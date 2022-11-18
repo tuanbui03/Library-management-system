@@ -1,0 +1,58 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+
+.text{
+    color: black;
+}
+
+.signin{
+    -fx-background-image: url(../Images/imageSignIn.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: black;
+}
+
+.signup{
+    -fx-background-image: url(../Images/imageSignUp.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: black;
+}
+
+.submit{
+    -fx-background-color: #0067b8;
+    -fx-text-fill : #e7e5e5;
+    -fx-backgound-radius: 3px;
+}
+
+.submit:hover{
+    -fx-backgound-color: #165b85;
+}
+
+.link{
+    -fx-background-color: #fff;
+    -fx-background-radius: 3px;
+}
+
+.link:hover{
+    outline: 2px;
+    -fx-background-color: #f9f7f4;
+}
+
+.input{
+    -fx-background-color: transparent;
+    -fx-border-color: #1f7eb9;
+    -fx-border-width: 0px 0px 1px 0px;
+    color: black;
+    transition: 0.5s;
+}
+
+.input:hover{
+    -fx-border-color: #165b85;
+}
+
+.input:pressed{
+    -fx-border-color: #165b85;
+}
