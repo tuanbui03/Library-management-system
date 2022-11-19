@@ -8,10 +8,10 @@
 }
 
 .signin{
-    -fx-background-image: url(../Images/imageSignIn.jpg);
+    -fx-background-image: url(../Images/cover.jpg);
     -fx-background-repeat: no-repeat;
     -fx-background-size: 100% 100%;
-    -fx-background-color: black;
+    /*-fx-background-color: linear-gradient(45deg, #c7d9e8, #e9d3ca);*/
 }
 
 .signup{

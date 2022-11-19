@@ -13,13 +13,13 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class AuthorEntity implements ICommon<Author> {
+public class AuthorEntity {
 
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
 
-    @Override
+
     public ArrayList<Author> getAll() {
         ArrayList<Author> list = new ArrayList<>();
         String query = "SELECT * FROM authors";
@@ -50,7 +50,7 @@ public class AuthorEntity implements ICommon<Author> {
         return null;
     }
 
-    @Override
+
     public Author getOne(int id) {
         String query = "SELECT * FROM authors WHERE id = ?";
 
@@ -82,7 +82,7 @@ public class AuthorEntity implements ICommon<Author> {
         return null;
     }
 
-    @Override
+
     public boolean insert(Author obj) {
         boolean flag = false;
         String query = "INSERT INTO accounts (name, dob, sign_name) VALUES (?, ?, ?)";
@@ -108,7 +108,7 @@ public class AuthorEntity implements ICommon<Author> {
         return flag;
     }
 
-    @Override
+
     public boolean update(Author obj) {
         boolean flag = false;
         AuthorEntity ae = new AuthorEntity();
@@ -143,7 +143,7 @@ public class AuthorEntity implements ICommon<Author> {
         return flag;
     }
 
-    @Override
+
     public boolean delete(int id) {
         boolean flag = false;
 

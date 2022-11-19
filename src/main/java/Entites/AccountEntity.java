@@ -13,13 +13,13 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class AccountEntity implements ICommon<Account> {
+public class AccountEntity {
 
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
 
-    @Override
+    
     public ArrayList<Account> getAll() {
         ArrayList<Account> list = new ArrayList<>();
         String sql = "SELECT * FROM accounts";
@@ -57,7 +57,7 @@ public class AccountEntity implements ICommon<Account> {
         return null;
     }
 
-    @Override
+    
     public Account getOne(int id) {
         String sql = "SELECT * FROM accounts WHERE id = ?";
 
@@ -130,7 +130,6 @@ public class AccountEntity implements ICommon<Account> {
         return null;
     }
 
-    @Override
     public boolean insert(Account acc) {
         boolean flag = false;
         String insertOne = "INSERT INTO accounts (UID, username, password, full_name, gender, email, dob, mobile, status, roleId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -163,7 +162,7 @@ public class AccountEntity implements ICommon<Account> {
         return flag;
     }
 
-    @Override
+
     public boolean update(Account acc) {
         boolean flag = false;
         AccountEntity am = new AccountEntity();
@@ -204,7 +203,7 @@ public class AccountEntity implements ICommon<Account> {
         return flag;
     }
 
-    @Override
+
     public boolean delete(int id) {
         boolean flag = false;
 
@@ -229,6 +228,6 @@ public class AccountEntity implements ICommon<Account> {
     }
 
     public static void main(String[] args) {
-        System.out.println(new AccountEntity().getAll());
+        System.out.println(new AccountEntity().getOne(1));
     }
 }
