@@ -15,9 +15,14 @@ import java.sql.SQLException;
  * @author PC
  */
 public class JDBCConnect {
+    public static final String DBNAME = "manage_library";
+    public static final String USERNAME = "root";
+    public static final String PASSWORD = "12345678";
+    public static final String INTEGRATED_SECURITY = "false";
+    
     public static Connection getJDBCConnection(){
         Connection con = null;
-        String connectionURL = "jdbc:mysql://localhost:3306/" + IDBConfig.DBNAME;
+        String connectionURL = "jdbc:mysql://localhost:3306/" + DBNAME;
         System.out.println(connectionURL);
         
         try{
@@ -29,7 +34,7 @@ public class JDBCConnect {
         System.out.println("MySQL JDBC Driver Registered!");
         
         try {
-            con = DriverManager.getConnection(connectionURL, IDBConfig.USERNAME, IDBConfig.PASSWORD);
+            con = DriverManager.getConnection(connectionURL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             System.err.println("Connection Failed! Check output console");
             return con;
