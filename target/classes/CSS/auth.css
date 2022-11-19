@@ -15,7 +15,7 @@
 }
 
 .signup{
-    -fx-background-image: url(../Images/imageSignUp.jpg);
+    -fx-background-image: url(../Images/cover.jpg);
     -fx-background-repeat: no-repeat;
     -fx-background-size: 100% 100%;
     -fx-background-color: black;
