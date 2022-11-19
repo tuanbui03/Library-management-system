@@ -31,6 +31,7 @@ public class JDBCConnect {
             System.err.println("Where is your MySQL JDBC Driver?");
             return con;
         }
+        
         System.out.println("MySQL JDBC Driver Registered!");
         
         try {
@@ -39,6 +40,8 @@ public class JDBCConnect {
             System.err.println("Connection Failed! Check output console");
             return con;
         }
+        
+        System.out.println("Connection Successfully!");
         
         return con;
     }
@@ -74,6 +77,6 @@ public class JDBCConnect {
     }
     
     public static void main(String[] args) {
-        JDBCConnect.getJDBCConnection();
+        JDBCConnect.openConnection();
     }
 }
