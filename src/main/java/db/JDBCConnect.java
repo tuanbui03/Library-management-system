@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class JDBCConnect {
     public static Connection getJDBCConnection(){
         Connection con = null;
-        String connectionURL = "jdbc:mysql://localhost:3306/" + ":" + IDBConfig.PORT + "/" + IDBConfig.DBNAME;
+        String connectionURL = "jdbc:mysql://localhost:3306/" + IDBConfig.DBNAME;
         System.out.println(connectionURL);
         
         try{
