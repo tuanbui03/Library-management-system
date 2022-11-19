@@ -20,7 +20,7 @@ public class JDBCConnect {
     public static final String PASSWORD = "12345678";
     public static final String INTEGRATED_SECURITY = "false";
     
-    public static Connection getJDBCConnection(){
+    public static Connection openConnection(){
         Connection con = null;
         String connectionURL = "jdbc:mysql://localhost:3306/" + DBNAME;
         System.out.println(connectionURL);
