@@ -18,9 +18,8 @@ public class JDBCConnect {
     public static final String DBNAME = "manage_library";
     public static final String USERNAME = "root";
     public static final String PASSWORD = "12345678";
-    public static final String INTEGRATED_SECURITY = "false";
     
-    public static Connection openConnection(){
+    public static Connection getJDBCConnection(){
         Connection con = null;
         String connectionURL = "jdbc:mysql://localhost:3306/" + DBNAME;
         System.out.println(connectionURL);
@@ -77,6 +76,6 @@ public class JDBCConnect {
     }
     
     public static void main(String[] args) {
-        JDBCConnect.openConnection();
+        JDBCConnect.getJDBCConnection();
     }
 }
