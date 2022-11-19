@@ -10,12 +10,12 @@ package Models;
  */
 public class StatusBorrow {
     private int id;
-    private int name;
+    private String name;
 
     public StatusBorrow() {
     }
 
-    public StatusBorrow(int id, int name) {
+    public StatusBorrow(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -28,11 +28,11 @@ public class StatusBorrow {
         this.id = id;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 

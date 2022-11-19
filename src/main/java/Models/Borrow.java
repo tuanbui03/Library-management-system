@@ -32,6 +32,15 @@ public class Borrow {
         this.statusId = statusId;
     }
 
+    public Borrow(Date borrowAt, int time_out, Date refundAt, float amount_of_pay, int manageId, int statusId) {
+        this.borrowAt = borrowAt;
+        this.time_out = time_out;
+        this.refundAt = refundAt;
+        this.amount_of_pay = amount_of_pay;
+        this.manageId = manageId;
+        this.statusId = statusId;
+    }
+    
     public int getId() {
         return id;
     }

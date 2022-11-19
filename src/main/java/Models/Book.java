@@ -38,6 +38,18 @@ public class Book {
         this.publishId = publishId;
     }
 
+    public Book(String name, String image, Date co_year, float price, int quantity, String description, int categoryId, int authorId, int publishId) {
+        this.name = name;
+        this.image = image;
+        this.co_year = co_year;
+        this.price = price;
+        this.quantity = quantity;
+        this.description = description;
+        this.categoryId = categoryId;
+        this.authorId = authorId;
+        this.publishId = publishId;
+    }
+    
     public int getId() {
         return id;
     }

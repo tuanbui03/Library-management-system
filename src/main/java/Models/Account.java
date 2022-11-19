@@ -4,19 +4,21 @@
  */
 package Models;
 
+import java.sql.Date;
+
 /**
  *
  * @author PC
  */
 public class Account {
     private int id;
-    private String user_number;
+    private String UID;
     private String username;
     private String password;
     private String full_name;
     private int gender;
     private String email;
-    private String dob;
+    private Date dob;
     private String mobile;
     private int status;
     private int roleId;
@@ -24,9 +26,9 @@ public class Account {
     public Account() {
     }
 
-    public Account(int id, String user_number, String username, String password, String full_name, int gender, String email, String dob, String mobile, int status, int roleId) {
+    public Account(int id, String UID, String username, String password, String full_name, int gender, String email, Date dob, String mobile, int status, int roleId) {
         this.id = id;
-        this.user_number = user_number;
+        this.UID = UID;
         this.username = username;
         this.password = password;
         this.full_name = full_name;
@@ -38,8 +40,8 @@ public class Account {
         this.roleId = roleId;
     }
 
-    public Account(String user_number, String username, String password, String full_name, int gender, String email, String dob, String mobile, int status, int roleId) {
-        this.user_number = user_number;
+    public Account(String UID, String username, String password, String full_name, int gender, String email, Date dob, String mobile, int status, int roleId) {
+        this.UID = UID;
         this.username = username;
         this.password = password;
         this.full_name = full_name;
@@ -51,12 +53,20 @@ public class Account {
         this.roleId = roleId;
     }
 
-    public String getUser_number() {
-        return user_number;
+    public int getId() {
+        return id;
     }
 
-    public void setUser_number(String user_number) {
-        this.user_number = user_number;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
     }
 
     public String getUsername() {
@@ -99,11 +109,11 @@ public class Account {
         this.email = email;
     }
 
-    public String getDob() {
+    public Date getDob() {
         return dob;
     }
 
-    public void setDob(String dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 
@@ -133,6 +143,6 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "id=" + id + ", user_number=" + user_number + ", username=" + username + ", password=" + password + ", full_name=" + full_name + ", gender=" + gender + ", email=" + email + ", dob=" + dob + ", mobile=" + mobile + ", status=" + status + ", roleId=" + roleId + '}';
+        return "Account{" + "id=" + id + ", UID=" + UID + ", username=" + username + ", password=" + password + ", full_name=" + full_name + ", gender=" + gender + ", email=" + email + ", dob=" + dob + ", mobile=" + mobile + ", status=" + status + ", roleId=" + roleId + '}';
     }
 }

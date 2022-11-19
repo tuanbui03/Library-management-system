@@ -26,6 +26,12 @@ public class Author {
         this.sign_name = sign_name;
     }
 
+    public Author(String name, Date dob, String sign_name) {
+        this.name = name;
+        this.dob = dob;
+        this.sign_name = sign_name;
+    }
+    
     public int getId() {
         return id;
     }

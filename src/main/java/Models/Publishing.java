@@ -26,6 +26,12 @@ public class Publishing {
         this.co_year = co_year;
     }
 
+    public Publishing(String name, String address, Date co_year) {
+        this.name = name;
+        this.address = address;
+        this.co_year = co_year;
+    }
+
     public int getId() {
         return id;
     }

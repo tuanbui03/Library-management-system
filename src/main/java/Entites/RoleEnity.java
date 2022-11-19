@@ -4,7 +4,7 @@
  */
 package Entites;
 
-import Models.StatusManage;
+import Models.Role;
 import java.sql.*;
 import db.*;
 import java.util.ArrayList;
@@ -12,18 +12,18 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class StatusManageEntity implements ICommon<StatusManage> {
+public class RoleEnity implements ICommon<Role>{
     
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
 
     @Override
-    public ArrayList<StatusManage> getAll() {
-//      Call array list with type is StatusManage
-        ArrayList<StatusManage> list = new ArrayList<>();
+    public ArrayList<Role> getAll() {
+//      Call array list with type is Role
+        ArrayList<Role> list = new ArrayList<>();
 //      Query SELECT in SQL
-        String query = "SELECT * FROM status_manage";
+        String query = "SELECT * FROM roles";
 
         try {
 //          Connect to database and execute query
@@ -31,12 +31,12 @@ public class StatusManageEntity implements ICommon<StatusManage> {
             preparedStatement = connection.prepareStatement(query);
             rs = preparedStatement.executeQuery();
 
-//          Call value in databse and set for list StatusManage
+//          Call value in databse and set for list Role
             while (rs.next()) {
-                StatusManage statusManage = new StatusManage(rs.getInt("id"),
+                Role role = new Role(rs.getInt("id"),
                         rs.getString("name"));
 
-                list.add(statusManage);
+                list.add(role);
             }
 
             return list;
@@ -54,9 +54,9 @@ public class StatusManageEntity implements ICommon<StatusManage> {
     }
 
     @Override
-    public StatusManage getOne(int id) {
+    public Role getOne(int id) {
 //      Query select in database with hidden value "?"
-        String query = "SELECT * FROM status_manage where id = ?";
+        String query = "SELECT * FROM roles where id = ?";
 
         try {
 //            Connect to database, set hidden value and execute query
@@ -65,14 +65,14 @@ public class StatusManageEntity implements ICommon<StatusManage> {
             preparedStatement.setInt(1, id);
             rs = preparedStatement.executeQuery();
             
-//          if id exists in database: set value in StatusManage of Models else print in console: "This statusManage doesn't exists!"
+//          if id exists in database: set value in Role of Models else print in console: "This role doesn't exists!"
             if (rs.next()) {
-                StatusManage statusManage = new StatusManage(rs.getInt("id"),
+                Role role = new Role(rs.getInt("id"),
                         rs.getString("name"));
 
-                return statusManage;
+                return role;
             } else {
-                System.out.println("This statusManage doesn't exists!");
+                System.out.println("This role doesn't exists!");
             }
 
         } catch (SQLException e) {
@@ -88,10 +88,10 @@ public class StatusManageEntity implements ICommon<StatusManage> {
     }
 
     @Override
-    public boolean insert(StatusManage obj) {
+    public boolean insert(Role obj) {
         boolean flag = false;
 //      Query insert in database with hidden value
-        String query = "INSERT INTO status_manage (name) VALUES (?)";
+        String query = "INSERT INTO roles (name) VALUES (?)";
 
         try {
 //          Connect to database and set hidden value
@@ -117,18 +117,18 @@ public class StatusManageEntity implements ICommon<StatusManage> {
     }
 
     @Override
-    public boolean update(StatusManage obj) {
+    public boolean update(Role obj) {
         boolean flag = false;
-        StatusManageEntity sme = new StatusManageEntity();
+        RoleEnity re = new RoleEnity();
 //        Query Update in Database with hidden value "?"
-        String query = "UPDATE status_manage SET name = ? WHERE id = ?";
+        String query = "UPDATE roles SET name = ? WHERE id = ?";
 
         try {
 //          Connect to database
             connection = JDBCConnect.getJDBCConnection();
 
-            if (sme.getOne(obj.getId()) == null) {
-                System.out.println("This StatusManage doesn't exists!");
+            if (re.getOne(obj.getId()) == null) {
+                System.out.println("This role doesn't exists!");
             } else {
 //              Set hidden value
                 preparedStatement = connection.prepareStatement(query);
@@ -158,7 +158,7 @@ public class StatusManageEntity implements ICommon<StatusManage> {
         boolean flag = false;
 
 //      Query Delete in database with hidden value
-        String query = "DELETE FROM status_manage WHERE id = ?";
+        String query = "DELETE FROM roles WHERE id = ?";
 
         try {
 //          Connect to Database, set value for hidden value

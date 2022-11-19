@@ -4,26 +4,27 @@
  */
 package Entites;
 
-import Models.StatusManage;
+import Models.ManageBook;
 import java.sql.*;
 import db.*;
 import java.util.ArrayList;
+
 /**
  *
  * @author PC
  */
-public class StatusManageEntity implements ICommon<StatusManage> {
-    
+public class ManageBookEntity implements ICommon<ManageBook> {
+
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
 
     @Override
-    public ArrayList<StatusManage> getAll() {
-//      Call array list with type is StatusManage
-        ArrayList<StatusManage> list = new ArrayList<>();
+    public ArrayList<ManageBook> getAll() {
+//      Call array list with type is ManageBook
+        ArrayList<ManageBook> list = new ArrayList<>();
 //      Query SELECT in SQL
-        String query = "SELECT * FROM status_manage";
+        String query = "SELECT * FROM manage_book";
 
         try {
 //          Connect to database and execute query
@@ -31,12 +32,16 @@ public class StatusManageEntity implements ICommon<StatusManage> {
             preparedStatement = connection.prepareStatement(query);
             rs = preparedStatement.executeQuery();
 
-//          Call value in databse and set for list StatusManage
+//          Call value in databse and set for list ManageBook
             while (rs.next()) {
-                StatusManage statusManage = new StatusManage(rs.getInt("id"),
-                        rs.getString("name"));
+                ManageBook manageBook = new ManageBook(rs.getInt("id"),
+                        rs.getDate("createdAt"),
+                        rs.getFloat("price_per_book"),
+                        rs.getInt("accountId"),
+                        rs.getInt("bookId"),
+                        rs.getInt("statusId"));
 
-                list.add(statusManage);
+                list.add(manageBook);
             }
 
             return list;
@@ -54,9 +59,9 @@ public class StatusManageEntity implements ICommon<StatusManage> {
     }
 
     @Override
-    public StatusManage getOne(int id) {
+    public ManageBook getOne(int id) {
 //      Query select in database with hidden value "?"
-        String query = "SELECT * FROM status_manage where id = ?";
+        String query = "SELECT * FROM manage_book where id = ?";
 
         try {
 //            Connect to database, set hidden value and execute query
@@ -64,15 +69,19 @@ public class StatusManageEntity implements ICommon<StatusManage> {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
             rs = preparedStatement.executeQuery();
-            
-//          if id exists in database: set value in StatusManage of Models else print in console: "This statusManage doesn't exists!"
-            if (rs.next()) {
-                StatusManage statusManage = new StatusManage(rs.getInt("id"),
-                        rs.getString("name"));
 
-                return statusManage;
+//          if id exists in database: set value in ManageBook of Models else print in console: "This manage book doesn't exists!"
+            if (rs.next()) {
+                ManageBook manageBook = new ManageBook(rs.getInt("id"),
+                        rs.getDate("createdAt"),
+                        rs.getFloat("price_per_book"),
+                        rs.getInt("accountId"),
+                        rs.getInt("bookId"),
+                        rs.getInt("statusId"));
+
+                return manageBook;
             } else {
-                System.out.println("This statusManage doesn't exists!");
+                System.out.println("This manage book doesn't exists!");
             }
 
         } catch (SQLException e) {
@@ -88,16 +97,20 @@ public class StatusManageEntity implements ICommon<StatusManage> {
     }
 
     @Override
-    public boolean insert(StatusManage obj) {
+    public boolean insert(ManageBook obj) {
         boolean flag = false;
 //      Query insert in database with hidden value
-        String query = "INSERT INTO status_manage (name) VALUES (?)";
+        String query = "INSERT INTO manage_book (createdAt, price_per_book, accountId, bookId, statusId) VALUES (?, ?, ?, ?, ?)";
 
         try {
 //          Connect to database and set hidden value
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, obj.getName());
+            preparedStatement.setDate(1, obj.getCreatedAt());
+            preparedStatement.setFloat(2, obj.getPrice_per_book());
+            preparedStatement.setInt(3, obj.getAccountId());
+            preparedStatement.setInt(4, obj.getBookId());
+            preparedStatement.setInt(5, obj.getStatusId());
 
 //          Execute Query, if insert successfull set flag equal true
             if (preparedStatement.executeUpdate() > 0) {
@@ -117,23 +130,27 @@ public class StatusManageEntity implements ICommon<StatusManage> {
     }
 
     @Override
-    public boolean update(StatusManage obj) {
+    public boolean update(ManageBook obj) {
         boolean flag = false;
-        StatusManageEntity sme = new StatusManageEntity();
+        ManageBookEntity mbe = new ManageBookEntity();
 //        Query Update in Database with hidden value "?"
-        String query = "UPDATE status_manage SET name = ? WHERE id = ?";
+        String query = "UPDATE manage_book SET createdAt = ?, price_per_book = ?, accountId = ?, bookId = ?, statusId = ? WHERE id = ?";
 
         try {
 //          Connect to database
             connection = JDBCConnect.getJDBCConnection();
 
-            if (sme.getOne(obj.getId()) == null) {
-                System.out.println("This StatusManage doesn't exists!");
+            if (mbe.getOne(obj.getId()) == null) {
+                System.out.println("This manage book doesn't exists!");
             } else {
 //              Set hidden value
                 preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, obj.getName());
-                preparedStatement.setInt(2, obj.getId());
+                preparedStatement.setDate(1, obj.getCreatedAt());
+                preparedStatement.setFloat(2, obj.getPrice_per_book());
+                preparedStatement.setInt(3, obj.getAccountId());
+                preparedStatement.setInt(4, obj.getBookId());
+                preparedStatement.setInt(5, obj.getStatusId());
+                preparedStatement.setInt(6, obj.getId());
 
 //              Execute Query, if update successfull set flag equal true
                 if (preparedStatement.executeUpdate() > 0) {
@@ -158,7 +175,7 @@ public class StatusManageEntity implements ICommon<StatusManage> {
         boolean flag = false;
 
 //      Query Delete in database with hidden value
-        String query = "DELETE FROM status_manage WHERE id = ?";
+        String query = "DELETE FROM manage_book WHERE id = ?";
 
         try {
 //          Connect to Database, set value for hidden value
