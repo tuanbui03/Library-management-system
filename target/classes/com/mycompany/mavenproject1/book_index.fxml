@@ -161,13 +161,13 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <TableView editable="true" layoutX="14.0" layoutY="237.0" prefHeight="543.0" prefWidth="870.0" stylesheets="@../../../CSS/table.css">
+                  <TableView editable="true" layoutX="20.0" layoutY="244.0" prefHeight="543.0" prefWidth="870.0" stylesheets="@../../../CSS/table.css">
                     <columns>
                       <TableColumn prefWidth="75.0" text="C1" />
                       <TableColumn prefWidth="75.0" text="C2" />
                     </columns>
                   </TableView>
-                  <Button layoutX="20.0" layoutY="192.0" mnemonicParsing="false" prefWidth="100.0" text="New" />
+                  <Button layoutX="20.0" layoutY="204.0" mnemonicParsing="false" prefWidth="100.0" text="New" />
                </children>
             </Pane>
          </children>
