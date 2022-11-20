@@ -9,15 +9,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 .button
 {
--fx-background-color : #05071F;
--fx-text-fill : #e7e5e5;
+-fx-background-color :  #EBE8F9;
+-fx-background-radius : 5px;
+-fx-text-fill : #000000;
 }
 .button:hover{
--fx-background-color : #10165F;
+-fx-background-color : #9d9aa7;
 }
 .button:pressed
 {
--fx-background-color : #1620A1;
+-fx-background-color : #707070;
 }
 
 .scroll-pane {

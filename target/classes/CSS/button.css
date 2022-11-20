@@ -1,0 +1,64 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 20-11-2022, 17:19:36
+    Author     : PC
+*/
+
+.button
+{
+-fx-background-color :  #EBE8F9;
+-fx-background-radius : 5px;
+-fx-text-fill : #000000;
+}
+.button:hover{
+-fx-background-color : #9d9aa7;
+}
+.button:pressed
+{
+-fx-background-color : #707070;
+}
+
+.button_primary
+{
+-fx-background-color :  #1f7eb9;
+-fx-background-radius : 5px;
+-fx-text-fill : #ffffff;
+}
+.button_primary:hover{
+-fx-background-color : #9d9aa7;
+}
+.button_primary:pressed
+{
+-fx-background-color : #165b85;
+}
+
+.button_success
+{
+-fx-background-color :  #27c47b;
+-fx-background-radius : 5px;
+-fx-text-fill : #000000;
+}
+.button_success:hover{
+-fx-background-color : #4bc089;
+}
+.button_success:pressed
+{
+-fx-background-color : #198754;
+}
+
+.button_danger
+{
+-fx-background-color :  #dc3545;
+-fx-background-radius : 5px;
+-fx-text-fill : #ffffff;
+}
+.button_danger:hover{
+-fx-background-color : #de4655;
+}
+.button_danger:pressed
+{
+-fx-background-color : #c2313f;
+}
