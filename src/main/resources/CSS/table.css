@@ -19,10 +19,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .table-view .column-header-background{
-    -fx-background-color: linear-gradient(to bottom left, #cadce9, #cadce9),
-        linear-gradient(to bottom right, #f4e7b8, #f4e7b8),
-        linear-gradient(to top right, #cce1cb, #cce1cb),
-        linear-gradient(to top left, #e9d3ca, #e9d3ca);
+    -fx-background-color: linear-gradient(to bottom left, #f4e7b8, #cadce9),
+        linear-gradient(to top right, #e9d3ca, #cce1cb);
     -fx-background-radius: 7px 7px 0px 0px;
     -fx-background-insets: 0 11px 0 0;
     -fx-padding: 0 0 5px 0;

@@ -12,13 +12,12 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class StatusBorrowEntity implements ICommon<StatusBorrow> {
+public class StatusBorrowEntity {
     
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
 
-    @Override
     public ArrayList<StatusBorrow> getAll() {
 //      Call array list with type is StatusBorrow
         ArrayList<StatusBorrow> list = new ArrayList<>();
@@ -53,7 +52,6 @@ public class StatusBorrowEntity implements ICommon<StatusBorrow> {
         return null;
     }
 
-    @Override
     public StatusBorrow getOne(int id) {
 //      Query select in database with hidden value "?"
         String query = "SELECT * FROM status_borrow where id = ?";
@@ -87,7 +85,6 @@ public class StatusBorrowEntity implements ICommon<StatusBorrow> {
         return null;
     }
 
-    @Override
     public boolean insert(StatusBorrow obj) {
         boolean flag = false;
 //      Query insert in database with hidden value
@@ -116,7 +113,6 @@ public class StatusBorrowEntity implements ICommon<StatusBorrow> {
         return flag;
     }
 
-    @Override
     public boolean update(StatusBorrow obj) {
         boolean flag = false;
         StatusBorrowEntity sbe = new StatusBorrowEntity();
@@ -153,7 +149,6 @@ public class StatusBorrowEntity implements ICommon<StatusBorrow> {
         return flag;
     }
 
-    @Override
     public boolean delete(int id) {
         boolean flag = false;
 

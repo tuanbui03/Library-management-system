@@ -12,13 +12,12 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class StatusManageEntity implements ICommon<StatusManage> {
+public class StatusManageEntity {
     
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
 
-    @Override
     public ArrayList<StatusManage> getAll() {
 //      Call array list with type is StatusManage
         ArrayList<StatusManage> list = new ArrayList<>();
@@ -53,7 +52,6 @@ public class StatusManageEntity implements ICommon<StatusManage> {
         return null;
     }
 
-    @Override
     public StatusManage getOne(int id) {
 //      Query select in database with hidden value "?"
         String query = "SELECT * FROM status_manage where id = ?";
@@ -87,7 +85,6 @@ public class StatusManageEntity implements ICommon<StatusManage> {
         return null;
     }
 
-    @Override
     public boolean insert(StatusManage obj) {
         boolean flag = false;
 //      Query insert in database with hidden value
@@ -116,7 +113,6 @@ public class StatusManageEntity implements ICommon<StatusManage> {
         return flag;
     }
 
-    @Override
     public boolean update(StatusManage obj) {
         boolean flag = false;
         StatusManageEntity sme = new StatusManageEntity();
@@ -153,7 +149,6 @@ public class StatusManageEntity implements ICommon<StatusManage> {
         return flag;
     }
 
-    @Override
     public boolean delete(int id) {
         boolean flag = false;
 

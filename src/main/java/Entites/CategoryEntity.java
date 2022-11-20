@@ -14,13 +14,12 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class CategoryEntity implements ICommon<Category> {
+public class CategoryEntity {
     
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
 
-    @Override
     public ArrayList<Category> getAll() {
 //      Call array list with type is Category
         ArrayList<Category> list = new ArrayList<>();
@@ -55,7 +54,7 @@ public class CategoryEntity implements ICommon<Category> {
         return null;
     }
 
-    @Override
+    
     public Category getOne(int id) {
 //      Query select in database with hidden value "?"
         String query = "SELECT * FROM categories where id = ?";
@@ -89,7 +88,7 @@ public class CategoryEntity implements ICommon<Category> {
         return null;
     }
 
-    @Override
+    
     public boolean insert(Category obj) {
         boolean flag = false;
 //      Query insert in database with hidden value
@@ -118,7 +117,7 @@ public class CategoryEntity implements ICommon<Category> {
         return flag;
     }
 
-    @Override
+    
     public boolean update(Category obj) {
         boolean flag = false;
         CategoryEntity ce = new CategoryEntity();
@@ -155,7 +154,7 @@ public class CategoryEntity implements ICommon<Category> {
         return flag;
     }
 
-    @Override
+    
     public boolean delete(int id) {
         boolean flag = false;
 

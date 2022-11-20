@@ -13,13 +13,12 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class ManageBookEntity implements ICommon<ManageBook> {
+public class ManageBookEntity {
 
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
 
-    @Override
     public ArrayList<ManageBook> getAll() {
 //      Call array list with type is ManageBook
         ArrayList<ManageBook> list = new ArrayList<>();
@@ -58,7 +57,6 @@ public class ManageBookEntity implements ICommon<ManageBook> {
         return null;
     }
 
-    @Override
     public ManageBook getOne(int id) {
 //      Query select in database with hidden value "?"
         String query = "SELECT * FROM manage_book where id = ?";
@@ -96,7 +94,6 @@ public class ManageBookEntity implements ICommon<ManageBook> {
         return null;
     }
 
-    @Override
     public boolean insert(ManageBook obj) {
         boolean flag = false;
 //      Query insert in database with hidden value
@@ -129,7 +126,6 @@ public class ManageBookEntity implements ICommon<ManageBook> {
         return flag;
     }
 
-    @Override
     public boolean update(ManageBook obj) {
         boolean flag = false;
         ManageBookEntity mbe = new ManageBookEntity();
@@ -170,7 +166,6 @@ public class ManageBookEntity implements ICommon<ManageBook> {
         return flag;
     }
 
-    @Override
     public boolean delete(int id) {
         boolean flag = false;
 

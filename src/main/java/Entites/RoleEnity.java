@@ -12,13 +12,12 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class RoleEnity implements ICommon<Role>{
+public class RoleEnity {
     
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
 
-    @Override
     public ArrayList<Role> getAll() {
 //      Call array list with type is Role
         ArrayList<Role> list = new ArrayList<>();
@@ -53,7 +52,6 @@ public class RoleEnity implements ICommon<Role>{
         return null;
     }
 
-    @Override
     public Role getOne(int id) {
 //      Query select in database with hidden value "?"
         String query = "SELECT * FROM roles where id = ?";
@@ -87,7 +85,6 @@ public class RoleEnity implements ICommon<Role>{
         return null;
     }
 
-    @Override
     public boolean insert(Role obj) {
         boolean flag = false;
 //      Query insert in database with hidden value
@@ -116,7 +113,6 @@ public class RoleEnity implements ICommon<Role>{
         return flag;
     }
 
-    @Override
     public boolean update(Role obj) {
         boolean flag = false;
         RoleEnity re = new RoleEnity();
@@ -153,7 +149,6 @@ public class RoleEnity implements ICommon<Role>{
         return flag;
     }
 
-    @Override
     public boolean delete(int id) {
         boolean flag = false;
 
