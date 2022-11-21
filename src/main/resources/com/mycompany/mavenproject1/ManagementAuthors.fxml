@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <StackPane layoutX="256.0" prefHeight="800.0" prefWidth="924.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="256.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Pane fx:id="pnlOverview">
+                    <children>
+                        <Label layoutX="45.0" layoutY="18.0" text="MANAGEMENT AUTHORS">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <BorderPane layoutY="75.0" prefHeight="726.0" prefWidth="924.0">
+                            <bottom>
+                                <Pane prefHeight="401.0" prefWidth="924.0" BorderPane.alignment="CENTER">
+                                    <children>
+                                        <TableView editable="true" layoutX="7.0" layoutY="49.0" prefHeight="350.0" prefWidth="910.0">
+                                            <columns>
+                                                <TableColumn fx:id="colIndex" prefWidth="61.0" text="No." />
+                                                <TableColumn fx:id="colName" maxWidth="324.0" minWidth="145.0" prefWidth="170.0" text="NAME" />
+                                                <TableColumn fx:id="colSignName" maxWidth="475.0" minWidth="190.0" prefWidth="190.0" text="SIGN NAME" />
+                                                <TableColumn fx:id="colBorn" minWidth="136.0" prefWidth="154.0" text="BORN" />
+                                                <TableColumn fx:id="colBorn1" minWidth="136.0" prefWidth="151.0" text="Created At" />
+                                                <TableColumn fx:id="colBorn2" minWidth="136.0" prefWidth="172.0" text="Updated At" />
+                                            </columns>
+                                        </TableView>
+                                        <Button fx:id="btnRefesh" layoutX="16.0" layoutY="7.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="button_danger" text="Refesh" />
+                                        <TextField fx:id="txtSearch" layoutX="630.0" layoutY="10.0" prefHeight="30.0" prefWidth="200.0" promptText="Search" style="-fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-background-radius: 2em;" />
+                                        <Button fx:id="btnSearch" layoutX="842.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="50.0" text="Find" />
+                                    </children>
+                                </Pane>
+                            </bottom>
+                            <top>
+                                <Pane prefHeight="320.0" prefWidth="910.0" style="-fx-background-color: #f9f7f4; -fx-background-radius: 15px;" BorderPane.alignment="CENTER">
+                                    <children>
+                                        <Separator layoutX="37.0" prefHeight="0.0" prefWidth="800.0" />
+                                        <Label layoutX="37.0" layoutY="43.0" text="ID">
+                                            <font>
+                                                <Font name="System Bold Italic" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <Label layoutX="37.0" layoutY="83.0" text="Name">
+                                            <font>
+                                                <Font name="System Bold Italic" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <Label layoutX="37.0" layoutY="123.0" text="Sign Name">
+                                            <font>
+                                                <Font name="System Bold Italic" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="txtName" layoutX="131.0" layoutY="77.0" prefHeight="26.0" prefWidth="300.0" />
+                                        <TextField fx:id="txtPrice" layoutX="131.0" layoutY="117.0" prefHeight="26.0" prefWidth="300.0" />
+                                        <Button fx:id="btnSave" layoutX="29.0" layoutY="260.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" text="Save" />
+                                        <TextField fx:id="txtId" disable="true" editable="false" layoutX="131.0" layoutY="37.0" prefHeight="26.0" prefWidth="300.0" />
+                                        <Button fx:id="btnDelete" layoutX="142.0" layoutY="260.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" text="Delete" />
+                                        <Button fx:id="btnReset" layoutX="255.0" layoutY="260.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" text="Reset" />
+                                        <Label layoutX="473.0" layoutY="83.0" text="Updated At">
+                                            <font>
+                                                <Font name="System Bold Italic" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="txtUpdatedAt" disable="true" editable="false" layoutX="567.0" layoutY="77.0" prefHeight="26.0" prefWidth="300.0" />
+                                        <Label layoutX="473.0" layoutY="43.0" text="Created At">
+                                            <font>
+                                                <Font name="System Bold Italic" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="txtCreatedAt" disable="true" editable="false" layoutX="567.0" layoutY="37.0" prefHeight="26.0" prefWidth="300.0" />
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="20.0" left="30.0" right="20.0" top="50.0" />
+                                    </padding>
+                                    <BorderPane.margin>
+                                        <Insets left="10.0" right="10.0" />
+                                    </BorderPane.margin>
+                                </Pane>
+                            </top>
+                        </BorderPane>
+                    </children>
+                </Pane>
+            </children>
+        </StackPane>
+        <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="256.0" style="-fx-background-color: #EBE8F9;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label fx:id="labelClock" text="Local Date Time" textFill="#171717">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets top="20.0" />
+                    </VBox.margin>
+                </Label>
+                <Circle fx:id="avatar" fill="WHITE" radius="80.0" stroke="BLACK" strokeType="INSIDE" styleClass="avatar">
+                    <VBox.margin>
+                        <Insets bottom="20.0" top="30.0" />
+                    </VBox.margin>
+                </Circle>
+                <Label fx:id="labelUsername" text="Jimmy Fallon" textFill="#171717">
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Button fx:id="btnDashboard" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="240.0" text="Dashboard">
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="50.0" />
+                    </padding>
+                </Button>
+                <Button fx:id="btnBorrowing" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="INHERIT" prefHeight="50.0" prefWidth="240.0" text="Borrowing" textFill="#171717">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="50.0" />
+                    </padding>
+                </Button>
+                <Button fx:id="btnManageBooks" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="INHERIT" prefHeight="50.0" prefWidth="240.0" text="Management Books" textFill="#171717">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="50.0" />
+                    </padding>
+                </Button>
+                <Button fx:id="btnManageAuthors" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="INHERIT" prefHeight="50.0" prefWidth="240.0" text="Management Authors" textFill="#171717">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="50.0" />
+                    </padding>
+                </Button>
+                <Button fx:id="btnManageCategories" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="INHERIT" prefHeight="50.0" prefWidth="240.0" text="Management Categories" textFill="#171717">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="50.0" />
+                    </padding>
+                </Button>
+                <Button fx:id="btnManagePublishing" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="INHERIT" prefHeight="50.0" prefWidth="240.0" text="Management Publishing" textFill="#171717">
+                    <padding>
+                        <Insets left="50.0" />
+                    </padding>
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="btnManageAccounts" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="INHERIT" prefHeight="50.0" prefWidth="240.0" text="Management Accounts" textFill="#171717">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="50.0" />
+                    </padding>
+                </Button>
+                <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="INHERIT" prefHeight="50.0" prefWidth="240.0" text="Sign Out">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="50.0" />
+                    </padding>
+                </Button>
+            </children>
+        </VBox>
+    </children>
+    <effect>
+        <DropShadow color="#1b1eeb" />
+    </effect>
+    <stylesheets>
+        <URL value="@../../../CSS/admin_index.css" />
+        <URL value="@../../../CSS/images.css" />
+        <URL value="@../../../CSS/button.css" />
+        <URL value="@../../../CSS/table.css" />
+    </stylesheets>
+</AnchorPane>

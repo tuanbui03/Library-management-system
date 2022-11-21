@@ -14,25 +14,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 -fx-text-fill : #000000;
 }
 .button:hover{
--fx-background-color : #9d9aa7;
+-fx-background-color : #a5a2ad;
 }
 .button:pressed
 {
--fx-background-color : #707070;
+-fx-background-color : #696969;
 }
 
 .button_primary
 {
--fx-background-color :  #1f7eb9;
+-fx-background-color :  #2e8cc7;
 -fx-background-radius : 5px;
 -fx-text-fill : #ffffff;
 }
 .button_primary:hover{
--fx-background-color : #9d9aa7;
+-fx-background-color : #1c80be;
 }
 .button_primary:pressed
 {
--fx-background-color : #165b85;
+-fx-background-color : #225f85;
 }
 
 .button_success
@@ -42,7 +42,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 -fx-text-fill : #000000;
 }
 .button_success:hover{
--fx-background-color : #4bc089;
+-fx-background-color : #13c572;
 }
 .button_success:pressed
 {
@@ -56,9 +56,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 -fx-text-fill : #ffffff;
 }
 .button_danger:hover{
--fx-background-color : #de4655;
+-fx-background-color : #d45763;
 }
 .button_danger:pressed
 {
--fx-background-color : #c2313f;
+-fx-background-color : #a02935;
 }
