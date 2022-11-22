@@ -15,7 +15,7 @@
    <center>
       <AnchorPane maxHeight="800.0" maxWidth="600.0" prefHeight="800.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane layoutX="75.0" layoutY="72.0" maxHeight="792.0" maxWidth="464.0" minHeight="792.0" minWidth="464.0" prefHeight="792.0" prefWidth="464.0" style="-fx-background-color: #fff; -fx-background-radius: 15px;" AnchorPane.bottomAnchor="72.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="61.0" AnchorPane.topAnchor="72.0">
+            <Pane layoutX="75.0" layoutY="72.0" maxHeight="792.0" maxWidth="464.0" minHeight="736.0" minWidth="464.0" prefHeight="736.0" prefWidth="464.0" style="-fx-background-color: #fff; -fx-background-radius: 15px;" AnchorPane.bottomAnchor="128.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="61.0" AnchorPane.topAnchor="72.0">
                <children>
                   <Text layoutX="42.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Sign Up" textAlignment="CENTER" wrappingWidth="380.87890625">
                      <font>
@@ -75,11 +75,11 @@
                      </padding>
                   </TextField>
                   <DatePicker layoutX="148.0" layoutY="450.0" prefHeight="26.0" prefWidth="280.0" promptText="YYYY-MM-DD" styleClass="input" />
-                  <Button layoutX="44.0" layoutY="626.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="376.0" styleClass="submit" text="Sign Up" textFill="WHITE">
+                  <Button layoutX="44.0" layoutY="608.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="376.0" styleClass="submit" text="Sign Up" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font></Button>
-                  <Button layoutX="44.0" layoutY="682.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="376.0" styleClass="link" text="Sign In">
+                  <Button layoutX="44.0" layoutY="664.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="376.0" styleClass="link" text="Sign In">
                      <font>
                         <Font size="16.0" />
                      </font></Button>
