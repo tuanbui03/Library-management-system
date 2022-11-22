@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -17,7 +18,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.ManagementCategoriesController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="256.0" style="-fx-background-color: #EBE8F9;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -124,7 +125,7 @@
                      <bottom>
                         <Pane prefHeight="401.0" prefWidth="924.0" BorderPane.alignment="CENTER">
                            <children>
-                              <TableView layoutX="7.0" layoutY="49.0" prefHeight="350.0" prefWidth="910.0" stylesheets="@../../../CSS/table.css">
+                              <TableView fx:id="table" layoutX="7.0" layoutY="49.0" prefHeight="350.0" prefWidth="910.0" stylesheets="@../../../CSS/table.css">
                                  <columns>
                                     <TableColumn fx:id="colIndex" prefWidth="61.0" text="No." />
                                     <TableColumn fx:id="colName" maxWidth="358.0" minWidth="63.0" prefWidth="340.0" text="NAME" />
@@ -152,11 +153,11 @@
                                     <Font name="System Bold Italic" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txtName" layoutX="131.0" layoutY="87.0" prefHeight="26.0" prefWidth="300.0" promptText="Enter a name" />
-                              <Button fx:id="btnSave" layoutX="29.0" layoutY="260.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
+                              <TextField fx:id="txtName" layoutX="131.0" layoutY="87.0" onAction="#FomartInputName" onKeyReleased="#CheckInputName" prefHeight="26.0" prefWidth="300.0" promptText="Enter a name" />
+                              <Button fx:id="btnSave" layoutX="29.0" layoutY="260.0" mnemonicParsing="false" onAction="#BtnSaveClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
                               <TextField fx:id="txtId" disable="true" editable="false" layoutX="131.0" layoutY="37.0" prefHeight="26.0" prefWidth="300.0" />
                               <Button fx:id="btnDelete" layoutX="142.0" layoutY="260.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Delete" />
-                              <Button fx:id="btnReset" layoutX="255.0" layoutY="260.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" stylesheets="@../../../CSS/button.css" text="Reset" />
+                              <Button fx:id="btnReset" layoutX="255.0" layoutY="260.0" mnemonicParsing="false" onAction="#ResetFeild" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" stylesheets="@../../../CSS/button.css" text="Reset" />
                               <Label layoutX="37.0" layoutY="192.0" text="Updated At">
                                  <font>
                                     <Font name="System Bold Italic" size="14.0" />
@@ -169,6 +170,15 @@
                                  </font>
                               </Label>
                               <TextField fx:id="txtCreatedAt" disable="true" editable="false" layoutX="131.0" layoutY="137.0" prefHeight="26.0" prefWidth="300.0" />
+                              <Label fx:id="errorName" layoutX="131.0" layoutY="113.0" text="Please enter a name !">
+                                 <styleClass>
+                                    <String fx:value="error" />
+                                    <String fx:value="hide" />
+                                 </styleClass>
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
                            </children>
                            <padding>
                               <Insets bottom="20.0" left="30.0" right="20.0" top="50.0" />
@@ -193,5 +203,6 @@
       <URL value="@../../../CSS/table.css" />
       <URL value="@../../../CSS/combo_box.css" />
       <URL value="@../../../CSS/button.css" />
+      <URL value="@../../../CSS/input.css" />
    </stylesheets>
 </AnchorPane>

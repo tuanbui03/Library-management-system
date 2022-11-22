@@ -15,13 +15,14 @@ import java.sql.SQLException;
  * @author PC
  */
 public class JDBCConnect {
-    public static final String DBNAME = "manage_library";
-    public static final String USERNAME = "root";
-    public static final String PASSWORD = "12345678";
+    
+    public static Connection connection = null;
+    public static PreparedStatement preparedStatement = null;
+    public static ResultSet rs = null;
     
     public static Connection getJDBCConnection(){
         Connection con = null;
-        String connectionURL = "jdbc:mysql://localhost:3306/" + DBNAME;
+        String connectionURL = "jdbc:mysql://" + IDBConfig.HOSTNAME + ":" + IDBConfig.PORT + "/" + IDBConfig.DBNAME;
         System.out.println(connectionURL);
         
         try{
@@ -30,17 +31,14 @@ public class JDBCConnect {
             System.err.println("Where is your MySQL JDBC Driver?");
             return con;
         }
-        
         System.out.println("MySQL JDBC Driver Registered!");
         
         try {
-            con = DriverManager.getConnection(connectionURL, USERNAME, PASSWORD);
+            con = DriverManager.getConnection(connectionURL, IDBConfig.USERNAME, IDBConfig.PASSWORD);
         } catch (SQLException e) {
             System.err.println("Connection Failed! Check output console");
             return con;
         }
-        
-        System.out.println("Connection Successfully!");
         
         return con;
     }

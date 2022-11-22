@@ -50,3 +50,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .scroll-pane > .corner {
     -fx-background-color: black;
 }
+
+.error{
+    -fx-text-fill: #dc3545;
+}
+
+.hidden{
+    visibility: hidden;
+    visibility: collapse;
+    display: none;  
+}

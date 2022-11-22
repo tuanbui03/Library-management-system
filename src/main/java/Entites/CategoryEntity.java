@@ -5,181 +5,175 @@
 package Entites;
 
 import Models.Category;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import java.sql.*;
 import db.*;
-import java.util.ArrayList;
-
+import java.io.IOException;
+import java.time.LocalDate;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 
 /**
  *
  * @author PC
  */
 public class CategoryEntity {
-    
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet rs = null;
 
-    public ArrayList<Category> getAll() {
-//      Call array list with type is Category
-        ArrayList<Category> list = new ArrayList<>();
-//      Query SELECT in SQL
-        String query = "SELECT * FROM categories";
+    @FXML
+    private static TextField txtId;
+    @FXML
+    private static TextField txtName;
+    @FXML
+    private static TextField txtCreatedAt;
+    @FXML
+    private static TextField txtUpdatedAt;
+    @FXML
+    private static TableView<Category> table;
+
+    @FXML
+    private static TableColumn<Category, String> colIndex;
+
+    @FXML
+    private static TableColumn<Category, String> colName;
+
+    @FXML
+    private static TableColumn<Category, String> colCreatedAt;
+
+    @FXML
+    private static TableColumn<Category, String> colUpdatedAt;
+
+    public static Connection connection = null;
+    public static PreparedStatement preparedStatement = null;
+    public static ResultSet rs = null;
+    public static int myIndex;
+    public static int id;
+
+    @FXML
+    public static void Add(ActionEvent event, String name) throws IOException {
+        String sql = "Insert into authors(name, creaetedAt, updatedAt) values(?, ?, ?)";
+        long milis = System.currentTimeMillis();
+        Date preDate = new Date(milis);
 
         try {
-//          Connect to database and execute query
             connection = JDBCConnect.getJDBCConnection();
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = connection.prepareCall(sql);
+            preparedStatement.setString(1, name);
+            preparedStatement.setDate(2, preDate);
+            preparedStatement.setDate(3, preDate);
+
+//          if add sucess reset all feild and reset table view, all feild else show message fail
+            if (preparedStatement.executeUpdate() > 0) {
+//              show message
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Test Connection");
+
+                alert.setHeaderText("Management Cateogries");
+                alert.setContentText("Add New Category Successfully !");
+
+                alert.showAndWait();
+
+//              get data in database fors table view
+                table();
+//              reset all feild
+                ResetFeild();
+            } else {
+//              show message
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Test Connection");
+
+                alert.setHeaderText("Management Cateogries");
+                alert.setContentText("Add Fail !");
+
+                alert.showAndWait();
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    @FXML
+    public static void Delete(ActionEvent event, int myIndex, int id) {
+        String sql = "Delete from categories WHERE id = ?";
+
+        try {
+
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareCall(sql);
+            preparedStatement.setInt(1, id);
+            if (preparedStatement.executeUpdate() > 0) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Test Connection");
+
+                alert.setHeaderText("Management Categories");
+                alert.setContentText("Deleted Successfully!");
+
+                alert.showAndWait();
+
+                table();
+                ResetFeild();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Test Connection");
+
+                alert.setHeaderText("Management Categories");
+                alert.setContentText("Deleted Fail!");
+
+                alert.showAndWait();
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    public static void ResetFeild() {
+        txtId.setText("");
+        txtName.setText("");
+        txtCreatedAt.setText("");
+        txtUpdatedAt.setText("");
+    }
+
+    private static void table() {
+        JDBCConnect.getJDBCConnection();
+        ObservableList<Category> categories = FXCollections.observableArrayList();
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareCall("Select * from categories");
             rs = preparedStatement.executeQuery();
 
-//          Call value in databse and set for list Category
             while (rs.next()) {
-                Category category = new Category(rs.getInt("id"),
-                        rs.getString("name"));
-
-                list.add(category);
+                Category c = new Category();
+                c.setId(rs.getString("id"));
+                c.setName(rs.getString("name"));
+                c.setCreatedAt(rs.getString("createdAt"));
+                c.setUpdatedAt(rs.getString("updatedAt"));
+                categories.add(c);
             }
-
-            return list;
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-//          Close databse at end
-            JDBCConnect.closeResultSet(rs);
-            JDBCConnect.closePreparedStatement(preparedStatement);
-            JDBCConnect.closeConnection(connection);
+            table.setItems(categories);
+            colIndex.setCellValueFactory(f -> f.getValue().idProperty());
+            colName.setCellValueFactory(f -> f.getValue().nameProperty());
+            colCreatedAt.setCellValueFactory(f -> f.getValue().createdAtProperty());
+            colUpdatedAt.setCellValueFactory(f -> f.getValue().updatedAtProperty());
+        } catch (SQLException ex) {
         }
-
-        return null;
-    }
-
-    
-    public Category getOne(int id) {
-//      Query select in database with hidden value "?"
-        String query = "SELECT * FROM categories where id = ?";
-
-        try {
-//            Connect to database, set hidden value and execute query
-            connection = JDBCConnect.getJDBCConnection();
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, id);
-            rs = preparedStatement.executeQuery();
-            
-//          if id exists in database: set value in Category of Models else print in console: "This category doesn't exists!"
-            if (rs.next()) {
-                Category category = new Category(rs.getInt("id"),
-                        rs.getString("name"));
-
-                return category;
-            } else {
-                System.out.println("This category doesn't exists!");
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-//          Close database at end
-            JDBCConnect.closeResultSet(rs);
-            JDBCConnect.closePreparedStatement(preparedStatement);
-            JDBCConnect.closeConnection(connection);
-        }
-
-        return null;
-    }
-
-    
-    public boolean insert(Category obj) {
-        boolean flag = false;
-//      Query insert in database with hidden value
-        String query = "INSERT INTO categories (name) VALUES (?)";
-
-        try {
-//          Connect to database and set hidden value
-            connection = JDBCConnect.getJDBCConnection();
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, obj.getName());
-
-//          Execute Query, if insert successfull set flag equal true
-            if (preparedStatement.executeUpdate() > 0) {
-                flag = true;
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-//          Close database at end
-            JDBCConnect.closeResultSet(rs);
-            JDBCConnect.closePreparedStatement(preparedStatement);
-            JDBCConnect.closeConnection(connection);
-        }
-
-        return flag;
-    }
-
-    
-    public boolean update(Category obj) {
-        boolean flag = false;
-        CategoryEntity ce = new CategoryEntity();
-//        Query Update in Database with hidden value "?"
-        String query = "UPDATE categories SET name = ? WHERE id = ?";
-
-        try {
-//          Connect to database
-            connection = JDBCConnect.getJDBCConnection();
-
-            if (ce.getOne(obj.getId()) == null) {
-                System.out.println("This category doesn't exists!");
-            } else {
-//              Set hidden value
-                preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, obj.getName());
-                preparedStatement.setInt(2, obj.getId());
-
-//              Execute Query, if update successfull set flag equal true
-                if (preparedStatement.executeUpdate() > 0) {
-                    flag = true;
+        table.setRowFactory(tv -> {
+            TableRow<Category> myRow = new TableRow<>();
+            myRow.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && (!myRow.isEmpty())) {
+                    myIndex = table.getSelectionModel().getSelectedIndex();
+                    id = Integer.parseInt(String.valueOf(table.getItems().get(myIndex).getId()));
+                    txtName.setText(table.getItems().get(myIndex).getName());
+                    txtCreatedAt.setText(table.getItems().get(myIndex).getCreatedAt());
+                    txtUpdatedAt.setText(table.getItems().get(myIndex).getUpdatedAt());
                 }
-            }
+            });
+            return myRow;
+        });
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-//          Close database at end
-            JDBCConnect.closeResultSet(rs);
-            JDBCConnect.closePreparedStatement(preparedStatement);
-            JDBCConnect.closeConnection(connection);
-        }
-
-        return flag;
     }
-
-    
-    public boolean delete(int id) {
-        boolean flag = false;
-
-//      Query Delete in database with hidden value
-        String query = "DELETE FROM categories WHERE id = ?";
-
-        try {
-//          Connect to Database, set value for hidden value
-            connection = JDBCConnect.getJDBCConnection();
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, id);
-
-//              Execute Query, if delete successfull set flag equal true
-            if (preparedStatement.executeUpdate() > 0) {
-                flag = true;
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-//          Close database at end
-            JDBCConnect.closePreparedStatement(preparedStatement);
-            JDBCConnect.closeConnection(connection);
-        }
-
-        return flag;
-    }
-
 }
