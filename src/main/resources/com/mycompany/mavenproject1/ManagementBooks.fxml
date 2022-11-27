@@ -84,7 +84,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnManageBooks" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementBooks" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Books">
+            <Button fx:id="btnManageBooks" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementBooks" prefHeight="50.0" prefWidth="259.0" styleClass="button_active" text="Management Books">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -320,24 +320,6 @@
                                     <Font name="System Bold Italic" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="Image" editable="false" layoutX="131.0" layoutY="114.0" prefHeight="26.0" prefWidth="300.0" promptText="Choose a image" styleClass="input" />
-                              <TextField fx:id="txtName" layoutX="131.0" layoutY="64.0" prefHeight="26.0" prefWidth="300.0" promptText="Enter a name" styleClass="input" />
-                              <Button fx:id="btnSave" layoutX="29.0" layoutY="320.0" mnemonicParsing="false" onAction="#BtnSaveClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
-                              <TextField fx:id="txtId" disable="true" editable="false" layoutX="131.0" layoutY="14.0" prefHeight="26.0" prefWidth="300.0" styleClass="input-disabled" />
-                              <Button fx:id="btnDelete" layoutX="142.0" layoutY="320.0" mnemonicParsing="false" onAction="#BtnDeleteClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Delete" />
-                              <Button fx:id="btnReset" layoutX="255.0" layoutY="320.0" mnemonicParsing="false" onAction="#ResetFeild" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" stylesheets="@../../../CSS/button.css" text="Reset" />
-                              <Label layoutX="473.0" layoutY="268.0" text="Updated At">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="txtUpdatedAt" disable="true" editable="false" layoutX="567.0" layoutY="264.0" prefHeight="26.0" prefWidth="300.0" styleClass="input-disabled" />
-                              <Label layoutX="37.0" layoutY="268.0" text="Created At">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="txtCreatedAt" disable="true" editable="false" layoutX="131.0" layoutY="264.0" prefHeight="26.0" prefWidth="300.0" styleClass="input-disabled" />
                               <Label layoutX="37.0" layoutY="168.0" text="Co Year">
                                  <font>
                                     <Font name="System Bold Italic" size="14.0" />
@@ -348,8 +330,6 @@
                                     <Font name="System Bold Italic" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txtCoyear" layoutX="131.0" layoutY="164.0" prefHeight="26.0" prefWidth="300.0" promptText="Enter a co year" styleClass="input" />
-                              <TextField fx:id="txtPrice" layoutX="131.0" layoutY="214.0" prefHeight="26.0" prefWidth="300.0" promptText="Enter a price" styleClass="input" />
                               <Label layoutX="473.0" layoutY="18.0" text="Quantity">
                                  <font>
                                     <Font name="System Bold Italic" size="14.0" />
@@ -360,26 +340,91 @@
                                     <Font name="System Bold Italic" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txtQuantity" layoutX="567.0" layoutY="14.0" prefHeight="26.0" prefWidth="300.0" promptText="Enter a number" styleClass="input" />
-                              <TextField fx:id="txtDescription" layoutX="567.0" layoutY="64.0" prefHeight="26.0" prefWidth="300.0" promptText="Enter a text" styleClass="input" />
-                              <ComboBox layoutX="567.0" layoutY="114.0" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Category !" />
                               <Label layoutX="473.0" layoutY="118.0" text="Categories">
                                  <font>
                                     <Font name="System Bold Italic" size="14.0" />
                                  </font>
                               </Label>
-                              <ComboBox layoutX="567.0" layoutY="164.0" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Author !" />
                               <Label layoutX="473.0" layoutY="168.0" text="Authors">
                                  <font>
                                     <Font name="System Bold Italic" size="14.0" />
                                  </font>
                               </Label>
-                              <ComboBox layoutX="567.0" layoutY="214.0" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Publishing Company !" />
                               <Label layoutX="473.0" layoutY="218.0" text="Publishs">
                                  <font>
                                     <Font name="System Bold Italic" size="14.0" />
                                  </font>
                               </Label>
+                              <Label layoutX="37.0" layoutY="268.0" text="Created At">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="473.0" layoutY="268.0" text="Updated At">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtId" disable="true" editable="false" layoutX="131.0" layoutY="14.0" prefHeight="26.0" prefWidth="300.0" styleClass="input-disabled" />
+                              <TextField fx:id="txtName" layoutX="131.0" layoutY="64.0" prefHeight="26.0" prefWidth="300.0" promptText="Enter a name" styleClass="input" />
+                              <Label fx:id="errorName" layoutX="47.0" layoutY="78.0" text="Name">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="Image" editable="false" layoutX="131.0" layoutY="114.0" prefHeight="26.0" prefWidth="300.0" promptText="Choose a image" styleClass="input" />
+                              <Label fx:id="errorImage" layoutX="47.0" layoutY="128.0" text="Image">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtCoyear" layoutX="131.0" layoutY="164.0" prefHeight="26.0" prefWidth="300.0" promptText="Enter a co year" styleClass="input" />
+                              <Label fx:id="errorCoyear" layoutX="47.0" layoutY="178.0" text="Co Year">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtPrice" layoutX="131.0" layoutY="214.0" prefHeight="26.0" prefWidth="300.0" promptText="Enter a price" styleClass="input" />
+                              <Label fx:id="errorPrice" layoutX="47.0" layoutY="228.0" text="Price">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtQuantity" layoutX="567.0" layoutY="14.0" prefHeight="26.0" prefWidth="300.0" promptText="Enter a number" styleClass="input" />
+                              <Label fx:id="errorQuantity" layoutX="567.0" layoutY="42.0" text="Quantity">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtDescription" layoutX="567.0" layoutY="64.0" prefHeight="26.0" prefWidth="300.0" promptText="Enter a text" styleClass="input" />
+                              <Label fx:id="errorDescription" layoutX="483.0" layoutY="78.0" text="Description">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="boxCategories" layoutX="567.0" layoutY="114.0" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Category !" />
+                              <Label fx:id="errorCategory" layoutX="483.0" layoutY="128.0" text="Categories">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="boxAuthors" layoutX="567.0" layoutY="164.0" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Author !" />
+                              <Label fx:id="errorAuthors" layoutX="483.0" layoutY="178.0" text="Authors">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="boxPublishs" layoutX="567.0" layoutY="214.0" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Publishing Company !" />
+                              <Label fx:id="errorPublish" layoutX="483.0" layoutY="228.0" text="Publishs">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtUpdatedAt" disable="true" editable="false" layoutX="567.0" layoutY="264.0" prefHeight="26.0" prefWidth="300.0" styleClass="input-disabled" />
+                              <TextField fx:id="txtCreatedAt" disable="true" editable="false" layoutX="131.0" layoutY="264.0" prefHeight="26.0" prefWidth="300.0" styleClass="input-disabled" />
+                              <Button fx:id="btnSave" layoutX="29.0" layoutY="320.0" mnemonicParsing="false" onAction="#BtnSaveClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
+                              <Button fx:id="btnDelete" layoutX="142.0" layoutY="320.0" mnemonicParsing="false" onAction="#BtnDeleteClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Delete" />
+                              <Button fx:id="btnReset" layoutX="255.0" layoutY="320.0" mnemonicParsing="false" onAction="#ResetFeild" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" stylesheets="@../../../CSS/button.css" text="Reset" />
                            </children>
                            <padding>
                               <Insets bottom="20.0" left="30.0" right="20.0" top="50.0" />
