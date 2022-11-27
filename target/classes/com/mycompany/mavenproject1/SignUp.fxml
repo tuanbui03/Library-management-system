@@ -15,7 +15,7 @@
    <center>
       <AnchorPane maxHeight="800.0" maxWidth="600.0" prefHeight="800.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane layoutX="75.0" layoutY="72.0" maxHeight="792.0" maxWidth="464.0" minHeight="736.0" minWidth="464.0" prefHeight="736.0" prefWidth="464.0" style="-fx-background-color: #fff; -fx-background-radius: 15px;" AnchorPane.bottomAnchor="128.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="61.0" AnchorPane.topAnchor="72.0">
+            <Pane layoutX="75.0" layoutY="72.0" maxHeight="792.0" maxWidth="464.0" minHeight="731.0" minWidth="464.0" prefHeight="731.0" prefWidth="464.0" style="-fx-background-color: #fff; -fx-background-radius: 15px;" AnchorPane.bottomAnchor="20.0">
                <children>
                   <Text layoutX="42.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Sign Up" textAlignment="CENTER" wrappingWidth="380.87890625">
                      <font>

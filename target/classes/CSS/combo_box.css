@@ -7,33 +7,35 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Author     : PC
 */
 
-.combo-box{
+.combo-box {
     -fx-background-color: #dbdbdb;
-    color: #02030A;
+    -fx-text-fill: #02030A;
 }
 
-.combo-box .list-cell{
-    -fx-background-color: #000000;
-    -fx-border-color: #f9f7f4;
-    color: #02030A;
+.combo-box:selected {
+    -fx-border-radius: 10px 10px 0px 0px;
 }
 
-.combo-box .list-cell:hover{
-    -fx-background-color: #f9f7f4;
-    -fx-border-color: #f9f7f4;
-    color: #02030A;
+.combo-box .list-cell {
+    -fx-background-color: #dbdbdb;
+    -fx-text-fill: #02030A;
+    -fx-border-radius: 0px 0px 10px 10px;
 }
 
-.combo-box .list-cell:selected{
-    -fx-background-color: #f9f7f4;
-    -fx-border-color: #dfdddb;
-    -fx-border-width: 1;
-    color: #02030A;
+.combo-box .list-cell:hover {
+    -fx-background-color: #969696;
+    -fx-border-radius: 0px 0px 10px 10px;
 }
 
-.combo-box .list-view{
+.combo-box .list-cell:selected {
+    -fx-background-color: #dbdbdb;
+    -fx-text-fill: #02030A;
+    -fx-border-radius: 0px 0px 10px 10px;
+}
+
+.combo-box .list-view {
     -fx-background-color: #dfdddb;
-    -fx-border-color: #000000;
+    -fx-border-color: #666666;
     -fx-border-width: 0px 0px 1px 0px;
-    color: #02030A;
+    -fx-border-radius: 0px 0px 10px 10px;
 }

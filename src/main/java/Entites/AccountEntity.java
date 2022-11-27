@@ -7,7 +7,12 @@ package Entites;
 import Models.Account;
 import java.sql.*;
 import db.*;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -15,35 +20,41 @@ import java.util.ArrayList;
  */
 public class AccountEntity {
 
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet rs = null;
+    public static Connection connection = null;
+    public static PreparedStatement preparedStatement = null;
+    public static ResultSet rs = null;
 
-    
-    public ArrayList<Account> getAll() {
-        ArrayList<Account> list = new ArrayList<>();
-        String sql = "SELECT * FROM accounts";
+    public static ObservableList<Account> GetAll() {
+        ObservableList<Account> list = FXCollections.observableArrayList();
+        String sql = "SELECT accounts.*, roles.name as roleName FROM accounts JOIN roles ON accounts.roleId = roles.id WHERE accounts.status = ?";
 
         try {
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, 1);
             rs = preparedStatement.executeQuery();
-
+            int i = 1;
             while (rs.next()) {
-                Account acc = new Account(rs.getInt("id"),
-                        rs.getString("UID"),
-                        rs.getString("username"),
-                        rs.getString("password"),
-                        rs.getString("full_name"),
-                        rs.getInt("gender"),
-                        rs.getString("email"),
-                        rs.getDate("dob"),
-                        rs.getString("mobile"),
-                        rs.getInt("status"),
-                        rs.getInt("roleId"));
-
+                Account acc = new Account();
+                acc.setIndex(i);
+                acc.setId(rs.getInt("id"));
+                acc.setUID(rs.getString("UID"));
+                acc.setUsername(rs.getString("username"));
+                acc.setAvatar(rs.getString("avatar"));
+                acc.setPassword(rs.getString("password"));
+                acc.setFull_name(rs.getString("full_name"));
+                acc.setGender(rs.getInt("gender"));
+                acc.setEmail(rs.getString("email"));
+                acc.setDob(rs.getString("dob"));
+                acc.setMobile(rs.getString("mobile"));
+                acc.setStatus(rs.getInt("status"));
+                acc.setRoleId(rs.getInt("roleId"));
+                acc.setRoleName(rs.getString("roleName"));
+                acc.setCreatedAt(rs.getString("createdAt"));
+                acc.setUpdatedAt(rs.getString("updatedAt"));
                 list.add(acc);
 
+                i++;
             }
             return list;
         } catch (SQLException e) {
@@ -57,28 +68,35 @@ public class AccountEntity {
         return null;
     }
 
-    
-    public Account getOne(int id) {
-        String sql = "SELECT * FROM accounts WHERE id = ?";
+    public static Account GetAccountByUsername(String username) {
+        String sql = "SELECT accounts.*, roles.name as roleName "
+                + "FROM accounts JOIN roles ON accounts.roleId = roles.id "
+                + "WHERE accounts.username = ? AND accounts.status = ?";
 
         try {
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, username);
+            preparedStatement.setInt(2, 1);
             rs = preparedStatement.executeQuery();
 
-            if (rs.next()) {
-                Account acc = new Account(rs.getInt("id"),
-                        rs.getString("UID"),
-                        rs.getString("username"),
-                        rs.getString("password"),
-                        rs.getString("full_name"),
-                        rs.getInt("gender"),
-                        rs.getString("email"),
-                        rs.getDate("dob"),
-                        rs.getString("mobile"),
-                        rs.getInt("status"),
-                        rs.getInt("roleId"));
+            while (rs.next()) {
+                Account acc = new Account();
+
+                acc.setId(rs.getInt("id"));
+                acc.setUID(rs.getString("UID"));
+                acc.setUsername(rs.getString("username"));
+                acc.setPassword(rs.getString("password"));
+                acc.setFull_name(rs.getString("full_name"));
+                acc.setGender(rs.getInt("gender"));
+                acc.setEmail(rs.getString("email"));
+                acc.setDob(rs.getString("dob"));
+                acc.setMobile(rs.getString("mobile"));
+                acc.setStatus(rs.getInt("status"));
+                acc.setRoleId(rs.getInt("roleId"));
+                acc.setRoleName(rs.getString("roleName"));
+                acc.setCreatedAt(rs.getString("createdAt"));
+                acc.setUpdatedAt(rs.getString("updatedAt"));
 
                 return acc;
             }
@@ -93,31 +111,40 @@ public class AccountEntity {
         return null;
     }
 
-    public ArrayList<Account> search(String name) {
-        ArrayList<Account> list = new ArrayList<>();
-        String sql = "SELECT * FROM accounts WHERE username like ?";
+    public static ObservableList<Account> GetAccountByRole(int roleId) {
+        ObservableList<Account> list = FXCollections.observableArrayList();
+        String sql = "SELECT accounts.*, roles.name as roleName "
+                + "FROM accounts JOIN roles ON accounts.roleId = roles.id "
+                + "WHERE accounts.roleId = ?";
 
         try {
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, "%" + name + "%");
+            preparedStatement.setInt(1, roleId);
             rs = preparedStatement.executeQuery();
 
+            int i = 1;
             while (rs.next()) {
-                Account acc = new Account(rs.getInt("id"),
-                        rs.getString("UID"),
-                        rs.getString("username"),
-                        rs.getString("password"),
-                        rs.getString("full_name"),
-                        rs.getInt("gender"),
-                        rs.getString("email"),
-                        rs.getDate("dob"),
-                        rs.getString("mobile"),
-                        rs.getInt("status"),
-                        rs.getInt("roleId"));
-
+                Account acc = new Account();
+                acc.setIndex(i);
+                acc.setId(rs.getInt("id"));
+                acc.setUID(rs.getString("UID"));
+                acc.setUsername(rs.getString("username"));
+                acc.setPassword(rs.getString("password"));
+                acc.setFull_name(rs.getString("full_name"));
+                acc.setGender(rs.getInt("gender"));
+                acc.setEmail(rs.getString("email"));
+                acc.setDob(rs.getString("dob"));
+                acc.setMobile(rs.getString("mobile"));
+                acc.setStatus(rs.getInt("status"));
+                acc.setRoleId(rs.getInt("roleId"));
+                acc.setRoleName(rs.getString("roleName"));
+                acc.setCreatedAt(rs.getString("createdAt"));
+                acc.setUpdatedAt(rs.getString("updatedAt"));
                 list.add(acc);
+                i++;
             }
+
             return list;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -130,27 +157,81 @@ public class AccountEntity {
         return null;
     }
 
-    public boolean insert(Account acc) {
-        boolean flag = false;
-        String insertOne = "INSERT INTO accounts (UID, username, password, full_name, gender, email, dob, mobile, status, roleId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static ObservableList<Account> SearchByUID(String UID) {
+        ObservableList<Account> list = FXCollections.observableArrayList();
+        String sql = "SELECT accounts.*, roles.name as roleName FROM accounts JOIN roles ON accounts.roleId = roles.id WHERE accounts.UID like ? AND accounts.status = ?";
 
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, "%" + UID + "%");
+            preparedStatement.setInt(2, 1);
+            rs = preparedStatement.executeQuery();
+
+            int i = 1;
+            while (rs.next()) {
+                Account acc = new Account();
+                acc.setIndex(i);
+                acc.setId(rs.getInt("id"));
+                acc.setUID(rs.getString("UID"));
+                acc.setUsername(rs.getString("username"));
+                acc.setPassword(rs.getString("password"));
+                acc.setFull_name(rs.getString("full_name"));
+                acc.setGender(rs.getInt("gender"));
+                acc.setEmail(rs.getString("email"));
+                acc.setDob(rs.getString("dob"));
+                acc.setMobile(rs.getString("mobile"));
+                acc.setStatus(rs.getInt("status"));
+                acc.setRoleId(rs.getInt("roleId"));
+                acc.setRoleName(rs.getString("roleName"));
+                acc.setCreatedAt(rs.getString("createdAt"));
+                acc.setUpdatedAt(rs.getString("updatedAt"));
+                list.add(acc);
+                i++;
+            }
+
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+
+        return null;
+    }
+
+    public static boolean Add(Account acc) {
+        String insertOne = "INSERT INTO accounts (UID, username, avatar, password, full_name, gender, email, dob, mobile, status, roleId, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+//      set time at present with accuracy approximately is millis
+        long milis = System.currentTimeMillis();
+        Date preDate = new Date(milis);
+        Date formatDob = convertStringToDate(acc.getDob());
         try {
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareStatement(insertOne);
+
             preparedStatement.setString(1, acc.getUID());
             preparedStatement.setString(2, acc.getUsername());
-            preparedStatement.setString(3, acc.getPassword());
-            preparedStatement.setString(4, acc.getFull_name());
-            preparedStatement.setInt(5, acc.getGender());
-            preparedStatement.setString(6, acc.getEmail());
-            preparedStatement.setDate(7, acc.getDob());
-            preparedStatement.setString(8, acc.getMobile());
-            preparedStatement.setInt(9, acc.getStatus());
-            preparedStatement.setInt(10, acc.getRoleId());
+            preparedStatement.setString(3, acc.getAvatar());
+            preparedStatement.setString(4, acc.getPassword());
+            preparedStatement.setString(5, acc.getFull_name());
+            preparedStatement.setInt(6, acc.getGender());
+            preparedStatement.setString(7, acc.getEmail());
+            preparedStatement.setDate(8, formatDob);
+            preparedStatement.setString(9, acc.getMobile());
+            preparedStatement.setInt(10, acc.getStatus());
+            preparedStatement.setInt(11, acc.getRoleId());
+            preparedStatement.setDate(12, preDate);
+            preparedStatement.setDate(13, preDate);
 
             if (preparedStatement.executeUpdate() > 0) {
-                flag = true;
+                return true;
+            } else {
+                return false;
             }
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -159,60 +240,59 @@ public class AccountEntity {
             JDBCConnect.closeConnection(connection);
         }
 
-        return flag;
+        return false;
     }
 
-
-    public boolean update(Account acc) {
+    public static boolean Update(Account acc) {
         boolean flag = false;
         AccountEntity am = new AccountEntity();
-        String query = "UPDATE accounts SET UID = ?, username = ?, password = ?, full_name = ?, gender = ?, email = ?, dob = ?, mobile = ?, status = ?, roleId = ?  WHERE id = ?";
+        String query = "UPDATE accounts SET username = ?, password = ?, full_name = ?, gender = ?, email = ?, dob = ?, mobile = ?, roleId = ?, updatedAt = ?  WHERE UID = ?";
 
-        try {
-            connection = JDBCConnect.getJDBCConnection();
-
-            if (am.getOne(acc.getId()) == null) {
-                System.out.println("This account doesn't exists!");
-            } else {
-                preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, acc.getUID());
-                preparedStatement.setString(2, acc.getUsername());
-                preparedStatement.setString(3, acc.getPassword());
-                preparedStatement.setString(4, acc.getFull_name());
-                preparedStatement.setInt(5, acc.getGender());
-                preparedStatement.setString(6, acc.getEmail());
-                preparedStatement.setDate(7, acc.getDob());
-                preparedStatement.setString(8, acc.getMobile());
-                preparedStatement.setInt(9, acc.getStatus());
-                preparedStatement.setInt(10, acc.getRoleId());
-
-                if (preparedStatement.executeUpdate() > 0) {
-                    flag = true;
-                }
-
-                return flag;
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            JDBCConnect.closeResultSet(rs);
-            JDBCConnect.closePreparedStatement(preparedStatement);
-            JDBCConnect.closeConnection(connection);
-        }
-
-        return flag;
-    }
-
-
-    public boolean delete(int id) {
-        boolean flag = false;
-
-        String query = "DELETE FROM accounts WHERE id = ?";
+//      set time at present with accuracy approximately is millis
+        long milis = System.currentTimeMillis();
+        java.sql.Date preDate = new java.sql.Date(milis);
+        Date formatDob = convertStringToDate(acc.getDob());
 
         try {
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, acc.getUsername());
+            preparedStatement.setString(2, acc.getPassword());
+            preparedStatement.setString(3, acc.getFull_name());
+            preparedStatement.setInt(4, acc.getGender());
+            preparedStatement.setString(5, acc.getEmail());
+            preparedStatement.setDate(6, formatDob);
+            preparedStatement.setString(7, acc.getMobile());
+            preparedStatement.setInt(8, acc.getRoleId());
+            preparedStatement.setDate(9, preDate);
+            preparedStatement.setString(10, acc.getUID());
+
+            if (preparedStatement.executeUpdate() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+
+        return false;
+    }
+
+    public static boolean Delete(String UID) {
+        boolean flag = false;
+
+        String query = "UPDATE accounts SET status = ? WHERE UID = ?";
+
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, 0);
+            preparedStatement.setString(2, UID);
 
             if (preparedStatement.executeUpdate() > 0) {
                 flag = true;
@@ -227,7 +307,18 @@ public class AccountEntity {
         return flag;
     }
 
+    private static Date convertStringToDate(String date) {
+        String[] dateArray = date.split("-");
+        int year = Integer.parseInt(dateArray[0]);
+        int month = Integer.parseInt(dateArray[1]);
+        int day = Integer.parseInt(dateArray[2]);
+        LocalDate localdate = LocalDate.of(year, month, day);
+        Date newDate = Date.valueOf(localdate);
+
+        return newDate;
+    }
+
     public static void main(String[] args) {
-        System.out.println(new AccountEntity().getOne(1));
+
     }
 }

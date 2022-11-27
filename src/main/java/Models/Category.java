@@ -6,7 +6,9 @@ package Models;
 
 import java.sql.Date;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.property.IntegerProperty;
 
 /**
  *
@@ -14,19 +16,25 @@ import javafx.beans.property.StringProperty;
  */
 public class Category {
 
-    private final StringProperty id;
+    private final IntegerProperty index;
+    private final IntegerProperty id;
     private final StringProperty name;
     private final StringProperty createdAt;
     private final StringProperty updatedAt;
 
     public Category() {
-        id = new SimpleStringProperty(this, "id");
+        index = new SimpleIntegerProperty(this, "index");
+        id = new SimpleIntegerProperty(this, "id");
         name = new SimpleStringProperty(this, "name");
         createdAt = new SimpleStringProperty(this, "createdAt");
         updatedAt = new SimpleStringProperty(this, "updatedAt");
     }
 
-    public StringProperty idProperty() {
+    public IntegerProperty indexProperty() {
+        return index;
+    }
+
+    public IntegerProperty idProperty() {
         return id;
     }
 
@@ -42,7 +50,11 @@ public class Category {
         return updatedAt;
     }
 
-    public String getId() {
+    public int getIndex() {
+        return index.get();
+    }
+
+    public int getId() {
         return id.get();
     }
 
@@ -57,21 +69,29 @@ public class Category {
     public String getUpdatedAt() {
         return updatedAt.get();
     }
-    
-    public void setId(String newId) {
+
+    public void setIndex(int newIndex) {
+        index.set(newIndex);
+    }
+
+    public void setId(int newId) {
         id.set(newId);
     }
-    
+
     public void setName(String newName) {
         name.set(newName);
     }
-    
+
     public void setCreatedAt(String newCreatedAt) {
         createdAt.set(newCreatedAt);
     }
-    
+
     public void setUpdatedAt(String newUpdatedAt) {
         updatedAt.set(newUpdatedAt);
     }
-    
+
+    @Override
+    public String toString() {
+        return "Category{" + "index=" + index.get() + ", id=" + id.get() + ", name=" + name.get() + ", createdAt=" + createdAt.get() + ", updatedAt=" + updatedAt.get() + '}';
+    }
 }

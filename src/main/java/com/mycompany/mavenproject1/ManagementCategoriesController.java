@@ -6,15 +6,25 @@ package com.mycompany.mavenproject1;
 
 import Models.Category;
 import Entites.CategoryEntity;
+import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -33,8 +43,6 @@ public class ManagementCategoriesController implements Initializable {
     private Label errorName;
     @FXML
     private Button btnDashboard;
-    @FXML
-    private Button btnBorrowing;
     @FXML
     private Button btnManageBooks;
     @FXML
@@ -64,15 +72,17 @@ public class ManagementCategoriesController implements Initializable {
     @FXML
     private TextField txtCreatedAt;
     @FXML
-    private TableView<?> table;
+    private TableView<Category> table;
     @FXML
-    private TableColumn<?, ?> colIndex;
+    private TableColumn<Category, Integer> colIndex;
     @FXML
-    private TableColumn<?, ?> colName;
+    private TableColumn<Category, String> colId;
     @FXML
-    private TableColumn<?, ?> colCreatedAt;
+    private TableColumn<Category, String> colName;
     @FXML
-    private TableColumn<?, ?> colUpdatedAt;
+    private TableColumn<Category, String> colCreatedAt;
+    @FXML
+    private TableColumn<Category, String> colUpdatedAt;
     @FXML
     private Button btnRefesh;
     @FXML
@@ -80,38 +90,217 @@ public class ManagementCategoriesController implements Initializable {
     @FXML
     private Button btnSearch;
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        errorName.setVisible(false);
-        btnSave.setDisable(true);
+    int myIndex;
+    int id;
+
+    @FXML
+    private void switchToAdminDashboard() throws IOException {
+        App.setRoot("AdminDashboard");
+    }
+
+    @FXML
+    private void switchToManagementAuthors() throws IOException {
+        App.setRoot("ManagementAuthors");
+    }
+
+    @FXML
+    private void switchToManagementBooks() throws IOException {
+        App.setRoot("ManagementBooks");
+    }
+
+    @FXML
+    private void switchToManagementCategories() throws IOException {
+        App.setRoot("ManagementCategories");
+    }
+
+    @FXML
+    private void switchToManagementPublishing() throws IOException {
+        App.setRoot("ManagementPublishing");
+    }
+
+    @FXML
+    private void switchToManagementAccounts() throws IOException {
+        App.setRoot("ManagementAccounts");
+    }
+
+    @FXML
+    private void SignOut() throws Exception {
+        App.setRoot("SignIn");
+    }
+
+    private void initClock() {
+
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            labelClock.setText(LocalDateTime.now().format(formatter));
+        }), new KeyFrame(Duration.seconds(1)));
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
+    }
+
+    public void table() {
+        ObservableList<Category> categories = CategoryEntity.GetAll();
+
+        table.setItems(categories);
+        colIndex.setCellValueFactory(f -> f.getValue().indexProperty().asObject());
+        colId.setCellValueFactory(f -> f.getValue().idProperty().asString());
+        colName.setCellValueFactory(f -> f.getValue().nameProperty());
+        colCreatedAt.setCellValueFactory(f -> f.getValue().createdAtProperty());
+        colUpdatedAt.setCellValueFactory(f -> f.getValue().updatedAtProperty());
+
+        table.setRowFactory(tv -> {
+            TableRow<Category> myRow = new TableRow<>();
+            myRow.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && (!myRow.isEmpty())) {
+                    myIndex = table.getSelectionModel().getSelectedIndex();
+                    txtId.setText(String.valueOf(table.getItems().get(myIndex).getId()));
+                    txtName.setText(table.getItems().get(myIndex).getName());
+                    txtCreatedAt.setText(table.getItems().get(myIndex).getCreatedAt());
+                    txtUpdatedAt.setText(table.getItems().get(myIndex).getUpdatedAt());
+
+                    CheckId();
+                }
+            });
+            return myRow;
+        });
+    }
+
+    public void BtnSearchClick() {
+//      get value at search text feild
+        String search = txtSearch.getText();
+//      call ObservableList with name is categories and value from function search in CategoryEntity
+        ObservableList<Category> categories = CategoryEntity.Search(search);
+
+//      set item with type Category with list type is ObservableList and ObservableList's name is categories
+        table.setItems(categories);
+//      set value for col
+        colIndex.setCellValueFactory(f -> f.getValue().indexProperty().asObject());
+        colId.setCellValueFactory(f -> f.getValue().idProperty().asString());
+        colName.setCellValueFactory(f -> f.getValue().nameProperty());
+        colCreatedAt.setCellValueFactory(f -> f.getValue().createdAtProperty());
+        colUpdatedAt.setCellValueFactory(f -> f.getValue().updatedAtProperty());
+
+//      add event listener clicked each row
+        table.setRowFactory(tv -> {
+            TableRow<Category> myRow = new TableRow<>();
+            myRow.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && (!myRow.isEmpty())) {
+                    myIndex = table.getSelectionModel().getSelectedIndex();
+                    txtId.setText(String.valueOf(table.getItems().get(myIndex).getId()));
+                    txtName.setText(table.getItems().get(myIndex).getName());
+                    txtCreatedAt.setText(table.getItems().get(myIndex).getCreatedAt());
+                    txtUpdatedAt.setText(table.getItems().get(myIndex).getUpdatedAt());
+                }
+            });
+            return myRow;
+        });
     }
 
     public void BtnSaveClick() {
-//      Call entity and model of category
-        CategoryEntity ce = new CategoryEntity();
-        Category category = new Category();
+
 //      Uppercase first char of each word
         FomartInputName();
+
 //      Call fx:id at fxml(id feild and name feild)
         String inpId = txtId.getText();
         String inpName = txtName.getText();
 
-//        inpId is empty we create new categories else we update this
+//      set entity
+        Category category = new Category();
+        category.setName(inpName);
 
+//      Call Alert box
+        Alert alert = new Alert(Alert.AlertType.NONE);
+//      inpId is empty we create new categories else we update this
+        if (inpId.isEmpty()) {
+
+//          if category's name doesn't exists, add this category else show message "This Category exists!"
+            if (CategoryEntity.GetCategoryByName(inpName) == null) {
+
+//              if add success, show a box with message "Added Successfully!" else show message "Added Fail!"
+                if (CategoryEntity.Add(category)) {
+//              set titile, header, content for alert box
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Categories Manager");
+                    alert.setContentText("Added Successfully!");
+                    alert.showAndWait();
+                } else {
+//              set titile, header, content for alert box
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Categories Manager");
+                    alert.setContentText("Added Fail!");
+                    alert.showAndWait();
+                }
+            } else {
+//              set titile, header, content for alert box
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Test Connection");
+                alert.setHeaderText("Categories Manager");
+                alert.setContentText("This Category exists!");
+                alert.showAndWait();
+            }
+
+        } else {
+//          set id for object category
+            category.setId(Integer.parseInt(inpId));
+
+//          if Update success, show a box with message "Updated Successfully!" else show message "Updated Fail!"
+            if (CategoryEntity.Update(category)) {
+
+//              set titile, header, content for alert box
+                alert.setAlertType(Alert.AlertType.INFORMATION);
+                alert.setTitle("Test Connection");
+                alert.setHeaderText("Categories Manager");
+                alert.setContentText("Updated Successfully!");
+                alert.showAndWait();
+
+            } else {
+
+//              set titile, header, content for alert box
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Test Connection");
+                alert.setHeaderText("Categories Manager");
+                alert.setContentText("Updated Fail!");
+                alert.showAndWait();
+
+            }
+
+        }
+
+        RefeshData();
     }
 
     public void BtnDeleteClick() {
-//      Call entity and model of category
-        CategoryEntity ce = new CategoryEntity();
 //      Call id at id feild
         int id = Integer.parseInt(txtId.getText());
 
-//      delete data for database, if success show message "Delete this Category successfully !" else show message "Delete this Category faild !"
+//      Call Alert box
+        Alert alert = new Alert(Alert.AlertType.NONE);
 
+//      delete data for database, if success show message "Deleted successfully !" else show message "Delete Fail !"
+        if (CategoryEntity.Delete(id)) {
+
+//          set titile, header, content for alert box
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setTitle("Test Connection");
+            alert.setHeaderText("Categories Manager");
+            alert.setContentText("Deleted Successfully!");
+            alert.showAndWait();
+
+        } else {
+
+//          set titile, header, content for alert box
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Test Connection");
+            alert.setHeaderText("Categories Manager");
+            alert.setContentText("Deleted Fail!");
+            alert.showAndWait();
+
+        }
+
+        RefeshData();
     }
 
     public void CheckInputName() {
@@ -123,8 +312,8 @@ public class ManagementCategoriesController implements Initializable {
             errorName.setVisible(false);
             btnSave.setDisable(false);
         }
-        
-        if(txtName.getText().length() > 64){
+//      if txtName have length() > 64 show alert box and cannot click at button Save
+        if (txtName.getText().length() > 64) {
             btnSave.setDisable(true);
             Locale.setDefault(new Locale("en", "English"));
 
@@ -151,20 +340,41 @@ public class ManagementCategoriesController implements Initializable {
 
         txtName.setText(newInpName);
     }
-    
-    public void RefeshData(){
-        txtId.setText("");
-        txtName.setText("");
-        txtCreatedAt.setText("");
-        txtUpdatedAt.setText("");
-        
-        
+
+    public void RefeshData() {
+        ResetFeild();
+        table();
     }
-    
-    public void ResetFeild(){
+
+    public void ResetFeild() {
         txtId.setText("");
         txtName.setText("");
         txtCreatedAt.setText("");
         txtUpdatedAt.setText("");
+        errorName.setVisible(false);
+        CheckId();
+    }
+
+    public void CheckId() {
+        String id = txtId.getText();
+
+        if (id.isEmpty()) {
+            btnDelete.setDisable(true);
+        } else {
+            btnDelete.setDisable(false);
+        }
+    }
+
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+        initClock();
+        errorName.setVisible(false);
+        btnSave.setDisable(true);
+        CheckId();
+        table();
     }
 }

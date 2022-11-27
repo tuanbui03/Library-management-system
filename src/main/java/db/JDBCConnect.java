@@ -74,6 +74,6 @@ public class JDBCConnect {
     }
     
     public static void main(String[] args) {
-        JDBCConnect.getJDBCConnection();
+        System.out.println(JDBCConnect.getJDBCConnection());
     }
 }

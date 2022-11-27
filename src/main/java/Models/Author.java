@@ -5,67 +5,90 @@
 package Models;
 
 import java.sql.Date;
+import javafx.beans.property.*;
 
 /**
  *
  * @author PC
  */
 public class Author {
-    private int id;
-    private String name;
-    private Date dob;
-    private String sign_name;
+
+    private static IntegerProperty index;
+    private static IntegerProperty id;
+    private static StringProperty name;
+    private static StringProperty dob;
+    private static StringProperty sign_name;
+    private static StringProperty createdAt;
+    private static StringProperty updatedAt;
 
     public Author() {
+        index = new SimpleIntegerProperty(this, "index");
+        id = new SimpleIntegerProperty(this, "id");
+        name = new SimpleStringProperty(this, "name");
+        dob = new SimpleStringProperty(this, "dob");
+        sign_name = new SimpleStringProperty(this, "sign_name");
+        createdAt = new SimpleStringProperty(this, "createdAt");
+        updatedAt = new SimpleStringProperty(this, "updatedAt");
     }
 
-    public Author(int id, String name, Date dob, String sign_name) {
-        this.id = id;
-        this.name = name;
-        this.dob = dob;
-        this.sign_name = sign_name;
+    public int getIndex() {
+        return index.get();
     }
 
-    public Author(String name, Date dob, String sign_name) {
-        this.name = name;
-        this.dob = dob;
-        this.sign_name = sign_name;
+    public void setIndex(int index) {
+        this.index.set(index);
     }
-    
+
     public int getId() {
-        return id;
+        return id.get();
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id.set(id);
     }
 
     public String getName() {
-        return name;
+        return name.get();
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name.set(name);
     }
 
-    public Date getDob() {
-        return dob;
+    public String getDob() {
+        return dob.get();
     }
 
-    public void setDob(Date dob) {
-        this.dob = dob;
+    public void setDob(String dob) {
+        this.dob.set(dob);
     }
 
     public String getSign_name() {
-        return sign_name;
+        return sign_name.get();
     }
 
     public void setSign_name(String sign_name) {
-        this.sign_name = sign_name;
+        this.sign_name.set(sign_name);
+    }
+
+    public String getCreatedAt() {
+        return createdAt.get();
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt.set(createdAt);
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt.get();
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt.set(updatedAt);
     }
 
     @Override
     public String toString() {
-        return "Author{" + "id=" + id + ", name=" + name + ", dob=" + dob + ", sign_name=" + sign_name + '}';
+        return this.name.get();
     }
 }

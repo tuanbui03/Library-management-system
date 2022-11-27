@@ -10,19 +10,23 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.ManagementCategoriesController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="256.0" style="-fx-background-color: #EBE8F9;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="labelClock" text="Local Date Time" textFill="#171717">
+            <Label fx:id="labelClock" alignment="TOP_CENTER" prefHeight="30.0" prefWidth="169.0" text="Local Date Time" textFill="#171717">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -30,12 +34,15 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </Label>
-            <Circle fx:id="avatar" fill="WHITE" radius="80.0" stroke="BLACK" strokeType="INSIDE" styleClass="avatar">
+            <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" styleClass="avatar">
                <VBox.margin>
                   <Insets bottom="20.0" top="30.0" />
                </VBox.margin>
-            </Circle>
-            <Label fx:id="labelUsername" text="Jimmy Fallon" textFill="#171717">
+               <image>
+                  <Image url="@../../../Images/icon_avatar_empty.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="sessionUsername1" text="Jimmy Fallon" textFill="#171717">
                <VBox.margin>
                   <Insets bottom="20.0" />
                </VBox.margin>
@@ -43,7 +50,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="btnDashboard" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Dashboard">
+            <Button fx:id="btnDashboard1" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#switchToAdminDashboard" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Dashboard">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -53,94 +60,227 @@
                <padding>
                   <Insets left="50.0" />
                </padding>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/dashboard_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
-            <Button fx:id="btnBorrowing" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Borrowing" textFill="#171717">
+            <Button fx:id="btnManageBooks1" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementBooks" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Books">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/book_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnManageAuthors1" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementAuthors" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Authors">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <padding>
                   <Insets left="50.0" />
                </padding>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/author_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
-            <Button fx:id="btnManageBooks" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Books" textFill="#171717">
+            <Button fx:id="btnManageCategories1" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementCategories" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Categories">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <padding>
                   <Insets left="50.0" />
                </padding>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/category_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
-            <Button fx:id="btnManageAuthors" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Authors" textFill="#171717">
+            <Button fx:id="btnManagePublishing1" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementPublishing" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Publishing">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/publish_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnManageAccounts1" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementAccounts" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Accounts">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <padding>
                   <Insets left="50.0" />
                </padding>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/user_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
-            <Button fx:id="btnManageCategories" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Categories" textFill="#171717">
+            <Button fx:id="btnSignout1" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#SignOut" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Sign Out">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <padding>
                   <Insets left="50.0" />
                </padding>
-            </Button>
-            <Button fx:id="btnManagePublishing" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Publishing" textFill="#171717">
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="btnManageAccounts" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Accounts" textFill="#171717">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-            </Button>
-            <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Sign Out">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/sign_out_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </children>
       </VBox>
-      <StackPane layoutX="256.0" prefHeight="800.0" prefWidth="924.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="256.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <StackPane layoutX="256.0" prefHeight="800.0" prefWidth="924.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane fx:id="pnlOverview">
                <children>
-                  <Label layoutX="45.0" layoutY="18.0" text="MANAGEMENT CATEGORIES">
+                  <Label alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" text="MANAGEMENT CATEGORIES">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <BorderPane layoutY="75.0" prefHeight="726.0" prefWidth="924.0">
-                     <bottom>
-                        <Pane prefHeight="401.0" prefWidth="924.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <TableView fx:id="table" layoutX="7.0" layoutY="49.0" prefHeight="350.0" prefWidth="910.0" stylesheets="@../../../CSS/table.css">
-                                 <columns>
-                                    <TableColumn fx:id="colIndex" prefWidth="61.0" text="No." />
-                                    <TableColumn fx:id="colName" maxWidth="358.0" minWidth="63.0" prefWidth="340.0" text="NAME" />
-                                    <TableColumn fx:id="colCreatedAt" minWidth="0.0" prefWidth="248.0" text="Created At" />
-                                    <TableColumn fx:id="colUpdatedAt" minWidth="112.0" prefWidth="248.0" text="Updated At" />
-                                 </columns>
-                              </TableView>
-                              <Button fx:id="btnRefesh" layoutX="16.0" layoutY="7.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Refesh" />
-                              <TextField fx:id="txtSearch" layoutX="643.0" layoutY="10.0" prefHeight="30.0" prefWidth="200.0" promptText="Search" style="-fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-background-radius: 2em;" />
-                              <Button fx:id="btnSearch" layoutX="855.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="50.0" styleClass="button_primary" text="Find" />
-                           </children>
-                        </Pane>
-                     </bottom>
+                  <BorderPane layoutY="50.0" prefHeight="750.0" prefWidth="884.0">
                      <top>
-                        <Pane prefHeight="320.0" prefWidth="910.0" style="-fx-background-color: #f9f7f4; -fx-background-radius: 15px;" BorderPane.alignment="CENTER">
+                        <Pane prefHeight="310.0" prefWidth="994.0" style="-fx-background-color: #f9f7f4; -fx-background-radius: 15px;" BorderPane.alignment="CENTER">
                            <children>
                               <Separator layoutX="37.0" prefHeight="0.0" prefWidth="800.0" />
                               <Label layoutX="37.0" layoutY="42.0" text="ID">
@@ -156,7 +296,7 @@
                               <TextField fx:id="txtName" layoutX="131.0" layoutY="87.0" onAction="#FomartInputName" onKeyReleased="#CheckInputName" prefHeight="26.0" prefWidth="300.0" promptText="Enter a name" />
                               <Button fx:id="btnSave" layoutX="29.0" layoutY="260.0" mnemonicParsing="false" onAction="#BtnSaveClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
                               <TextField fx:id="txtId" disable="true" editable="false" layoutX="131.0" layoutY="37.0" prefHeight="26.0" prefWidth="300.0" />
-                              <Button fx:id="btnDelete" layoutX="142.0" layoutY="260.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Delete" />
+                              <Button fx:id="btnDelete" layoutX="142.0" layoutY="260.0" mnemonicParsing="false" onAction="#BtnDeleteClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Delete" />
                               <Button fx:id="btnReset" layoutX="255.0" layoutY="260.0" mnemonicParsing="false" onAction="#ResetFeild" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" stylesheets="@../../../CSS/button.css" text="Reset" />
                               <Label layoutX="37.0" layoutY="192.0" text="Updated At">
                                  <font>
@@ -173,7 +313,7 @@
                               <Label fx:id="errorName" layoutX="131.0" layoutY="113.0" text="Please enter a name !">
                                  <styleClass>
                                     <String fx:value="error" />
-                                    <String fx:value="hide" />
+                                    <String fx:value="hidden" />
                                  </styleClass>
                                  <font>
                                     <Font size="13.0" />
@@ -184,12 +324,36 @@
                               <Insets bottom="20.0" left="30.0" right="20.0" top="50.0" />
                            </padding>
                            <BorderPane.margin>
-                              <Insets left="10.0" right="10.0" />
+                              <Insets />
                            </BorderPane.margin>
                         </Pane>
                      </top>
+                     <bottom>
+                        <Pane prefHeight="420.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <TableView fx:id="table" layoutX="7.0" layoutY="49.0" prefHeight="360.0" prefWidth="873.0" stylesheets="@../../../CSS/table.css" tableMenuButtonVisible="true">
+                                 <columns>
+                                    <TableColumn fx:id="colIndex" prefWidth="60.0" text="No." />
+                                    <TableColumn fx:id="colId" prefWidth="88.0" text="CAT_ID" visible="false" />
+                                    <TableColumn fx:id="colName" maxWidth="358.0" minWidth="63.0" prefWidth="250.0" text="NAME" />
+                                    <TableColumn fx:id="colCreatedAt" minWidth="0.0" prefWidth="250.0" text="Created At" />
+                                    <TableColumn fx:id="colUpdatedAt" minWidth="112.0" prefWidth="250.0" text="Updated At" />
+                                 </columns>
+                              </TableView>
+                              <Button fx:id="btnRefesh" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#RefeshData" prefHeight="30.0" prefWidth="100.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Refesh" />
+                              <TextField fx:id="txtSearch" layoutX="600.0" layoutY="7.0" onKeyReleased="#BtnSearchClick" prefHeight="30.0" prefWidth="200.0" promptText="Search a name" style="-fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-background-radius: 2em;" />
+                              <Button fx:id="btnSearch" layoutX="812.0" layoutY="7.0" mnemonicParsing="false" onAction="#BtnSearchClick" prefHeight="30.0" prefWidth="50.0" styleClass="button_primary" text="Find" />
+                           </children>
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+                        </Pane>
+                     </bottom>
                   </BorderPane>
                </children>
+               <StackPane.margin>
+                  <Insets left="20.0" right="20.0" />
+               </StackPane.margin>
             </Pane>
          </children>
       </StackPane>

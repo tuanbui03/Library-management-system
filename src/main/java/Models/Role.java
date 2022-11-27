@@ -4,41 +4,51 @@
  */
 package Models;
 
+import java.sql.Date;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.IntegerProperty;
+
 /**
  *
  * @author PC
  */
 public class Role {
-    private int id;
-    private String name;
+    private final IntegerProperty id;
+    private final StringProperty name;
 
     public Role() {
+        id = new SimpleIntegerProperty(this, "id");
+        name = new SimpleStringProperty(this, "name");
     }
 
-    public Role(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public int getId() {
+    public IntegerProperty idProperty() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
+    public StringProperty nameProperty() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getId() {
+        return id.get();
+    }
+
+    public String getName() {
+        return name.get();
+    }
+
+    public void setId(int newId) {
+        id.set(newId);
+    }
+
+    public void setName(String newName) {
+        name.set(newName);
     }
 
     @Override
     public String toString() {
-        return "Role{" + "id=" + id + ", name=" + name + '}';
+        return name.get();
     }
-    
 }

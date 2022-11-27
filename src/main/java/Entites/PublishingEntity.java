@@ -4,10 +4,16 @@
  */
 package Entites;
 
+import static Entites.PublishingEntity.connection;
+import static Entites.PublishingEntity.preparedStatement;
+import static Entites.PublishingEntity.rs;
 import Models.Publishing;
 import java.sql.*;
 import db.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -15,173 +21,182 @@ import java.util.ArrayList;
  */
 public class PublishingEntity {
 
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet rs = null;
+    public static Connection connection = null;
+    public static PreparedStatement preparedStatement = null;
+    public static ResultSet rs = null;
 
-    public ArrayList<Publishing> getAll() {
-//      Call array list with type is Publishing
-        ArrayList<Publishing> list = new ArrayList<>();
-//      Query SELECT in SQL
-        String query = "SELECT * FROM publishing";
+    public static ObservableList<Publishing> GetAll() {
+        ObservableList<Publishing> publishing = FXCollections.observableArrayList();
 
         try {
-//          Connect to database and execute query
             connection = JDBCConnect.getJDBCConnection();
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = connection.prepareCall("Select * from publishing");
             rs = preparedStatement.executeQuery();
 
-//          Call value in databse and set for list Publishing
-            while (rs.next()) {
-                Publishing publishing = new Publishing(rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("address"),
-                        rs.getDate("co_year"));
+            for (int i = 1; rs.next(); i++) {
+                Publishing p = new Publishing();
 
-                list.add(publishing);
+                p.setIndex(i);
+                p.setId(rs.getInt("id"));
+                p.setName(rs.getString("name"));
+                p.setAddress(rs.getString("address"));
+                p.setCoyear(rs.getString("co_year"));
+                p.setCreatedAt(rs.getString("createdAt"));
+                p.setUpdatedAt(rs.getString("updatedAt"));
+
+                publishing.add(p);
             }
 
-            return list;
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            return publishing;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         } finally {
 //          Close databse at end
             JDBCConnect.closeResultSet(rs);
             JDBCConnect.closePreparedStatement(preparedStatement);
             JDBCConnect.closeConnection(connection);
         }
-
         return null;
     }
 
-    public Publishing getOne(int id) {
-//      Query select in database with hidden value "?"
-        String query = "SELECT * FROM publishing where id = ?";
+    public static ObservableList<Publishing> Search(String search) {
+        ObservableList<Publishing> publishing = FXCollections.observableArrayList();
 
         try {
-//            Connect to database, set hidden value and execute query
+//          connect to database and execute query with hidden value
             connection = JDBCConnect.getJDBCConnection();
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, id);
+            preparedStatement = connection.prepareCall("Select * from publishing WHERE name like ?");
+//          set hidden value in query
+            preparedStatement.setString(1, "%" + search + "%");
             rs = preparedStatement.executeQuery();
 
-//          if id exists in database: set value in Publishing of Models else print in console: "This publishing doesn't exists!"
-            if (rs.next()) {
-                Publishing publishing = new Publishing(rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("address"),
-                        rs.getDate("bo_year"));
+//          set a Publishing, add and return ObservableList with name is publishing
+            for (int i = 1; rs.next(); i++) {
+                Publishing p = new Publishing();
 
-                return publishing;
-            } else {
-                System.out.println("This publishing doesn't exists!");
+                p.setIndex(i);
+                p.setId(rs.getInt("id"));
+                p.setName(rs.getString("name"));
+                p.setAddress(rs.getString("address"));
+                p.setCoyear(rs.getString("co_year"));
+                p.setCreatedAt(rs.getString("createdAt"));
+                p.setUpdatedAt(rs.getString("updatedAt"));
+
+                publishing.add(p);
             }
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            return publishing;
+        } catch (SQLException ex) {
+//          show message in console screen when wrong at query
+            System.out.println(ex.getMessage());
         } finally {
-//          Close database at end
+//          Close databse at end
             JDBCConnect.closeResultSet(rs);
             JDBCConnect.closePreparedStatement(preparedStatement);
             JDBCConnect.closeConnection(connection);
         }
-
         return null;
     }
 
-    public boolean insert(Publishing obj) {
-        boolean flag = false;
-//      Query insert in database with hidden value
-        String query = "INSERT INTO publishing (name, address, co_year) VALUES (?)";
+    public static boolean Add(Publishing obj) {
+        String sql = "Insert into publishing (name, address, co_year, createdAt, updatedAt) values(?, ?, ?, ?, ?)";
+//      set time at present with accuracy approximately is millis
+        long milis = System.currentTimeMillis();
+        Date preDate = new Date(milis);
 
         try {
-//          Connect to database and set hidden value
+//          connect to database and execute query with hidden value
             connection = JDBCConnect.getJDBCConnection();
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = connection.prepareCall(sql);
+//          set hidden value in query
             preparedStatement.setString(1, obj.getName());
-            preparedStatement.setString(1, obj.getAddress());
-            preparedStatement.setDate(1, obj.getCo_year());
+            preparedStatement.setString(2, obj.getAddress());
+            preparedStatement.setString(3, obj.getCoyear());
+            preparedStatement.setDate(4, preDate);
+            preparedStatement.setDate(5, preDate);
 
-//          Execute Query, if insert successfull set flag equal true
+//          if add sucess reset all feild and reset table view, all feild else show message fail
             if (preparedStatement.executeUpdate() > 0) {
-                flag = true;
-            }
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-//          Close database at end
-            JDBCConnect.closeResultSet(rs);
-            JDBCConnect.closePreparedStatement(preparedStatement);
-            JDBCConnect.closeConnection(connection);
-        }
+                System.out.println("Add successfully !");
 
-        return flag;
-    }
-
-    public boolean update(Publishing obj) {
-        boolean flag = false;
-        PublishingEntity pe = new PublishingEntity();
-//        Query Update in Database with hidden value "?"
-        String query = "UPDATE publishing SET name = ?, address = ?, co_year = ? WHERE id = ?";
-
-        try {
-//          Connect to database
-            connection = JDBCConnect.getJDBCConnection();
-
-            if (pe.getOne(obj.getId()) == null) {
-                System.out.println("This publishing doesn't exists!");
+                return true;
             } else {
-//              Set hidden value
-                preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, obj.getName());
-                preparedStatement.setString(1, obj.getAddress());
-                preparedStatement.setDate(1, obj.getCo_year());
+                System.out.println("Add fail !");
 
-//              Execute Query, if update successfull set flag equal true
-                if (preparedStatement.executeUpdate() > 0) {
-                    flag = true;
-                }
+                return false;
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        } finally {
-//          Close database at end
-            JDBCConnect.closeResultSet(rs);
-            JDBCConnect.closePreparedStatement(preparedStatement);
-            JDBCConnect.closeConnection(connection);
         }
-
-        return flag;
+        return false;
     }
 
-    public boolean delete(int id) {
-        boolean flag = false;
-
-//      Query Delete in database with hidden value
-        String query = "DELETE FROM publishing WHERE id = ?";
+    public static boolean Update(Publishing obj) {
+        String sql = "UPDATE publishing SET name = ?, address= ?, co_year = ?, updatedAt = ? WHERE id = ?";
+        long milis = System.currentTimeMillis();
+        Date preDate = new Date(milis);
 
         try {
-//          Connect to Database, set value for hidden value
             connection = JDBCConnect.getJDBCConnection();
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = connection.prepareCall(sql);
+            preparedStatement.setString(1, obj.getName());
+            preparedStatement.setString(2, obj.getAddress());
+            preparedStatement.setDate(3, convertStringToDate(obj.getCoyear()));
+            preparedStatement.setDate(4, preDate);
+            preparedStatement.setInt(5, obj.getId());
+            System.out.println(preparedStatement.getResultSet());
+
+//          if update sucess reset all feild and reset table view, all feild else show message fail
+            if (preparedStatement.executeUpdate() > 0) {
+                System.out.println("Updated Successfully !");
+
+                return true;
+            } else {
+                System.out.println("Updated Fail !");
+
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    public static boolean Delete(int id) {
+        String sql = "Delete FROM publishing WHERE id = ?";
+
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareCall(sql);
             preparedStatement.setInt(1, id);
 
-//              Execute Query, if delete successfull set flag equal true
             if (preparedStatement.executeUpdate() > 0) {
-                flag = true;
+                System.out.println("Delete Successfully !");
+
+                return true;
+            } else {
+                System.out.println("Delete Faild !");
+
+                return false;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        } finally {
-//          Close database at end
-            JDBCConnect.closePreparedStatement(preparedStatement);
-            JDBCConnect.closeConnection(connection);
         }
 
-        return flag;
+        return false;
     }
 
+    private static Date convertStringToDate(String date) {
+        String[] dateArray = date.split("-");
+        int year = Integer.parseInt(dateArray[0]);
+        int month = Integer.parseInt(dateArray[1]);
+        int day = Integer.parseInt(dateArray[2]);
+        LocalDate localdate = LocalDate.of(year, month, day);
+        Date newDate = Date.valueOf(localdate);
+
+        return newDate;
+    }
 }
