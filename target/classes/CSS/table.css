@@ -1,0 +1,33 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 20-11-2022, 03:01:53
+    Author     : PC
+*/
+
+.table-view {
+    -fx-background-color: transparent;
+}
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+/*    -fx-background-color: linear-gradient(to bottom left, #f4e7b8, #cadce9),
+        linear-gradient(to top right, #e9d3ca, #cce1cb);*/
+    -fx-background-color: linear-gradient(to bottom left, #cec7b2, #ccb9b0);
+        /* linear-gradient(to top right, #c7d8c7, #d8cac4); */
+    -fx-background-radius: 7px 7px 0px 0px;
+    -fx-background-insets: 0 11px 0 0;
+    -fx-padding: 0 0 5px 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}

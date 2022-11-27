@@ -282,7 +282,7 @@
                      <bottom>
                         <Pane prefHeight="345.0" prefWidth="924.0" BorderPane.alignment="CENTER">
                            <children>
-                              <TableView fx:id="table" layoutX="7.0" layoutY="49.0" prefHeight="286.0" prefWidth="910.0" stylesheets="@../../../CSS/table.css" tableMenuButtonVisible="true">
+                              <TableView fx:id="table" layoutX="7.0" layoutY="49.0" prefHeight="286.0" prefWidth="910.0" tableMenuButtonVisible="true">
                                  <columns>
                                     <TableColumn fx:id="colIndex" prefWidth="61.0" text="No." />
                                     <TableColumn fx:id="colName" maxWidth="324.0" minWidth="63.0" prefWidth="106.0" text="NAME" />
@@ -400,10 +400,9 @@
    </effect>
    <stylesheets>
       <URL value="@../../../CSS/admin_index.css" />
-      <URL value="@../../../CSS/images.css" />
-      <URL value="@../../../CSS/table.css" />
-      <URL value="@../../../CSS/combo_box.css" />
       <URL value="@../../../CSS/button.css" />
+      <URL value="@../../../CSS/combo_box.css" />
       <URL value="@../../../CSS/input.css" />
+      <URL value="@../../../CSS/table.css" />
    </stylesheets>
 </AnchorPane>

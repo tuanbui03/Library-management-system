@@ -42,8 +42,8 @@
                                     <TableColumn fx:id="colId" maxWidth="358.0" minWidth="63.0" prefWidth="74.0" text="NAME" visible="false" />
                                     <TableColumn fx:id="colIndex" prefWidth="70.0" text="No." />
                                     <TableColumn fx:id="colName" maxWidth="358.0" minWidth="63.0" prefWidth="177.0" text="NAME" />
-                                    <TableColumn fx:id="colCoyear" maxWidth="358.0" minWidth="63.0" prefWidth="150.0" text="CO_YEAR" />
                                     <TableColumn fx:id="colAddress" maxWidth="358.0" minWidth="63.0" prefWidth="200.0" text="ADDRESS" />
+                                    <TableColumn fx:id="colCoyear" maxWidth="358.0" minWidth="63.0" prefWidth="150.0" text="CO_YEAR" />
                                     <TableColumn fx:id="colCreatedAt" minWidth="0.0" prefWidth="150.0" text="Created At" />
                                     <TableColumn fx:id="colUpdatedAt" minWidth="112.0" prefWidth="150.0" text="Updated At" />
                                  </columns>
@@ -89,14 +89,14 @@
                                  </font>
                               </Label>
                               <TextField fx:id="txtId" disable="true" editable="false" layoutX="131.0" layoutY="37.0" prefHeight="26.0" prefWidth="300.0" />
-                              <TextField fx:id="txtName" layoutX="131.0" layoutY="87.0" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a name" />
-                              <DatePicker fx:id="txtCoyear" layoutX="131.0" layoutY="137.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Pick a date!" style="-fx-background-color: transparent;" />
-                              <TextField fx:id="txtAddress" layoutX="131.0" layoutY="187.0" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a address" />
+                              <TextField fx:id="txtName" layoutX="131.0" layoutY="87.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a name" />
+                              <DatePicker fx:id="txtCoyear" editable="false" layoutX="131.0" layoutY="137.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Pick a date!" style="-fx-background-color: transparent;" />
+                              <TextField fx:id="txtAddress" layoutX="131.0" layoutY="187.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a address" />
                               <TextField fx:id="txtCreatedAt" disable="true" editable="false" layoutX="577.0" layoutY="37.0" prefHeight="26.0" prefWidth="300.0" />
                               <TextField fx:id="txtUpdatedAt" disable="true" editable="false" layoutX="577.0" layoutY="87.0" prefHeight="26.0" prefWidth="300.0" />
-                              <Label fx:id="errorName" layoutX="131.0" layoutY="114.0" styleClass="error" text="Cannot be null and less than 64 characters" />
-                              <Label fx:id="errorCoyear" layoutX="131.0" layoutY="164.0" styleClass="error" text="Pick a date!" />
-                              <Label fx:id="errorAddress" layoutX="131.0" layoutY="215.0" styleClass="error" text="Cannot be null" />
+                              <Label fx:id="errorName" layoutX="131.0" layoutY="114.0" styleClass="error" text="Cannot be null and less than 64 characters" visible="false" />
+                              <Label fx:id="errorCoyear" layoutX="131.0" layoutY="164.0" styleClass="error" text="Pick a date!" visible="false" />
+                              <Label fx:id="errorAddress" layoutX="131.0" layoutY="215.0" styleClass="error" text="Cannot be null" visible="false" />
                               <Button fx:id="btnSave" layoutX="29.0" layoutY="260.0" mnemonicParsing="false" onAction="#BtnSaveClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
                               <Button fx:id="btnDelete" layoutX="142.0" layoutY="260.0" mnemonicParsing="false" onAction="#BtnDeleteClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Delete" />
                               <Button fx:id="btnReset" layoutX="255.0" layoutY="260.0" mnemonicParsing="false" onAction="#ResetFeild" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" stylesheets="@../../../CSS/button.css" text="Reset" />
@@ -116,7 +116,7 @@
       </StackPane>
       <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="256.0" style="-fx-background-color: #EBE8F9;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="labelClock" text="Local Date Time" textFill="#171717">
+            <Label fx:id="labelClock" alignment="CENTER" text="Local Date Time" textFill="#171717">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

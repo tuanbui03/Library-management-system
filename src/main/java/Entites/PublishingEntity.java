@@ -59,6 +59,70 @@ public class PublishingEntity {
         return null;
     }
 
+    public static Publishing GetPublishingWithId(int id) {
+
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareCall("Select * from publishing WHERE id = ?");
+            preparedStatement.setInt(1, id);
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Publishing p = new Publishing();
+
+                p.setId(rs.getInt("id"));
+                p.setName(rs.getString("name"));
+                p.setAddress(rs.getString("address"));
+                p.setCoyear(rs.getString("co_year"));
+                p.setCreatedAt(rs.getString("createdAt"));
+                p.setUpdatedAt(rs.getString("updatedAt"));
+
+                return p;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+//          Close databse at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+
+        return null;
+    }
+    
+    public static Publishing GetPublishingWithName(String name) {
+
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareCall("Select * from publishing WHERE name = ?");
+            preparedStatement.setString(1, name);
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Publishing p = new Publishing();
+
+                p.setId(rs.getInt("id"));
+                p.setName(rs.getString("name"));
+                p.setAddress(rs.getString("address"));
+                p.setCoyear(rs.getString("co_year"));
+                p.setCreatedAt(rs.getString("createdAt"));
+                p.setUpdatedAt(rs.getString("updatedAt"));
+
+                return p;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+//          Close databse at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+
+        return null;
+    }
+
     public static ObservableList<Publishing> Search(String search) {
         ObservableList<Publishing> publishing = FXCollections.observableArrayList();
 

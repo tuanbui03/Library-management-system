@@ -4,24 +4,29 @@
  */
 package com.mycompany.mavenproject1;
 
+import Entites.PublishingEntity;
 import Models.Publishing;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -112,10 +117,14 @@ public class ManagementPublishingController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
+//      run real time and replace a time String for labelClock
         initClock();
+//      get all data from database 
+        table();
+//      set button disable
+        btnSave.setDisable(true);
         CheckId();
-//        table();
     }
 
     private void initClock() {
@@ -129,12 +138,14 @@ public class ManagementPublishingController implements Initializable {
 
     @FXML
     public void CheckId() {
+//      get value of UID feild
         String id = txtId.getText();
-
+        
+//      Set button delete disable when UID is empty else unset disable
         if (id.isEmpty()) {
-            btnDelete.setVisible(false);
+            btnDelete.setDisable(true);
         } else {
-            btnDelete.setVisible(true);
+            btnDelete.setDisable(false);
         }
     }
 
@@ -146,7 +157,7 @@ public class ManagementPublishingController implements Initializable {
         String address = txtAddress.getText();
         LocalDate coYear = txtCoyear.getValue();
 
-        if (name.matches("^.{1,64}$")) {
+        if (name.length() > 64 || name.isEmpty()) {
             errorName.setVisible(true);
 
             flag = true;
@@ -174,11 +185,108 @@ public class ManagementPublishingController implements Initializable {
     }
 
     @FXML
-    private void BtnSaveClick(ActionEvent event) {
+    private void BtnSaveClick() {
+        Validated();
+
+        Publishing pub = new Publishing();
+        String id = txtId.getText();
+        String name = txtName.getText();
+        String address = txtAddress.getText();
+        String coyear = txtCoyear.getValue().toString();
+
+        pub.setName(name);
+        pub.setAddress(address);
+        pub.setCoyear(coyear);
+
+//      Call Alert box
+        Alert alert = new Alert(Alert.AlertType.NONE);
+
+//      inpId is empty we create new categories else we update this
+        if (id.isEmpty()) {
+
+//          if publishing's name doesn't exists, add this category else show message "This Publishing exists!"
+            if (PublishingEntity.GetPublishingWithName(name) == null) {
+
+//              if add success, show a box with message "Added Successfully!" else show message "Added Fail!"
+                if (PublishingEntity.Add(pub)) {
+//              set titile, header, content for alert box
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Publishings Manager");
+                    alert.setContentText("Added Successfully!");
+                    alert.showAndWait();
+                } else {
+//              set titile, header, content for alert box
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Publishings Manager");
+                    alert.setContentText("Added Fail!");
+                    alert.showAndWait();
+                }
+            } else {
+//              set titile, header, content for alert box
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Test Connection");
+                alert.setHeaderText("Publishings Manager");
+                alert.setContentText("This Publishing exists!");
+                alert.showAndWait();
+            }
+
+        } else {
+//          set id for object publishing
+            pub.setId(Integer.parseInt(id));
+
+//          if Update success, show a box with message "Updated Successfully!" else show message "Updated Fail!"
+            if (PublishingEntity.Update(pub)) {
+
+//              set titile, header, content for alert box
+                alert.setAlertType(Alert.AlertType.INFORMATION);
+                alert.setTitle("Test Connection");
+                alert.setHeaderText("Publishings Manager");
+                alert.setContentText("Updated Successfully!");
+                alert.showAndWait();
+
+            } else {
+
+//              set titile, header, content for alert box
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Test Connection");
+                alert.setHeaderText("Publishings Manager");
+                alert.setContentText("Updated Fail!");
+                alert.showAndWait();
+
+            }
+
+        }
+
+        RefeshData();
     }
 
     @FXML
-    private void BtnDeleteClick(ActionEvent event) {
+    private void BtnDeleteClick() {
+        int id = Integer.parseInt(txtId.getText());
+
+//      Call Alert box
+        Alert alert = new Alert(Alert.AlertType.NONE);
+
+//      delete data for database, if success show message "Deleted successfully !" else show message "Delete Fail !"
+        if (PublishingEntity.Delete(id)) {
+//          set titile, header, content for alert box
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setTitle("Test Connection");
+            alert.setHeaderText("Accounts Manager");
+            alert.setContentText("Deleted Successfully!");
+            alert.showAndWait();
+        } else {
+//          set titile, header, content for alert box
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Test Connection");
+            alert.setHeaderText("Accounts Manager");
+            alert.setContentText("Deleted Fail!");
+            alert.showAndWait();
+        }
+
+        RefeshData();
     }
 
     @FXML
@@ -193,18 +301,94 @@ public class ManagementPublishingController implements Initializable {
         errorName.setVisible(false);
         errorAddress.setVisible(false);
         errorCoyear.setVisible(false);
-        
+
         CheckId();
+        btnSave.setDisable(true);
     }
 
     @FXML
     private void RefeshData() {
         ResetFeild();
-//        table();
+        table();
+    }
+
+    @FXML
+    public void table() {
+        ObservableList<Publishing> publishing = PublishingEntity.GetAll();
+
+        table.setItems(publishing);
+        colIndex.setCellValueFactory(f -> f.getValue().indexProperty().asString());
+        colId.setCellValueFactory(f -> f.getValue().idProperty().asString());
+        colName.setCellValueFactory(f -> f.getValue().nameProperty());
+        colAddress.setCellValueFactory(f -> f.getValue().addressProperty());
+        colCoyear.setCellValueFactory(f -> f.getValue().co_yearProperty());
+        colCreatedAt.setCellValueFactory(f -> f.getValue().createdAtProperty());
+        colUpdatedAt.setCellValueFactory(f -> f.getValue().updatedAtProperty());
+
+        table.setRowFactory(tv -> {
+            TableRow<Publishing> myRow = new TableRow<>();
+            myRow.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && (!myRow.isEmpty())) {
+                    myIndex = table.getSelectionModel().getSelectedIndex();
+
+                    String[] date = table.getItems().get(myIndex).getCoyear().split("-");
+                    System.out.println(table.getItems().get(myIndex).getCoyear());
+
+                    LocalDate dob = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
+                    txtCoyear.setValue(dob);
+
+                    txtId.setText(String.valueOf(table.getItems().get(myIndex).getId()));
+                    txtName.setText(table.getItems().get(myIndex).getName());
+                    txtAddress.setText(table.getItems().get(myIndex).getAddress());
+                    txtCreatedAt.setText(table.getItems().get(myIndex).getCreatedAt());
+                    txtUpdatedAt.setText(table.getItems().get(myIndex).getUpdatedAt());
+
+                    CheckId();
+                    Validated();
+                }
+            });
+            return myRow;
+        });
     }
 
     @FXML
     private void Search() {
+        String search = txtSearch.getText();
+        ObservableList<Publishing> publishing = PublishingEntity.Search(search);
+
+        table.setItems(publishing);
+        colIndex.setCellValueFactory(f -> f.getValue().indexProperty().asString());
+        colId.setCellValueFactory(f -> f.getValue().idProperty().asString());
+        colName.setCellValueFactory(f -> f.getValue().nameProperty());
+        colAddress.setCellValueFactory(f -> f.getValue().addressProperty());
+        colCoyear.setCellValueFactory(f -> f.getValue().co_yearProperty());
+        colCreatedAt.setCellValueFactory(f -> f.getValue().createdAtProperty());
+        colUpdatedAt.setCellValueFactory(f -> f.getValue().updatedAtProperty());
+
+        table.setRowFactory(tv -> {
+            TableRow<Publishing> myRow = new TableRow<>();
+            myRow.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && (!myRow.isEmpty())) {
+                    myIndex = table.getSelectionModel().getSelectedIndex();
+
+                    String[] date = table.getItems().get(myIndex).getCoyear().split("-");
+
+                    LocalDate dob = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
+                    txtCoyear.setValue(dob);
+
+                    txtId.setText(String.valueOf(table.getItems().get(myIndex).getId()));
+                    txtName.setText(table.getItems().get(myIndex).getName());
+                    txtAddress.setText(table.getItems().get(myIndex).getAddress());
+                    txtCoyear.setValue(LocalDate.of(id, Month.MARCH, myIndex));
+                    txtCreatedAt.setText(table.getItems().get(myIndex).getCreatedAt());
+                    txtUpdatedAt.setText(table.getItems().get(myIndex).getUpdatedAt());
+
+                    CheckId();
+                    Validated();
+                }
+            });
+            return myRow;
+        });
     }
 
     @FXML
