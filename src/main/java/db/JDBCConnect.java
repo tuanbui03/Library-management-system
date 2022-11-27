@@ -19,10 +19,13 @@ public class JDBCConnect {
     public static Connection connection = null;
     public static PreparedStatement preparedStatement = null;
     public static ResultSet rs = null;
+    public static String DBNAME = "manage_library";
+    public static String USERNAME = "root";
+    public static String PASSWORD = "12345678";
     
     public static Connection getJDBCConnection(){
         Connection con = null;
-        String connectionURL = "jdbc:mysql://" + IDBConfig.HOSTNAME + ":" + IDBConfig.PORT + "/" + IDBConfig.DBNAME;
+        String connectionURL = "jdbc:mysql://localhost:3306/" + DBNAME;
         System.out.println(connectionURL);
         
         try{
@@ -34,7 +37,7 @@ public class JDBCConnect {
         System.out.println("MySQL JDBC Driver Registered!");
         
         try {
-            con = DriverManager.getConnection(connectionURL, IDBConfig.USERNAME, IDBConfig.PASSWORD);
+            con = DriverManager.getConnection(connectionURL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             System.err.println("Connection Failed! Check output console");
             return con;
