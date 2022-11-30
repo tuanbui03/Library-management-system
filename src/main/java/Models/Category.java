@@ -92,6 +92,6 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category{" + "index=" + index.get() + ", id=" + id.get() + ", name=" + name.get() + ", createdAt=" + createdAt.get() + ", updatedAt=" + updatedAt.get() + '}';
+        return name.get();
     }
 }

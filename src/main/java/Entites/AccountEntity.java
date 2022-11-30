@@ -26,7 +26,11 @@ public class AccountEntity {
 
     public static ObservableList<Account> GetAll() {
         ObservableList<Account> list = FXCollections.observableArrayList();
-        String sql = "SELECT accounts.*, roles.name as roleName FROM accounts JOIN roles ON accounts.roleId = roles.id WHERE accounts.status = ?";
+
+        String sql = "SELECT accounts.*, roles.name as roleName "
+                + "FROM accounts "
+                + "JOIN roles ON accounts.roleId = roles.id "
+                + "WHERE accounts.status = ?";
 
         try {
             connection = JDBCConnect.getJDBCConnection();
@@ -318,7 +322,4 @@ public class AccountEntity {
         return newDate;
     }
 
-    public static void main(String[] args) {
-
-    }
 }

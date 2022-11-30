@@ -243,21 +243,6 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "index=" + index.get() 
-                + ", id=" + id.get() 
-                + ", UID=" + UID.get() 
-                + ", Avatar=" + avatar.get() 
-                + ", username=" + username.get() 
-                + ", password=" + password.get() 
-                + ", full_name=" + full_name.get() 
-                + ", gender=" + gender.get() 
-                + ", email=" + email.get() 
-                + ", dob=" + dob.get() 
-                + ", mobile=" + mobile.get() 
-                + ", status=" + status.get() 
-                + ", roleId=" + roleId.get() 
-                + ", createdAt=" + createdAt.get() 
-                + ", updatedAt=" + updatedAt.get() 
-                + '}';
+        return this.username.get();
     }
 }

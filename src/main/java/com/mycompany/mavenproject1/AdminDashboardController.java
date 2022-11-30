@@ -11,6 +11,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -28,6 +29,8 @@ import javafx.util.Duration;
  * @author PC
  */
 public class AdminDashboardController implements Initializable {
+
+    private Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
 
     @FXML
     private Label labelClock;
@@ -70,43 +73,44 @@ public class AdminDashboardController implements Initializable {
 //      run real time and replace a time String for labelClock
         initClock();
         Total();
-    }    
+        sessionUsername.setText(prefs.get("username", ""));
+    }
 
     @FXML
     private void switchToAdminDashboard() throws IOException {
         App.setRoot("AdminDashboard");
     }
-    
+
     @FXML
     private void switchToManagementAuthors() throws IOException {
         App.setRoot("ManagementAuthors");
     }
-    
+
     @FXML
     private void switchToManagementBooks() throws IOException {
         App.setRoot("ManagementBooks");
     }
-    
+
     @FXML
     private void switchToManagementCategories() throws IOException {
         App.setRoot("ManagementCategories");
     }
-    
+
     @FXML
     private void switchToManagementPublishing() throws IOException {
         App.setRoot("ManagementPublishing");
     }
-    
+
     @FXML
     private void switchToManagementAccounts() throws IOException {
         App.setRoot("ManagementAccounts");
     }
-    
+
     @FXML
     private void SignOut() throws Exception {
         App.setRoot("SignIn");
     }
-    
+
     private void initClock() {
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -115,19 +119,19 @@ public class AdminDashboardController implements Initializable {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
     }
-    
-    public void Total(){
-//        ObservableList<Book> books = BookEntity.GetAll();
+
+    public void Total() {
+        ObservableList<Book> books = BookEntity.GetAll();
         ObservableList<Category> categories = CategoryEntity.GetAll();
-//        ObservableList<Author> authors = AuthorsEntity.GetAll();
+        ObservableList<Author> authors = AuthorEntity.GetAll();
         ObservableList<Publishing> publishs = PublishingEntity.GetAll();
         ObservableList<Account> accounts = AccountEntity.GetAll();
         ObservableList<Account> librarians = AccountEntity.GetAccountByRole(2);
         ObservableList<Account> readers = AccountEntity.GetAccountByRole(3);
-        
-//        totalBooks.setText(String.valueOf(books.size()));
+
+        totalBooks.setText(String.valueOf(books.size()));
         totalCategories.setText(String.valueOf(categories.size()));
-//        totalAuthors.setText(String.valueOf(authors.size()));
+        totalAuthors.setText(String.valueOf(authors.size()));
         totalPublishs.setText(String.valueOf(publishs.size()));
         totalAccounts.setText(String.valueOf(accounts.size()));
         totalLibrarians.setText(String.valueOf(librarians.size()));

@@ -56,6 +56,7 @@ public class PublishingEntity {
             JDBCConnect.closePreparedStatement(preparedStatement);
             JDBCConnect.closeConnection(connection);
         }
+
         return null;
     }
 
@@ -90,7 +91,7 @@ public class PublishingEntity {
 
         return null;
     }
-    
+
     public static Publishing GetPublishingWithName(String name) {
 
         try {

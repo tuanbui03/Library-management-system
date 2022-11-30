@@ -33,6 +33,8 @@ import javafx.util.Duration;
  */
 public class ManagementCategoriesController implements Initializable {
 
+    private Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
+
     @FXML
     private Label labelClock;
     @FXML
@@ -351,7 +353,9 @@ public class ManagementCategoriesController implements Initializable {
         txtName.setText("");
         txtCreatedAt.setText("");
         txtUpdatedAt.setText("");
+        txtSearch.setText("");
         errorName.setVisible(false);
+
         CheckId();
     }
 

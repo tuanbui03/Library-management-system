@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -41,6 +42,8 @@ import javafx.util.Duration;
  * @author PC
  */
 public class ManagementPublishingController implements Initializable {
+
+    private Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
 
     @FXML
     private Pane management_publishing;
@@ -297,6 +300,7 @@ public class ManagementPublishingController implements Initializable {
         txtCoyear.setValue(null);
         txtCreatedAt.setText("");
         txtUpdatedAt.setText("");
+        txtSearch.setText("");
 
         errorName.setVisible(false);
         errorAddress.setVisible(false);

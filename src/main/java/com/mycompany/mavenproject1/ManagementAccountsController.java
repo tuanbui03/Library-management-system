@@ -15,6 +15,7 @@ import java.time.*;
 import java.time.format.*;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -40,7 +41,9 @@ import javax.imageio.ImageIO;
  * @author PC
  */
 public class ManagementAccountsController implements Initializable {
-    
+
+    private Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
+
     @FXML
     private AnchorPane ap;
     @FXML
@@ -153,49 +156,49 @@ public class ManagementAccountsController implements Initializable {
     private TextField txtSearch;
     @FXML
     private Button btnSearch;
-    
+
     int myIndex;
     int id;
     Image av;
-    
+
     @FXML
     private void switchToAdminDashboard() throws IOException {
         App.setRoot("AdminDashboard");
     }
-    
+
     @FXML
     private void switchToManagementAuthors() throws IOException {
         App.setRoot("ManagementAuthors");
     }
-    
+
     @FXML
     private void switchToManagementBooks() throws IOException {
         App.setRoot("ManagementBooks");
     }
-    
+
     @FXML
     private void switchToManagementCategories() throws IOException {
         App.setRoot("ManagementCategories");
     }
-    
+
     @FXML
     private void switchToManagementPublishing() throws IOException {
         App.setRoot("ManagementPublishing");
     }
-    
+
     @FXML
     private void switchToManagementAccounts() throws IOException {
         App.setRoot("ManagementAccounts");
     }
-    
+
     @FXML
     private void SignOut() throws Exception {
         App.setRoot("SignIn");
     }
-    
+
     public void table() {
         ObservableList<Account> accounts = AccountEntity.GetAll();
-        
+
         table.setItems(accounts);
         colIndex.setCellValueFactory(f -> f.getValue().indexProperty().asString());
         colUID.setCellValueFactory(f -> f.getValue().UIDProperty());
@@ -210,30 +213,30 @@ public class ManagementAccountsController implements Initializable {
         colMobile.setCellValueFactory(f -> f.getValue().mobileProperty());
         colCreatedAt.setCellValueFactory(f -> f.getValue().createdAtProperty());
         colUpdatedAt.setCellValueFactory(f -> f.getValue().updatedAtProperty());
-        
+
         table.setRowFactory(tv -> {
             TableRow<Account> myRow = new TableRow<>();
             myRow.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && (!myRow.isEmpty())) {
                     myIndex = table.getSelectionModel().getSelectedIndex();
-                    
+
                     int indexGender = table.getItems().get(myIndex).getGender();
                     ObservableList<Gender> gender = FXCollections.observableArrayList();
-                    
+
                     gender.addAll(new Gender(1, "Male"), new Gender(2, "Female"), new Gender(3, "Other"));
-                    
-                    boxGender.setValue(boxGender.getItems().get(indexGender-1));
-                    
+
+                    boxGender.setValue(boxGender.getItems().get(indexGender - 1));
+
                     String roleName = table.getItems().get(myIndex).getRoleName();
                     Role role = RoleEntity.GetOneByName(roleName);
-                    
+
                     boxRole.setValue(role);
-                    
+
                     String[] date = table.getItems().get(myIndex).getDob().split("-");
-                    
+
                     LocalDate dob = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
                     txtDob.setValue(dob);
-                    
+
                     txtUID.setText(table.getItems().get(myIndex).getUID());
                     txtUsername.setText(table.getItems().get(myIndex).getUsername());
 //                    av = getToFile(table.getItems().get(myIndex).getAvatar());
@@ -244,7 +247,7 @@ public class ManagementAccountsController implements Initializable {
                     txtMobile.setText(table.getItems().get(myIndex).getMobile());
                     txtCreatedAt.setText(table.getItems().get(myIndex).getCreatedAt());
                     txtUpdatedAt.setText(table.getItems().get(myIndex).getUpdatedAt());
-                    
+
                     CheckUID();
                     CheckRole();
                     Validated();
@@ -253,7 +256,7 @@ public class ManagementAccountsController implements Initializable {
             return myRow;
         });
     }
-    
+
     private void initClock() {
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -262,7 +265,7 @@ public class ManagementAccountsController implements Initializable {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
     }
-    
+
 //    @FXML
 //    private void ChooseAnImage(ActionEvent event) throws IOException {
 //        Stage stage = (Stage) ap.getScene().getWindow();
@@ -280,7 +283,6 @@ public class ManagementAccountsController implements Initializable {
 //            Validated();
 //        }
 //    }
-    
 //    @FXML
 //    public static void saveToFile(Image image, String imgName) {
 //        File outputFile = new File("D:\\Documents\\NetBeansProjects\\Library-management-system\\src\\main\\resources\\Avatar\\" + imgName);
@@ -291,17 +293,15 @@ public class ManagementAccountsController implements Initializable {
 //            System.out.println(e.getMessage());
 //        }
 //    }
-    
 //    public Image getToFile(String imgName) {
 //        Image img = new Image("file:/D:/Documents/NetBeansProjects/Library-management-system/src/main/resources/Avatar/" + imgName);
 //        return img;
 //    }
-    
     @FXML
     public void BtnSaveClick() {
         Validated();
         FormatFullName();
-        
+
         Account a = new Account();
         String UID = txtUID.getText();
         String password = txtPassword.getText();
@@ -321,7 +321,7 @@ public class ManagementAccountsController implements Initializable {
         if (UID.isEmpty()) {
             if (AccountEntity.GetAccountByUsername(userName) == null) {
                 ObservableList<Account> accounts = AccountEntity.GetAccountByRole(role.getId());
-                
+
                 UID = role.getName() + accounts.size();
                 a.setUID(UID);
                 a.setAvatar(imgName);
@@ -353,7 +353,7 @@ public class ManagementAccountsController implements Initializable {
                     alert.setContentText("Added Fail!");
                     alert.showAndWait();
                 }
-                
+
             } else {
 //              set titile, header, content for alert box
                 alert.setAlertType(Alert.AlertType.ERROR);
@@ -362,7 +362,7 @@ public class ManagementAccountsController implements Initializable {
                 alert.setContentText("This username exists!");
                 alert.showAndWait();
             }
-            
+
         } else {
             a.setUID(UID);
             a.setUsername(userName);
@@ -394,12 +394,12 @@ public class ManagementAccountsController implements Initializable {
         }
         RefeshData();
     }
-    
+
     @FXML
     public void Search() {
         String search = txtSearch.getText();
         ObservableList<Account> accounts = AccountEntity.SearchByUID(search);
-        
+
         table.setItems(accounts);
         colIndex.setCellValueFactory(f -> f.getValue().indexProperty().asString());
         colUID.setCellValueFactory(f -> f.getValue().UIDProperty());
@@ -414,30 +414,30 @@ public class ManagementAccountsController implements Initializable {
         colMobile.setCellValueFactory(f -> f.getValue().mobileProperty());
         colCreatedAt.setCellValueFactory(f -> f.getValue().createdAtProperty());
         colUpdatedAt.setCellValueFactory(f -> f.getValue().updatedAtProperty());
-        
+
         table.setRowFactory(tv -> {
             TableRow<Account> myRow = new TableRow<>();
             myRow.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && (!myRow.isEmpty())) {
                     myIndex = table.getSelectionModel().getSelectedIndex();
-                    
+
                     int indexGender = table.getItems().get(myIndex).getGender();
                     ObservableList<Gender> gender = FXCollections.observableArrayList();
-                    
+
                     gender.addAll(new Gender(1, "Male"), new Gender(2, "Female"), new Gender(3, "Other"));
-                    
-                    boxGender.setValue(boxGender.getItems().get(indexGender-1));
-                    
+
+                    boxGender.setValue(boxGender.getItems().get(indexGender - 1));
+
                     String roleName = table.getItems().get(myIndex).getRoleName();
                     Role role = RoleEntity.GetOneByName(roleName);
-                    
+
                     boxRole.setValue(role);
-                    
+
                     String[] date = table.getItems().get(myIndex).getDob().split("-");
-                    
+
                     LocalDate dob = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
                     txtDob.setValue(dob);
-                    
+
                     txtUID.setText(table.getItems().get(myIndex).getUID());
                     txtUsername.setText(table.getItems().get(myIndex).getUsername());
 //                    av = getToFile(table.getItems().get(myIndex).getAvatar());
@@ -448,7 +448,7 @@ public class ManagementAccountsController implements Initializable {
                     txtMobile.setText(table.getItems().get(myIndex).getMobile());
                     txtCreatedAt.setText(table.getItems().get(myIndex).getCreatedAt());
                     txtUpdatedAt.setText(table.getItems().get(myIndex).getUpdatedAt());
-                    
+
                     CheckUID();
                     CheckRole();
                     Validated();
@@ -457,7 +457,7 @@ public class ManagementAccountsController implements Initializable {
             return myRow;
         });
     }
-    
+
     @FXML
     public void BtnDeleteClick() {
 //      Call id at id feild
@@ -475,7 +475,7 @@ public class ManagementAccountsController implements Initializable {
             alert.setHeaderText("Accounts Manager");
             alert.setContentText("Unactived Successfully!");
             alert.showAndWait();
-            
+
         } else {
 
 //          set titile, header, content for alert box
@@ -484,18 +484,18 @@ public class ManagementAccountsController implements Initializable {
             alert.setHeaderText("Accounts Manager");
             alert.setContentText("Unactived Fail!");
             alert.showAndWait();
-            
+
         }
-        
+
         RefeshData();
     }
-    
+
     @FXML
     public void RefeshData() {
         ResetFeild();
         table();
     }
-    
+
     @FXML
     public void ResetFeild() {
         txtUID.setText("");
@@ -509,8 +509,9 @@ public class ManagementAccountsController implements Initializable {
         txtMobile.setText("");
         txtCreatedAt.setText("");
         txtUpdatedAt.setText("");
+        txtSearch.setText("");
 //        txtAvatar.setText("");
-        
+
         errorUsername.setVisible(false);
         errorPassword.setVisible(false);
         errorFullname.setVisible(false);
@@ -520,10 +521,10 @@ public class ManagementAccountsController implements Initializable {
         errorDob.setVisible(false);
         errorMobile.setVisible(false);
 //        errorAvatar.setVisible(false);
-        
+
         CheckUID();
     }
-    
+
     @FXML
     public void CheckUID() {
 //      get value of UID feild
@@ -535,7 +536,7 @@ public class ManagementAccountsController implements Initializable {
             btnDelete.setDisable(false);
         }
     }
-    
+
     @FXML
     public void CheckRole() {
 //      get value of role combo box
@@ -547,7 +548,7 @@ public class ManagementAccountsController implements Initializable {
             btnDelete.setDisable(false);
         }
     }
-    
+
     @FXML
     private boolean Validated() {
         boolean flag = true;
@@ -572,7 +573,7 @@ public class ManagementAccountsController implements Initializable {
         } else {
             errorUsername.setVisible(false);
         }
-        
+
         if (password.isEmpty() || !password.matches(PASSWORD_PATTERN)) {
             errorPassword.setVisible(true);
             flag = false;
@@ -580,7 +581,7 @@ public class ManagementAccountsController implements Initializable {
         } else {
             errorPassword.setVisible(false);
         }
-        
+
         if (fullname.isEmpty() || fullname.length() > 64) {
             errorFullname.setVisible(true);
             flag = false;
@@ -589,7 +590,7 @@ public class ManagementAccountsController implements Initializable {
         } else {
             errorFullname.setVisible(false);
         }
-        
+
         if (gender == null) {
             errorGender.setVisible(true);
             flag = false;
@@ -598,7 +599,7 @@ public class ManagementAccountsController implements Initializable {
         } else {
             errorGender.setVisible(false);
         }
-        
+
         if (role == null) {
             errorRole.setVisible(true);
             flag = false;
@@ -607,7 +608,7 @@ public class ManagementAccountsController implements Initializable {
         } else {
             errorRole.setVisible(false);
         }
-        
+
         if (email.isEmpty() || !email.matches(EMAIL_PATTERN)) {
             errorEmail.setVisible(true);
             flag = false;
@@ -616,7 +617,7 @@ public class ManagementAccountsController implements Initializable {
         } else {
             errorEmail.setVisible(false);
         }
-        
+
         if (dob == null) {
             errorDob.setVisible(true);
             flag = false;
@@ -625,10 +626,10 @@ public class ManagementAccountsController implements Initializable {
         } else {
             errorDob.setVisible(false);
         }
-        
+
         if (mobile.isEmpty() || !mobile.matches(MOBILE_PATTERN)) {
             errorMobile.setVisible(true);
-            
+
             flag = false;
 //            return false;
         } else {
@@ -648,25 +649,40 @@ public class ManagementAccountsController implements Initializable {
         } else {
             btnSave.setDisable(false);
         }
+
         return flag;
     }
-    
+
     @FXML
     private void FormatFullName() {
         String inpFullname = txtFullname.getText();
         String newFullname = "";
         inpFullname = inpFullname.trim().replaceAll("//s//s+", " ");
         String[] array = inpFullname.split(" ");
-        
+
         for (String name : array) {
             newFullname += name.toUpperCase().charAt(0);
             newFullname += name.substring(1);
             newFullname += " ";
         }
-        
+
         newFullname = newFullname.trim();
-        
+
         txtFullname.setText(newFullname);
+    }
+
+    private void InitItemsRoleBox() {
+
+//      set value for combo box is role
+        ObservableList<Role> role = RoleEntity.GetAll();
+
+        if (role == null) {
+            boxRole.setPromptText("No roles in this box!");
+        } else if (role.isEmpty()) {
+            boxRole.setPromptText("No roles in this box!");
+        } else {
+            boxRole.setItems(role);
+        }
     }
 
     /**
@@ -681,14 +697,10 @@ public class ManagementAccountsController implements Initializable {
 //      set button disable
         btnSave.setDisable(true);
         CheckUID();
-//      set value for combo box is role
-        ObservableList<Role> role = RoleEntity.GetAll();
-        
-        boxRole.setItems(role);
 
 //      set value for combo box is gender
         ObservableList<Gender> gender = FXCollections.observableArrayList();
-        
+
         boxGender.setItems(FXCollections.observableArrayList(
                 new Gender(1, "Male"),
                 new Gender(2, "Female"),

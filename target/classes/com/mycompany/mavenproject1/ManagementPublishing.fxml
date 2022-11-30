@@ -264,7 +264,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnManagePublishing" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementPublishing" prefHeight="50.0" prefWidth="259.0" styleClass="button_active" text="Management Publishing">
+            <Button fx:id="btnManagePublishing" alignment="BASELINE_LEFT" disable="true" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementPublishing" prefHeight="50.0" prefWidth="259.0" styleClass="button_active" text="Management Publishing">
                <padding>
                   <Insets left="50.0" />
                </padding>

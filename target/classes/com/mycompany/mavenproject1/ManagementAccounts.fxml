@@ -111,7 +111,7 @@
                                     <Font name="System Bold Italic" size="14.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="boxGender" layoutX="131.0" layoutY="235.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" styleClass="combo-box" />
+                              <ComboBox fx:id="boxGender" layoutX="131.0" layoutY="235.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a gender!" styleClass="combo-box" />
                               <Label fx:id="errorGender" layoutX="131.0" layoutY="263.0" styleClass="error" text="Select your gender!" visible="false">
                                  <font>
                                     <Font size="13.0" />
@@ -122,7 +122,7 @@
                                     <Font name="System Bold Italic" size="14.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="boxRole" layoutX="131.0" layoutY="285.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" styleClass="combo-box" />
+                              <ComboBox fx:id="boxRole" layoutX="131.0" layoutY="285.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Role!" styleClass="combo-box" />
                               <Label fx:id="errorRole" layoutX="131.0" layoutY="313.0" styleClass="error" text="Select a role!" visible="false">
                                  <font>
                                     <Font size="13.0" />
@@ -374,7 +374,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnManageAccounts" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementAccounts" prefHeight="50.0" prefWidth="259.0" styleClass="button_active" text="Management Accounts">
+            <Button fx:id="btnManageAccounts" alignment="BASELINE_LEFT" disable="true" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementAccounts" prefHeight="50.0" prefWidth="259.0" styleClass="button_active" text="Management Accounts">
                <VBox.margin>
                   <Insets />
                </VBox.margin>

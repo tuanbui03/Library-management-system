@@ -33,13 +33,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-alignment: BASELINE_LEFT;
     -fx-padding: 0 0 0 20;
     -fx-background-radius: 0px;
-    -fx-background-insets: 1px 15px 0px 0px;
+    -fx-background-insets: 1px 20px 0px 0px;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
     -fx-text-fill: #000000;
 }
 .button_active:hover {
     -fx-background-color: #a5a2ad;
+}
+.button_active:disabled {
+    -fx-opacity: 1;
 }
 
 .button_primary {

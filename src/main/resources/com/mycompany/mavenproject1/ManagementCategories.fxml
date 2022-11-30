@@ -143,7 +143,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnManageCategories1" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementCategories" prefHeight="50.0" prefWidth="259.0" styleClass="button_active" text="Management Categories">
+            <Button fx:id="btnManageCategories1" alignment="BASELINE_LEFT" disable="true" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementCategories" prefHeight="50.0" prefWidth="259.0" styleClass="button_active" text="Management Categories">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -269,7 +269,7 @@
             </Button>
          </children>
       </VBox>
-      <StackPane layoutX="256.0" prefHeight="800.0" prefWidth="924.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <StackPane layoutX="256.0" prefHeight="800.0" prefWidth="924.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="256.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane fx:id="pnlOverview">
                <children>
