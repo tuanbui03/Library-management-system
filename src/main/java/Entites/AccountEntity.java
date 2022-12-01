@@ -72,6 +72,50 @@ public class AccountEntity {
         return null;
     }
 
+    public static Account GetAccountByUID(String UID) {
+        String sql = "SELECT accounts.*, roles.name as roleName "
+                + "FROM accounts "
+                + "JOIN roles ON accounts.roleId = roles.id "
+                + "WHERE accounts.UID = ? AND accounts.status = ?";
+
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, UID);
+            preparedStatement.setInt(2, 1);
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Account acc = new Account();
+
+                acc.setId(rs.getInt("id"));
+                acc.setUID(rs.getString("UID"));
+                acc.setUsername(rs.getString("username"));
+                acc.setPassword(rs.getString("password"));
+                acc.setFull_name(rs.getString("full_name"));
+                acc.setGender(rs.getInt("gender"));
+                acc.setEmail(rs.getString("email"));
+                acc.setDob(rs.getString("dob"));
+                acc.setMobile(rs.getString("mobile"));
+                acc.setStatus(rs.getInt("status"));
+                acc.setRoleId(rs.getInt("roleId"));
+                acc.setRoleName(rs.getString("roleName"));
+                acc.setCreatedAt(rs.getString("createdAt"));
+                acc.setUpdatedAt(rs.getString("updatedAt"));
+
+                return acc;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+
+        return null;
+    }
+
     public static Account GetAccountByUsername(String username) {
         String sql = "SELECT accounts.*, roles.name as roleName "
                 + "FROM accounts JOIN roles ON accounts.roleId = roles.id "

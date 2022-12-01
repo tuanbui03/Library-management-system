@@ -87,7 +87,7 @@
             </Button>
             <Button fx:id="btnManageBooks" alignment="BASELINE_LEFT" disable="true" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementBooks" prefHeight="50.0" prefWidth="259.0" styleClass="button_active" text="Management Books">
                <VBox.margin>
-                  <Insets />
+                  <Insets top="-1.0" />
                </VBox.margin>
                <textFill>
                   <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
@@ -287,10 +287,12 @@
                                  <columns>
                                     <TableColumn fx:id="colIndex" prefWidth="57.0" text="No." />
                                     <TableColumn fx:id="colId" prefWidth="61.0" text="ID" visible="false" />
-                                    <TableColumn fx:id="colName" maxWidth="324.0" minWidth="63.0" prefWidth="120.0" text="NAME" />
-                                    <TableColumn fx:id="colCoyear" maxWidth="324.0" minWidth="63.0" prefWidth="90.0" text="CO YEAR" />
+                                    <TableColumn fx:id="colAccount" prefWidth="170.0" text="ADD BY" />
+                                    <TableColumn fx:id="colBookId" prefWidth="61.0" text="BOOK ID" visible="false" />
+                                    <TableColumn fx:id="colName" maxWidth="324.0" minWidth="110.0" prefWidth="110.0" text="NAME" />
+                                    <TableColumn fx:id="colCoyear" maxWidth="324.0" minWidth="63.0" prefWidth="90.0" text="CO YEAR" visible="false" />
                                     <TableColumn fx:id="colPrice" maxWidth="475.0" minWidth="-Infinity" prefWidth="100.0" text="PRICE" />
-                                    <TableColumn fx:id="colQuantity" maxWidth="475.0" minWidth="-Infinity" prefWidth="70.0" text="QUANTITY" />
+                                    <TableColumn fx:id="colQuantity" maxWidth="475.0" minWidth="-Infinity" prefWidth="70.0" text="QUANTITY" visible="false" />
                                     <TableColumn fx:id="colDescription" maxWidth="475.0" minWidth="74.0" prefWidth="74.0" text="DESCRIPTION" visible="false" />
                                     <TableColumn fx:id="colCategory" minWidth="-Infinity" prefWidth="100.0" text="CATEGORY" />
                                     <TableColumn fx:id="colAuthor" minWidth="-Infinity" prefWidth="100.0" text="AUTHOR" />
@@ -374,10 +376,10 @@
                               <TextField fx:id="txtName" layoutX="131.0" layoutY="64.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a name" styleClass="input" />
                               <Label fx:id="errorName" layoutX="131.0" layoutY="91.0" styleClass="error" text="Cannot be null and less than 64 characters" visible="false" />
                               <Label fx:id="errorCoyear" layoutX="131.0" layoutY="141.0" styleClass="error" text="Pick a date!" visible="false" />
-                              <TextField fx:id="txtPrice" layoutX="131.0" layoutY="164.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a price" styleClass="input" />
-                              <Label fx:id="errorPrice" layoutX="131.0" layoutY="191.0" styleClass="error" text="Enter a price" visible="false" />
-                              <TextField fx:id="txtQuantity" layoutX="131.0" layoutY="216.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a number" styleClass="input" />
-                              <Label fx:id="errorQuantity" layoutX="131.0" layoutY="244.0" styleClass="error" text="Enter a quantity" visible="false" />
+                              <TextField fx:id="txtPrice" layoutX="131.0" layoutY="164.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="0.0" styleClass="input" />
+                              <Label fx:id="errorPrice" layoutX="131.0" layoutY="191.0" styleClass="error" text="Cannot be null and is number" visible="false" />
+                              <TextField fx:id="txtQuantity" layoutX="131.0" layoutY="216.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="0" styleClass="input" />
+                              <Label fx:id="errorQuantity" layoutX="131.0" layoutY="244.0" styleClass="error" text="Cannot be null and is number" visible="false" />
                               <TextField fx:id="txtDescription" layoutX="131.0" layoutY="264.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a text" styleClass="input" />
                               <Label fx:id="errorDescription" layoutX="131.0" layoutY="292.0" styleClass="error" text="Enter a description" visible="false" />
                               <ComboBox fx:id="boxCategories" layoutX="563.0" layoutY="14.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Category !" />
@@ -390,9 +392,9 @@
                               <Label fx:id="errorStatus" layoutX="563.0" layoutY="191.0" styleClass="error" text="Please choose a Status !" visible="false" />
                               <TextField fx:id="txtUpdatedAt" disable="true" editable="false" layoutX="561.0" layoutY="266.0" prefHeight="26.0" prefWidth="300.0" styleClass="input-disabled" />
                               <TextField fx:id="txtCreatedAt" disable="true" editable="false" layoutX="563.0" layoutY="216.0" prefHeight="26.0" prefWidth="300.0" styleClass="input-disabled" />
-                              <Button fx:id="btnSave" layoutX="29.0" layoutY="330.0" mnemonicParsing="false" onAction="#BtnSaveClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
-                              <Button fx:id="btnDelete" layoutX="142.0" layoutY="330.0" mnemonicParsing="false" onAction="#BtnDeleteClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Delete" />
-                              <Button fx:id="btnReset" layoutX="255.0" layoutY="330.0" mnemonicParsing="false" onAction="#ResetFeild" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" stylesheets="@../../../CSS/button.css" text="Reset" />
+                              <Button fx:id="btnSave" layoutX="29.0" layoutY="325.0" mnemonicParsing="false" onAction="#BtnSaveClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
+                              <Button fx:id="btnDelete" layoutX="142.0" layoutY="325.0" mnemonicParsing="false" onAction="#BtnDeleteClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Delete" />
+                              <Button fx:id="btnReset" layoutX="255.0" layoutY="325.0" mnemonicParsing="false" onAction="#ResetFeild" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" stylesheets="@../../../CSS/button.css" text="Reset" />
                               <DatePicker fx:id="txtCoyear" editable="false" layoutX="131.0" layoutY="114.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" style="-fx-background-color: #f9f7f4;" />
                            </children>
                            <padding>

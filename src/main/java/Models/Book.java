@@ -87,7 +87,19 @@ public class Book {
     public IntegerProperty categoryIdProperty() {
         return categoryId;
     }
-
+    
+    public StringProperty authorSignNameProperty() {
+        return authorSignName;
+    }
+    
+    public StringProperty publishingNameProperty() {
+        return publishingName;
+    }
+        
+    public StringProperty categoryNameProperty() {
+        return categoryName;
+    }
+    
     public int getIndex() {
         return index.get();
     }

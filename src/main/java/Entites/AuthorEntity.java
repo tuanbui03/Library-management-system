@@ -64,6 +64,40 @@ public class AuthorEntity {
         return null;
     }
 
+    public static Author GetAuthorWithId(int id) {
+        String sql = "SELECT * FROM authors WHERE id = ?";
+
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Author author = new Author();
+
+                author.setId(rs.getInt("id"));
+                author.setName(rs.getString("name"));
+                author.setDob(rs.getString("dob"));
+                author.setSign_name(rs.getString("sign_name"));
+                author.setCreatedAt(rs.getString("createdAt"));
+                author.setUpdatedAt(rs.getString("updatedAt"));
+
+                return author;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+
+        return null;
+    }
+    
     public static Author GetAuthorWithName(String name) {
         String sql = "SELECT * FROM authors WHERE name = ?";
 

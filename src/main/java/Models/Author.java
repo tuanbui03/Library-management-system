@@ -31,6 +31,34 @@ public class Author {
         updatedAt = new SimpleStringProperty(this, "updatedAt");
     }
 
+    public IntegerProperty indexProperty() {
+        return index;
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public StringProperty dobProperty() {
+        return dob;
+    }
+    
+    public StringProperty signNameProperty(){
+        return sign_name;
+    }
+    
+    public StringProperty createdAtProperty(){
+        return createdAt;
+    }
+    
+    public StringProperty updatedAtProperty(){
+        return updatedAt;
+    }
+
     public int getIndex() {
         return index.get();
     }

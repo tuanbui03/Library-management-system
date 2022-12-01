@@ -7,7 +7,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Author     : PC
 */
 .button_deffault {
-    -fx-effect: unset;
     -fx-font-family: "System";
     -fx-background-color: transparent;
     -fx-alignment: BASELINE_LEFT;
@@ -27,13 +26,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .button_active {
-    -fx-effect: unset;
     -fx-font-family: "System";
     -fx-background-color: #cccad6;
     -fx-alignment: BASELINE_LEFT;
     -fx-padding: 0 0 0 20;
     -fx-background-radius: 0px;
-    -fx-background-insets: 1px 20px 0px 0px;
+    -fx-background-insets: 0px 20px 0px 0px;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
     -fx-text-fill: #000000;
@@ -46,7 +44,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .button_primary {
-    -fx-effect: unset;
     -fx-background-color: #1c80be;
     -fx-background-radius: 5px;
     -fx-text-fill: #ffffff;
@@ -61,7 +58,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .button_success {
-    -fx-effect: unset;
     -fx-background-color: #0dc56f;
     -fx-background-radius: 5px;
     -fx-text-fill: #ffffff;
@@ -76,7 +72,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .button_danger {
-    -fx-effect: unset;
     -fx-background-color: #dc3545;
     -fx-background-radius: 5px;
     -fx-text-fill: #ffffff;

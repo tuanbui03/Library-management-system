@@ -20,6 +20,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("AdminDashboard"));
         stage.setScene(scene);
+        stage.setTitle("Library Management");
+        stage.setResizable(false);
         stage.show();
     }
 

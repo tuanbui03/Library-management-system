@@ -243,6 +243,6 @@ public class Account {
 
     @Override
     public String toString() {
-        return this.username.get();
+        return this.UID.get();
     }
 }

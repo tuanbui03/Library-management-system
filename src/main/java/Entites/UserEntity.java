@@ -76,7 +76,7 @@ public class UserEntity {
         prefs.put(ID2,
                 "Hello Europa");
         prefs.putInt(ID3,
-                45);
+                20);
         
         System.out.println(prefs.get(ID3, ID3));
 

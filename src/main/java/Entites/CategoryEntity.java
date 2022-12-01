@@ -53,6 +53,39 @@ public class CategoryEntity {
         return null;
     }
 
+    public static Category GetCategoryById(int id) {
+
+        try {
+//          connect to database and execute query with hidden value
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareCall("Select * from categories WHERE id = ?");
+//          set hidden value in query
+            preparedStatement.setInt(1, id);
+            rs = preparedStatement.executeQuery();
+
+//          set a Category, add and return ObservableList with name is categories
+            while (rs.next()) {
+                Category c = new Category();
+                c.setId(rs.getInt("id"));
+                c.setName(rs.getString("name"));
+                c.setCreatedAt(rs.getString("createdAt"));
+                c.setUpdatedAt(rs.getString("updatedAt"));
+
+                return c;
+            }
+
+        } catch (SQLException ex) {
+//          show message in console screen when wrong at query
+            System.out.println(ex.getMessage());
+        } finally {
+//          Close databse at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+        return null;
+    }
+    
     public static Category GetCategoryByName(String name) {
 
         try {

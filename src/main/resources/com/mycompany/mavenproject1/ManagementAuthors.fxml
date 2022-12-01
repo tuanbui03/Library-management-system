@@ -83,7 +83,7 @@
                     <center>
                         <Pane prefHeight="400.0" prefWidth="924.0" BorderPane.alignment="CENTER">
                             <children>
-                                <TableView editable="true" layoutY="49.0" prefHeight="408.0" prefWidth="900.0" tableMenuButtonVisible="true">
+                                <TableView fx:id="table" editable="true" layoutY="49.0" prefHeight="408.0" prefWidth="900.0" tableMenuButtonVisible="true">
                                     <columns>
                                         <TableColumn fx:id="colIndex" prefWidth="61.0" text="No." />
                                         <TableColumn fx:id="colName" maxWidth="324.0" minWidth="145.0" prefWidth="170.0" text="NAME" />

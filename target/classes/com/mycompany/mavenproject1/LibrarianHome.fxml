@@ -174,6 +174,13 @@
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/sign_out_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </children>
       </VBox>
@@ -183,7 +190,7 @@
                <top>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="922.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
                      <children>
-                        <Label text="Dashboard">
+                        <Label text="HOME">
                            <font>
                               <Font name="System Bold" size="30.0" />
                            </font>
@@ -204,7 +211,7 @@
                <center>
                   <AnchorPane prefHeight="704.0" prefWidth="880.0" BorderPane.alignment="CENTER">
                      <children>
-                        <VBox prefHeight="701.0" prefWidth="880.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox prefHeight="701.0" prefWidth="880.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <HBox alignment="CENTER" prefHeight="109.0" prefWidth="880.0" spacing="20.0">
                                  <children>
@@ -281,15 +288,68 @@
                                     <Insets top="20.0" />
                                  </VBox.margin>
                               </HBox>
-                              <HBox alignment="CENTER" prefHeight="250.0" prefWidth="860.0" spacing="20.0">
+                              <HBox alignment="CENTER" prefHeight="116.0" prefWidth="860.0" spacing="20.0">
                                  <VBox.margin>
                                     <Insets top="20.0" />
                                  </VBox.margin>
+                                 <children>
+                                    <VBox alignment="BOTTOM_LEFT" prefWidth="300.0" style="-fx-background-color: #ffffff;">
+                                       <children>
+                                          <Label text="All Books" textFill="#02030a">
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                    <VBox alignment="BOTTOM_LEFT" prefWidth="300.0" style="-fx-background-color: #ffffff;">
+                                       <children>
+                                          <Label text="All Categories" textFill="#02030a">
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
                               </HBox>
-                              <HBox alignment="CENTER" prefHeight="250.0" prefWidth="860.0" spacing="20.0" />
+                              <HBox alignment="CENTER" prefHeight="116.0" prefWidth="860.0" spacing="20.0">
+                                 <children>
+                                    <VBox alignment="BOTTOM_LEFT" prefWidth="300.0" style="-fx-background-color: #ffffff;">
+                                       <children>
+                                          <Label text="Borrowing" textFill="#02030a">
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                    <VBox alignment="BOTTOM_LEFT" prefWidth="300.0" style="-fx-background-color: #ffffff;">
+                                       <children>
+                                          <Label text="Settings" textFill="#02030a">
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </HBox>
                            </children>
                            <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
                            </padding>
                         </VBox>
                      </children>
