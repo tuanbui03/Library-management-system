@@ -128,7 +128,7 @@ public class AccountEntity {
             preparedStatement.setInt(2, 1);
             rs = preparedStatement.executeQuery();
 
-            while (rs.next()) {
+            if (rs.next()) {
                 Account acc = new Account();
 
                 acc.setId(rs.getInt("id"));
@@ -148,6 +148,8 @@ public class AccountEntity {
 
                 return acc;
             }
+            
+            return null;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -345,6 +347,7 @@ public class AccountEntity {
             if (preparedStatement.executeUpdate() > 0) {
                 flag = true;
             }
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {

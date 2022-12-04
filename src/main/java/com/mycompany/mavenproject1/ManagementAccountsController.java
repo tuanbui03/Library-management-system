@@ -373,9 +373,11 @@ public class ManagementAccountsController implements Initializable {
             a.setDob(date);
             a.setMobile(mobile);
             a.setRoleId(role.getId());
-
 //              if update success, show a box with message "Updated Successfully!" else show message "Updated Fail!"
             if (AccountEntity.Update(a)) {
+                if (AccountEntity.GetAccountByUsername(sessionUsername.getText()).getUID().equals(UID)) {
+                    sessionUsername.setText(userName);
+                }
 //                saveToFile(av, UID + ".jpg");
 //              set titile, header, content for alert box
                 alert.setAlertType(Alert.AlertType.INFORMATION);
@@ -690,6 +692,19 @@ public class ManagementAccountsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        User user = User.getInstace();
+        String sessionUser = user.getUserName();
+        try {
+
+            if (sessionUser.equals("") || sessionUser.equals(null)) {
+                SignOut();
+            } else {
+                sessionUsername.setText(sessionUser);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 //      run real time and replace a time String for labelClock
         initClock();
 //      get all data from database 

@@ -4,8 +4,8 @@
  */
 package com.mycompany.mavenproject1;
 
-import Models.Category;
-import Entites.CategoryEntity;
+import Models.*;
+import Entites.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -16,6 +16,7 @@ import java.util.prefs.Preferences;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,7 +41,7 @@ public class ManagementCategoriesController implements Initializable {
     @FXML
     private Circle avatar;
     @FXML
-    private Label labelUsername;
+    private Label sessionUsername;
     @FXML
     private Label errorName;
     @FXML
@@ -131,7 +132,6 @@ public class ManagementCategoriesController implements Initializable {
     }
 
     private void initClock() {
-
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             labelClock.setText(LocalDateTime.now().format(formatter));
@@ -275,31 +275,39 @@ public class ManagementCategoriesController implements Initializable {
     }
 
     public void BtnDeleteClick() {
-//      Call id at id feild
+
         int id = Integer.parseInt(txtId.getText());
 
-//      Call Alert box
         Alert alert = new Alert(Alert.AlertType.NONE);
+        ObservableList<Book> existsBook = BookEntity.GetBookByCategoryId(id);
+        ObservableList<Book> noBook = FXCollections.observableArrayList();
 
-//      delete data for database, if success show message "Deleted successfully !" else show message "Delete Fail !"
-        if (CategoryEntity.Delete(id)) {
+        if (existsBook.equals(noBook) || existsBook.equals(null)) {
+            if (CategoryEntity.Delete(id)) {
 
 //          set titile, header, content for alert box
+                alert.setAlertType(Alert.AlertType.INFORMATION);
+                alert.setTitle("Test Connection");
+                alert.setHeaderText("Categories Manager");
+                alert.setContentText("Deleted Successfully!");
+                alert.showAndWait();
+
+            } else {
+
+//          set titile, header, content for alert box
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Test Connection");
+                alert.setHeaderText("Categories Manager");
+                alert.setContentText("Deleted Fail!");
+                alert.showAndWait();
+
+            }
+        } else {
             alert.setAlertType(Alert.AlertType.INFORMATION);
             alert.setTitle("Test Connection");
             alert.setHeaderText("Categories Manager");
-            alert.setContentText("Deleted Successfully!");
+            alert.setContentText("This category have books! Delete books of category");
             alert.showAndWait();
-
-        } else {
-
-//          set titile, header, content for alert box
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Test Connection");
-            alert.setHeaderText("Categories Manager");
-            alert.setContentText("Deleted Fail!");
-            alert.showAndWait();
-
         }
 
         RefeshData();
@@ -375,6 +383,20 @@ public class ManagementCategoriesController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+
+        User user = User.getInstace();
+        String sessionUser = user.getUserName();
+        try {
+
+            if (sessionUser.equals("") || sessionUser.equals(null)) {
+                SignOut();
+            } else {
+                sessionUsername.setText(sessionUser);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
         initClock();
         errorName.setVisible(false);
         btnSave.setDisable(true);

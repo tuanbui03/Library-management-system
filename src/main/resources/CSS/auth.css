@@ -1,0 +1,49 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 02-12-2022, 01:20:28
+    Author     : PC
+*/
+.button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #02030A;
+}
+
+.button:hover {
+    -fx-text-fill: #1c80be;
+}
+
+.button_submit {
+    -fx-background-color: #c5a476;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 40px;
+}
+
+.button_submit:hover {
+    -fx-background-color: #c7b090;
+    -fx-text-fill: #ffffff;
+}
+
+.button_submit:pressed {
+    -fx-background-color: #a38861;
+    -fx-text-fill: #ffffff;
+}
+
+.text-field {
+    -fx-background-color: transparent;
+    -fx-border-color: #000000;
+    -fx-border-width: 0px 0px 1px 0px;
+    color: black;
+}
+
+.text-field:hover {
+    -fx-border-width: 0px 0px 1px 0px;
+    -fx-border-color: #c5a476;
+}
+
+.text-field:focused {
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color: #c5a476;
+}

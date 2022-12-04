@@ -269,7 +269,7 @@
                <top>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="922.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
                      <children>
-                        <Label text="Welcome to Library Management">
+                        <Label text="Welcome to Westmaster">
                            <font>
                               <Font name="System Bold" size="30.0" />
                            </font>
@@ -294,12 +294,12 @@
                                                 <Image url="@../../../Icon/author_icon.png" />
                                              </image>
                                           </ImageView>
-                                          <Label fx:id="totalCategories" text="1000" textFill="#02030a">
+                                          <Label fx:id="totalAuthors" text="1000" textFill="#02030a">
                                              <font>
                                                 <Font name="System Bold" size="26.0" />
                                              </font>
                                           </Label>
-                                          <Label text="Total Categories" textFill="#02030a">
+                                          <Label text="Total Authors" textFill="#02030a">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -367,12 +367,12 @@
                                                 <Image url="@../../../Icon/category_icon.png" />
                                              </image>
                                           </ImageView>
-                                          <Label fx:id="totalAuthors" text="1000" textFill="#02030a">
+                                          <Label fx:id="totalCategories" text="1000" textFill="#02030a">
                                              <font>
                                                 <Font name="System Bold" size="26.0" />
                                              </font>
                                           </Label>
-                                          <Label text="Total Authors" textFill="#02030a">
+                                          <Label text="Total Categories" textFill="#02030a">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>

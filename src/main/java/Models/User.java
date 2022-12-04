@@ -16,17 +16,19 @@ public class User {
     private static User instance;
 
     private String userName;
-    private Set<String> privileges;
 
-    private User(String userName, Set<String> privileges) {
-        this.userName = userName;
-        this.privileges = privileges;
+    private User() {
     }
 
-    public static User getInstace(String userName, Set<String> privileges) {
+    private User(String userName) {
+        this.userName = userName;
+    }
+
+    public static User getInstace() {
         if (instance == null) {
-            instance = new User(userName, privileges);
+            instance = new User();
         }
+
         return instance;
     }
 
@@ -34,20 +36,18 @@ public class User {
         return userName;
     }
 
-    public Set<String> getPrivileges() {
-        return privileges;
+    public void setUserSession(String userName) {
+        this.userName = userName;
     }
 
     public void cleanUserSession() {
-        userName = "";// or null
-        privileges = new HashSet<>();// or null
+        userName = null;// or null
     }
 
     @Override
     public String toString() {
         return "UserSession{"
-                + "userName='" + userName + '\''
-                + ", privileges=" + privileges
+                + "userName='" + userName
                 + '}';
     }
 }

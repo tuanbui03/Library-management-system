@@ -13,13 +13,13 @@ import javafx.beans.property.*;
  */
 public class Author {
 
-    private static IntegerProperty index;
-    private static IntegerProperty id;
-    private static StringProperty name;
-    private static StringProperty dob;
-    private static StringProperty sign_name;
-    private static StringProperty createdAt;
-    private static StringProperty updatedAt;
+    private final IntegerProperty index;
+    private final IntegerProperty id;
+    private final StringProperty name;
+    private final StringProperty dob;
+    private final StringProperty sign_name;
+    private final StringProperty createdAt;
+    private final StringProperty updatedAt;
 
     public Author() {
         index = new SimpleIntegerProperty(this, "index");

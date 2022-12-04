@@ -1,0 +1,200 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 04-12-2022, 18:24:15
+    Author     : PC
+*/
+
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 20-11-2022, 17:19:36
+    Author     : PC
+*/
+.button_deffault {
+    -fx-font-family: "System";
+    -fx-background-color: transparent;
+    -fx-alignment: BASELINE_LEFT;
+    -fx-padding: 0 0 0 20;
+    -fx-background-radius: 0px;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #02030A;
+}
+
+.button_deffault:hover {
+    -fx-background-color: #c5a476;
+}
+
+.button_deffault:pressed {
+    -fx-background-color: #a38861;
+}
+
+.button_active {
+    -fx-font-family: "System";
+    -fx-background-color: #c5a476;
+    -fx-alignment: BASELINE_LEFT;
+    -fx-padding: 0 0 0 20;
+    -fx-background-radius: 0px;
+    -fx-background-insets: 0px 20px 0px 0px;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #02030A;
+}
+.button_active:disabled {
+    -fx-opacity: 1;
+}
+
+.button_primary {
+    -fx-background-color: #1c80be;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #ffffff;
+}
+
+.button_primary:hover {
+    -fx-background-color: #2e8cc7;
+}
+
+.button_primary:pressed {
+    -fx-background-color: #225f85;
+}
+
+.button_success {
+    -fx-background-color: #0dc56f;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #ffffff;
+}
+
+.button_success:hover {
+    -fx-background-color: #3fc486;
+}
+
+.button_success:pressed {
+    -fx-background-color: #198754;
+}
+
+.button_danger {
+    -fx-background-color: #dc3545;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #ffffff;
+}
+
+.button_danger:hover {
+    -fx-background-color: #d45763;
+}
+
+.button_danger:pressed {
+    -fx-background-color: #a02935;
+}
+
+
+.text-field{
+    -fx-background-color: transparent;
+    -fx-border-color: #000000;
+    -fx-border-width: 0px 0px 1px 0px;
+    color: black;
+}
+.text-field:focused{
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color: #2196f3;
+}
+.text-field:disabled{
+    -fx-background-color: transparent;
+    -fx-border-color: #000000;
+    -fx-border-width: 0px 0px 1px 0px;
+    -fx-border-style: segments(2, 1, 2, 1);
+    -fx-opacity: 0.2;
+    color: black;
+}
+
+.combo-box {
+    -fx-background-color: #dbdbdb;
+    -fx-text-fill: #02030A;
+}
+
+.combo-box:selected {
+    -fx-border-radius: 10px 10px 0px 0px;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: #dbdbdb;
+    -fx-text-fill: #02030A;
+    -fx-border-radius: 0px 0px 10px 10px;
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: #969696;
+    -fx-border-radius: 0px 0px 10px 10px;
+}
+
+.combo-box .list-cell:selected {
+    -fx-background-color: #dbdbdb;
+    -fx-text-fill: #02030A;
+    -fx-border-radius: 0px 0px 10px 10px;
+}
+
+.combo-box .list-view {
+    -fx-background-color: #dfdddb;
+    -fx-border-color: #666666;
+    -fx-border-width: 0px 0px 1px 0px;
+    -fx-border-radius: 0px 0px 10px 10px;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #000000;
+    -fx-border-width: 0px 1px 1px 1px;
+    -fx-border-radius: 10px;
+    -fx-background-insets: 0 0px 0 0;
+}
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+/*    -fx-background-color: linear-gradient(to bottom left, #f4e7b8, #cadce9),
+        linear-gradient(to top right, #e9d3ca, #cce1cb);*/
+    -fx-background-color: linear-gradient(to bottom left, #cec7b2, #ccb9b0);
+        /* linear-gradient(to top right, #c7d8c7, #d8cac4); */
+    -fx-background-radius: 7px 7px 0px 0px;
+    -fx-background-insets: 0 0px 0 0;
+    -fx-padding: 0 0 5px 0;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px 0px 0px 0px;
+    -fx-border-radius: 10px;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #c7b090;
+    -fx-background-radius: 5em;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: #c5a476;
+}

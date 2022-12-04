@@ -68,6 +68,57 @@ public class ManageBookEntity {
         return null;
     }
 
+    public static ObservableList<ManageBook> GetAllBookImported() {
+        ObservableList<ManageBook> categories = FXCollections.observableArrayList();
+        String sql = "Select manage_book.*, accounts.UID AS accountUID, books.name AS bookName, books.co_year, books.price, books.quantity, books.description, books.categoryId, books.authorId, books.publishId, status_manage.name AS statusManageName "
+                + "FROM manage_book "
+                + "JOIN accounts ON manage_book.accountId = accounts.id "
+                + "JOIN books ON manage_book.bookId = books.id "
+                + "JOIN status_manage ON manage_book.statusId = status_manage.id "
+                + "WHERE status_manage.name = ?";
+
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareCall(sql);
+            preparedStatement.setString(1, "Imported");
+            rs = preparedStatement.executeQuery();
+
+            for (int i = 1; rs.next(); i++) {
+                ManageBook mb = new ManageBook();
+
+                mb.setIndex(i);
+                mb.setId(rs.getInt("id"));
+                mb.getAccount().setId(rs.getInt("accountId"));
+                mb.getAccount().setUID(rs.getString("accountUID"));
+                mb.getBook().setId(rs.getInt("bookId"));
+                mb.getBook().setName(rs.getString("bookName"));
+                mb.getBook().setCoyear(rs.getString("co_year"));
+                mb.getBook().setPrice(rs.getFloat("price"));
+                mb.getBook().setQuantity(rs.getInt("quantity"));
+                mb.getBook().setDescription(rs.getString("description"));
+                mb.getBook().setCategoryId(rs.getInt("categoryId"));
+                mb.getBook().setAuthorId(rs.getInt("authorId"));
+                mb.getBook().setPublishingId(rs.getInt("publishId"));
+                mb.getStatus().setId(rs.getInt("statusId"));
+                mb.getStatus().setName(rs.getString("statusManageName"));
+                mb.setCreatedAt(rs.getString("createdAt"));
+                mb.setUpdatedAt(rs.getString("updatedAt"));
+
+                categories.add(mb);
+            }
+
+            return categories;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+//          Close databse at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+        return null;
+    }
+
     public static ObservableList<ManageBook> SearchByBookName(String search) {
         ObservableList<ManageBook> categories = FXCollections.observableArrayList();
         String sql = "Select manage_book.*, accounts.UID AS accountUID, books.name AS bookName, books.co_year, books.price, books.quantity, books.description, books.categoryId, books.authorId, books.publishId, status_manage.name AS statusManageName "
@@ -159,7 +210,8 @@ public class ManageBookEntity {
     }
 
     public static boolean Update(ManageBook obj) {
-        String sql = "UPDATE manage_book SET price_per_book = ?, accountId = ?, bookId = ?, statusId = ?, updatedAt = ? WHERE bookId = ?";
+        String sql = "UPDATE manage_book SET price_per_book = ?, statusId = ?, updatedAt = ? "
+                + "WHERE bookId = ? AND accountId = ?";
         long milis = System.currentTimeMillis();
         Date preDate = new Date(milis);
 
@@ -167,11 +219,10 @@ public class ManageBookEntity {
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareCall(sql);
             preparedStatement.setFloat(1, obj.getPricePerBook());
-            preparedStatement.setInt(2, obj.getAccount().getId());
-            preparedStatement.setInt(3, obj.getBook().getId());
-            preparedStatement.setInt(4, obj.getStatus().getId());
-            preparedStatement.setDate(5, preDate);
-            preparedStatement.setInt(6, obj.getId());
+            preparedStatement.setInt(2, obj.getStatus().getId());
+            preparedStatement.setDate(3, preDate);
+            preparedStatement.setInt(4, obj.getBook().getId());
+            preparedStatement.setInt(5, obj.getAccount().getId());
 
 //          if update sucess reset all feild and reset table view, all feild else show message fail
             if (preparedStatement.executeUpdate() > 0) {
@@ -212,5 +263,9 @@ public class ManageBookEntity {
         }
 
         return false;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(GetAllBookImported());
     }
 }

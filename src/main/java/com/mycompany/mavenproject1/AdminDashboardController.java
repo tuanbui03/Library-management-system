@@ -30,8 +30,6 @@ import javafx.util.Duration;
  */
 public class AdminDashboardController implements Initializable {
 
-    private Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
-
     @FXML
     private Label labelClock;
     @FXML
@@ -70,10 +68,21 @@ public class AdminDashboardController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        User user = User.getInstace();
+        String sessionUser = user.getUserName();
+        try {
+
+            if (sessionUser.equals("") || sessionUser.equals(null)) {
+                SignOut();
+            } else {
+                sessionUsername.setText(sessionUser);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 //      run real time and replace a time String for labelClock
         initClock();
         Total();
-        sessionUsername.setText(prefs.get("username", ""));
     }
 
     @FXML

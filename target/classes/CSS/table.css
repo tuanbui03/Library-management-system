@@ -9,6 +9,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 .table-view {
     -fx-background-color: transparent;
+    -fx-border-color: #000000;
+    -fx-border-width: 0px 1px 1px 1px;
+    -fx-border-radius: 10px;
+    -fx-background-insets: 0 0px 0 0;
 }
 .table-view .column-header-background .filler {
     -fx-background-color: transparent;
@@ -24,8 +28,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-color: linear-gradient(to bottom left, #cec7b2, #ccb9b0);
         /* linear-gradient(to top right, #c7d8c7, #d8cac4); */
     -fx-background-radius: 7px 7px 0px 0px;
-    -fx-background-insets: 0 11px 0 0;
+    -fx-background-insets: 0 0px 0 0;
     -fx-padding: 0 0 5px 0;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px 0px 0px 0px;
+    -fx-border-radius: 10px;
 }
 
 .table-view .column-header {

@@ -28,14 +28,13 @@ public class AuthorEntity {
     public static ResultSet rs = null;
 
     public static ObservableList<Author> GetAll() {
-        ObservableList<Author> list = FXCollections.observableArrayList();
+        ObservableList<Author> authors = FXCollections.observableArrayList();
 
         String sql = "SELECT * FROM authors";
 
         try {
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareStatement(sql);
-
             rs = preparedStatement.executeQuery();
 
             for (int i = 1; rs.next(); i++) {
@@ -49,10 +48,10 @@ public class AuthorEntity {
                 author.setCreatedAt(rs.getString("createdAt"));
                 author.setUpdatedAt(rs.getString("updatedAt"));
 
-                list.add(author);
+                authors.add(author);
             }
 
-            return list;
+            return authors;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -97,15 +96,14 @@ public class AuthorEntity {
 
         return null;
     }
-    
-    public static Author GetAuthorWithName(String name) {
-        String sql = "SELECT * FROM authors WHERE name = ?";
+
+    public static Author GetAuthorWithSignName(String sign_name) {
+        String sql = "SELECT * FROM authors WHERE sign_name = ?";
 
         try {
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, name);
-
+            preparedStatement.setString(1, sign_name);
             rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -132,16 +130,15 @@ public class AuthorEntity {
         return null;
     }
 
-    public static ObservableList<Author> Search(String name) {
+    public static ObservableList<Author> SearchBySignName(String sign_name) {
         ObservableList<Author> list = FXCollections.observableArrayList();
 
-        String sql = "SELECT * FROM authors WHERE name like ?";
+        String sql = "SELECT * FROM authors WHERE sign_name like ?";
 
         try {
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, "%" + name + "%");
-
+            preparedStatement.setString(1, "%" + sign_name + "%");
             rs = preparedStatement.executeQuery();
 
             for (int i = 1; rs.next(); i++) {
@@ -172,7 +169,7 @@ public class AuthorEntity {
 
     public static boolean Add(Author author) {
         String sql = "INSERT INTO authors"
-                + "(name, dob ,signName, createdAt, updatedAt) "
+                + "(name, dob , sign_name, createdAt, updatedAt) "
                 + "VALUES(?, ?, ?, ?, ?)";
 
 //      set time at present with accuracy approximately is millis
@@ -187,13 +184,12 @@ public class AuthorEntity {
             preparedStatement.setString(3, author.getSign_name());
             preparedStatement.setDate(4, preDate);
             preparedStatement.setDate(5, preDate);
-            preparedStatement.executeUpdate();
 
             if (preparedStatement.executeUpdate() > 0) {
                 return true;
+            }else{
+                return false;
             }
-
-            return false;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -202,7 +198,7 @@ public class AuthorEntity {
     }
 
     public static boolean Update(Author author) {
-        String sql = "UPDATE authors SET name = ?, dob = ?, signName = ?,  WHERE (`id` = ?);";
+        String sql = "UPDATE authors SET name = ?, dob = ?, sign_name = ?, updatedAt = ? WHERE id = ?";
 
 //      set time at present with accuracy approximately is millis
         long milis = System.currentTimeMillis();
@@ -215,14 +211,14 @@ public class AuthorEntity {
             preparedStatement.setDate(2, convertStringToDate(author.getDob()));
             preparedStatement.setString(3, author.getSign_name());
             preparedStatement.setDate(4, preDate);
-            preparedStatement.setInt(1, author.getId());
-            preparedStatement.executeUpdate();
+            preparedStatement.setInt(5, author.getId());
 
             if (preparedStatement.executeUpdate() > 0) {
                 return true;
+            }else{
+                return false;
             }
-
-            return false;
+            
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -231,19 +227,22 @@ public class AuthorEntity {
     }
 
     public static boolean Delete(int id) {
-        String sql = "Delete from authors WHERE id = ?";
+        String sql = "Delete FROM authors WHERE id = ?";
 
         try {
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareCall(sql);
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
 
             if (preparedStatement.executeUpdate() > 0) {
-                return true;
-            }
+                System.out.println("Delete Successfully !");
 
-            return false;
+                return true;
+            } else {
+                System.out.println("Delete Faild !");
+
+                return false;
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

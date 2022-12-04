@@ -42,7 +42,7 @@
                   <Image url="@../../../Images/icon_avatar_empty.png" />
                </image>
             </ImageView>
-            <Label fx:id="sessionUsername1" text="Jimmy Fallon" textFill="#171717">
+            <Label fx:id="sessionUsername" text="Jimmy Fallon" textFill="#171717">
                <VBox.margin>
                   <Insets bottom="20.0" />
                </VBox.margin>

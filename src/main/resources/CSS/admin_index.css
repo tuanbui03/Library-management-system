@@ -1,18 +1,18 @@
 .button
 {
--fx-background-color : #05071F;
--fx-text-fill : #e7e5e5;
+    -fx-background-color : transparent;
+    -fx-text-fill : #02030A;
 }
 .button:hover{
--fx-background-color : #10165F;
+    -fx-background-color : #cccccc;
 }
 .button:pressed
 {
--fx-background-color : #1620A1;
+    -fx-background-color : #999999;
 }
 
 .scroll-pane {
-    -fx-background-color: #02030A;
+    -fx-background-color: #c5a476;
 }
 
 .scroll-bar:horizontal, .scroll-bar:vertical{
@@ -33,12 +33,12 @@
 
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
-    -fx-background-color: #10165F;
+    -fx-background-color: #c7b090;
     -fx-background-radius: 5em;
 }
 
 .scroll-pane > .corner {
-    -fx-background-color: black;
+    -fx-background-color: #c5a476;
 }
 
 .error{

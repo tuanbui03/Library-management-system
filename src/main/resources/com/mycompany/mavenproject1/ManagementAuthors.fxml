@@ -3,6 +3,7 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
@@ -35,7 +36,7 @@
                         <Insets top="50.0" />
                     </StackPane.margin>
                     <top>
-                        <Pane prefHeight="267.0" prefWidth="894.0" style="-fx-background-color: #f9f7f4; -fx-background-radius: 15px;" BorderPane.alignment="CENTER">
+                        <Pane prefHeight="290.0" prefWidth="894.0" style="-fx-background-color: #f9f7f4; -fx-background-radius: 15px;" BorderPane.alignment="CENTER">
                             <children>
                                 <Separator layoutX="37.0" prefHeight="0.0" prefWidth="800.0" />
                                 <Label layoutX="37.0" layoutY="43.0" text="ID">
@@ -43,34 +44,43 @@
                                         <Font name="System Bold Italic" size="14.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="37.0" layoutY="83.0" text="Name">
+                                <Label layoutX="37.0" layoutY="93.0" text="Name">
                                     <font>
                                         <Font name="System Bold Italic" size="14.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="37.0" layoutY="123.0" text="Sign Name">
+                                <Label layoutX="37.0" layoutY="143.0" text="Sign Name">
                                     <font>
                                         <Font name="System Bold Italic" size="14.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="txtName" layoutX="131.0" layoutY="77.0" prefHeight="26.0" prefWidth="300.0" />
-                                <TextField fx:id="txtSignname" layoutX="131.0" layoutY="117.0" prefHeight="26.0" prefWidth="300.0" />
-                                <Button fx:id="btnSave" layoutX="29.0" layoutY="207.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
+                        <Label layoutX="473.0" layoutY="43.0" text="Dob">
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="txtDob" layoutX="567.0" layoutY="37.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" style="-fx-background-color: #f9f7f4;" />
+                        <Label fx:id="errorDob" layoutX="567.0" layoutY="63.0" styleClass="error" text="Pick a date" visible="false" />
+                                <TextField fx:id="txtName" layoutX="131.0" layoutY="87.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" />
+                                <TextField fx:id="txtSignname" layoutX="131.0" layoutY="137.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" />
+                                <Button fx:id="btnSave" layoutX="29.0" layoutY="226.0" mnemonicParsing="false" onAction="#BtnSaveClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
                                 <TextField fx:id="txtId" disable="true" editable="false" layoutX="131.0" layoutY="37.0" opacity="0.6" prefHeight="26.0" prefWidth="300.0" />
-                                <Button fx:id="btnDelete" layoutX="142.0" layoutY="207.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" text="Delete" />
-                                <Button fx:id="btnReset" layoutX="255.0" layoutY="207.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" text="Reset" />
-                                <Label layoutX="473.0" layoutY="83.0" text="Updated At">
+                                <Button fx:id="btnDelete" layoutX="142.0" layoutY="226.0" mnemonicParsing="false" onAction="#BtnDeleteClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" text="Delete" />
+                                <Button fx:id="btnReset" layoutX="255.0" layoutY="226.0" mnemonicParsing="false" onAction="#ResetFeild" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" text="Reset" />
+                                <Label layoutX="473.0" layoutY="143.0" text="Updated At">
                                     <font>
                                         <Font name="System Bold Italic" size="14.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="txtUpdatedAt" disable="true" editable="false" layoutX="567.0" layoutY="77.0" prefHeight="26.0" prefWidth="300.0" />
-                                <Label layoutX="473.0" layoutY="43.0" text="Created At">
+                                <TextField fx:id="txtUpdatedAt" disable="true" editable="false" layoutX="567.0" layoutY="137.0" prefHeight="26.0" prefWidth="300.0" />
+                                <Label layoutX="473.0" layoutY="93.0" text="Created At">
                                     <font>
                                         <Font name="System Bold Italic" size="14.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="txtCreatedAt" disable="true" editable="false" layoutX="567.0" layoutY="37.0" prefHeight="26.0" prefWidth="300.0" />
+                                <TextField fx:id="txtCreatedAt" disable="true" editable="false" layoutX="567.0" layoutY="87.0" prefHeight="26.0" prefWidth="300.0" />
+                        <Label fx:id="errorName" layoutX="131.0" layoutY="113.0" styleClass="error" text="Cannot be null and less than 64 characters" visible="false" />
+                        <Label fx:id="errorSignname" layoutX="132.0" layoutY="163.0" styleClass="error" text="Cannot be null and less than 64 characters" visible="false" />
                             </children>
                             <padding>
                                 <Insets bottom="20.0" left="30.0" right="20.0" top="50.0" />
@@ -83,22 +93,20 @@
                     <center>
                         <Pane prefHeight="400.0" prefWidth="924.0" BorderPane.alignment="CENTER">
                             <children>
-                                <TableView fx:id="table" editable="true" layoutY="49.0" prefHeight="408.0" prefWidth="900.0" tableMenuButtonVisible="true">
+                                <TableView fx:id="table" editable="true" layoutY="49.0" prefHeight="400.0" prefWidth="900.0" tableMenuButtonVisible="true">
                                     <columns>
                                         <TableColumn fx:id="colIndex" prefWidth="61.0" text="No." />
-                                        <TableColumn fx:id="colName" maxWidth="324.0" minWidth="145.0" prefWidth="170.0" text="NAME" />
-                                        <TableColumn fx:id="colSignName" maxWidth="475.0" minWidth="190.0" prefWidth="190.0" text="SIGN NAME" />
-                                        <TableColumn fx:id="colBorn" minWidth="136.0" prefWidth="154.0" text="BORN" />
-                                        <TableColumn fx:id="colBorn1" minWidth="136.0" prefWidth="151.0" text="Created At" />
-                                        <TableColumn fx:id="colBorn2" minWidth="136.0" prefWidth="172.0" text="Updated At" />
+                              <TableColumn fx:id="colId" prefWidth="57.0" text="ID" visible="false" />
+                                        <TableColumn fx:id="colName" maxWidth="324.0" minWidth="-Infinity" prefWidth="177.0" text="NAME" />
+                                        <TableColumn fx:id="colSignName" maxWidth="475.0" minWidth="190.0" prefWidth="200.0" text="SIGN NAME" />
+                                        <TableColumn fx:id="colDob" minWidth="136.0" prefWidth="150.0" text="BORN" />
+                                        <TableColumn fx:id="colCreatedAt" minWidth="136.0" prefWidth="150.0" text="Created At" />
+                                        <TableColumn fx:id="colUpdatedAt" minWidth="136.0" prefWidth="150.0" text="Updated At" />
                                     </columns>
-                                    <columnResizePolicy>
-                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                    </columnResizePolicy>
                                 </TableView>
-                                <Button fx:id="btnRefesh" layoutX="16.0" layoutY="7.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="button_danger" text="Refesh" />
-                                <TextField fx:id="txtSearch" layoutX="623.0" layoutY="10.0" prefHeight="30.0" prefWidth="200.0" promptText="Search" style="-fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-background-radius: 2em;" />
-                                <Button fx:id="btnSearch" layoutX="835.0" layoutY="9.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="50.0" styleClass="button_primary" text="Find" />
+                                <Button fx:id="btnRefesh" layoutX="16.0" layoutY="7.0" mnemonicParsing="false" onAction="#RefeshData" prefHeight="30.0" prefWidth="100.0" styleClass="button_danger" text="Refesh" />
+                                <TextField fx:id="txtSearch" layoutX="623.0" layoutY="10.0" onKeyReleased="#Search" prefHeight="30.0" prefWidth="200.0" promptText="Search" style="-fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-background-radius: 2em;" />
+                                <Button fx:id="btnSearch" layoutX="835.0" layoutY="9.0" mnemonicParsing="false" onAction="#Search" prefHeight="30.0" prefWidth="50.0" styleClass="button_primary" text="Find" />
                             </children>
                             <BorderPane.margin>
                                 <Insets left="10.0" right="10.0" />
@@ -111,205 +119,251 @@
                 <Insets left="10.0" top="10.0" />
             </padding>
         </StackPane>
-        <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="256.0" style="-fx-background-color: #EBE8F9;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-                <Label fx:id="labelClock" text="Local Date Time" textFill="#171717">
-                    <font>
-                        <Font name="System Bold" size="16.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets top="20.0" />
-                    </VBox.margin>
-                </Label>
-            <ImageView disable="true" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="avatar">
-               <image>
-                  <Image url="@../../../Images/icon_avatar_empty.png" />
-               </image>
+      <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="256.0" style="-fx-background-color: #EBE8F9;">
+         <children>
+            <Label fx:id="labelClock" text="Local Date Time" textFill="#171717">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Label>
+            <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" styleClass="avatar">
                <VBox.margin>
                   <Insets bottom="20.0" top="30.0" />
                </VBox.margin>
+               <image>
+                  <Image url="@../../../Images/icon_avatar_empty.png" />
+               </image>
             </ImageView>
-                <Label fx:id="sessionUsername" text="Jimmy Fallon" textFill="#171717">
-                    <VBox.margin>
-                        <Insets bottom="20.0" />
-                    </VBox.margin>
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Button fx:id="btnDashboard" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Dashboard">
-                    <opaqueInsets>
-                        <Insets />
-                    </opaqueInsets>
-                    <VBox.margin>
-                        <Insets />
-                    </VBox.margin>
-                    <padding>
-                        <Insets left="50.0" />
-                    </padding>
-                    <textFill>
-                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                            <stops>
-                                <Stop>
-                                    <color>
-                                        <Color />
-                                    </color>
-                                </Stop>
-                                <Stop offset="1.0">
-                                    <color>
-                                        <Color />
-                                    </color>
-                                </Stop>
-                            </stops>
-                        </RadialGradient>
-                    </textFill>
-                </Button>
-                <Button fx:id="btnManageBooks" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Books">
-                    <VBox.margin>
-                        <Insets />
-                    </VBox.margin>
-                    <padding>
-                        <Insets left="50.0" />
-                    </padding>
-                    <textFill>
-                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                            <stops>
-                                <Stop>
-                                    <color>
-                                        <Color />
-                                    </color>
-                                </Stop>
-                                <Stop offset="1.0">
-                                    <color>
-                                        <Color />
-                                    </color>
-                                </Stop>
-                            </stops>
-                        </RadialGradient>
-                    </textFill>
-                </Button>
-                <Button fx:id="btnManageAuthors" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Authors">
-                    <VBox.margin>
-                        <Insets />
-                    </VBox.margin>
-                    <padding>
-                        <Insets left="50.0" />
-                    </padding>
-                    <textFill>
-                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                            <stops>
-                                <Stop>
-                                    <color>
-                                        <Color />
-                                    </color>
-                                </Stop>
-                                <Stop offset="1.0">
-                                    <color>
-                                        <Color />
-                                    </color>
-                                </Stop>
-                            </stops>
-                        </RadialGradient>
-                    </textFill>
-                </Button>
-                <Button fx:id="btnManageCategories" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Categories">
-                    <VBox.margin>
-                        <Insets />
-                    </VBox.margin>
-                    <padding>
-                        <Insets left="50.0" />
-                    </padding>
-                    <textFill>
-                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                            <stops>
-                                <Stop>
-                                    <color>
-                                        <Color />
-                                    </color>
-                                </Stop>
-                                <Stop offset="1.0">
-                                    <color>
-                                        <Color />
-                                    </color>
-                                </Stop>
-                            </stops>
-                        </RadialGradient>
-                    </textFill>
-                </Button>
-                <Button fx:id="btnManagePublishing" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Publishing">
-                    <padding>
-                        <Insets left="50.0" />
-                    </padding>
-                    <VBox.margin>
-                        <Insets />
-                    </VBox.margin>
-                    <textFill>
-                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                            <stops>
-                                <Stop>
-                                    <color>
-                                        <Color />
-                                    </color>
-                                </Stop>
-                                <Stop offset="1.0">
-                                    <color>
-                                        <Color />
-                                    </color>
-                                </Stop>
-                            </stops>
-                        </RadialGradient>
-                    </textFill>
-                </Button>
-                <Button fx:id="btnManageAccounts" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Accounts">
-                    <VBox.margin>
-                        <Insets />
-                    </VBox.margin>
-                    <padding>
-                        <Insets left="50.0" />
-                    </padding>
-                    <textFill>
-                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                            <stops>
-                                <Stop>
-                                    <color>
-                                        <Color />
-                                    </color>
-                                </Stop>
-                                <Stop offset="1.0">
-                                    <color>
-                                        <Color />
-                                    </color>
-                                </Stop>
-                            </stops>
-                        </RadialGradient>
-                    </textFill>
-                </Button>
-                <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Sign Out">
-                    <VBox.margin>
-                        <Insets />
-                    </VBox.margin>
-                    <padding>
-                        <Insets left="50.0" />
-                    </padding>
-                    <textFill>
-                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                            <stops>
-                                <Stop>
-                                    <color>
-                                        <Color />
-                                    </color>
-                                </Stop>
-                                <Stop offset="1.0">
-                                    <color>
-                                        <Color />
-                                    </color>
-                                </Stop>
-                            </stops>
-                        </RadialGradient>
-                    </textFill>
-                </Button>
-            </children>
-        </VBox>
+            <Label fx:id="sessionUsername" text="Jimmy Fallon" textFill="#171717">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnDashboard" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#switchToAdminDashboard" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Dashboard">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/dashboard_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnManageBooks" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementBooks" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Books">
+               <VBox.margin>
+                  <Insets top="-1.0" />
+               </VBox.margin>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/book_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnManageAuthors" alignment="BASELINE_LEFT" disable="true" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementAuthors" prefHeight="50.0" prefWidth="259.0" styleClass="button_active" text="Management Authors">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/author_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnManageCategories" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementCategories" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Categories">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/category_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnManagePublishing" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementPublishing" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Publishing">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/publish_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnManageAccounts" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementAccounts" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Accounts">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/user_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#SignOut" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Sign Out">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/sign_out_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
     </children>
     <effect>
         <DropShadow color="#1b1eeb" />
@@ -319,5 +373,6 @@
         <URL value="@../../../CSS/images.css" />
         <URL value="@../../../CSS/button.css" />
         <URL value="@../../../CSS/table.css" />
+      <URL value="@../../../CSS/input.css" />
     </stylesheets>
 </AnchorPane>

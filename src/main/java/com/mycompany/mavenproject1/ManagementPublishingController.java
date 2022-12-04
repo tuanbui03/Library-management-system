@@ -4,8 +4,8 @@
  */
 package com.mycompany.mavenproject1;
 
-import Entites.PublishingEntity;
-import Models.Publishing;
+import Entites.*;
+import Models.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -18,6 +18,7 @@ import java.util.prefs.Preferences;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -121,6 +122,19 @@ public class ManagementPublishingController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        User user = User.getInstace();
+        String sessionUser = user.getUserName();
+        try {
+
+            if (sessionUser.equals("") || sessionUser.equals(null)) {
+                SignOut();
+            } else {
+                sessionUsername.setText(sessionUser);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
 //      run real time and replace a time String for labelClock
         initClock();
 //      get all data from database 
@@ -143,7 +157,7 @@ public class ManagementPublishingController implements Initializable {
     public void CheckId() {
 //      get value of UID feild
         String id = txtId.getText();
-        
+
 //      Set button delete disable when UID is empty else unset disable
         if (id.isEmpty()) {
             btnDelete.setDisable(true);
@@ -268,24 +282,34 @@ public class ManagementPublishingController implements Initializable {
     @FXML
     private void BtnDeleteClick() {
         int id = Integer.parseInt(txtId.getText());
+        ObservableList<Book> existsBook = BookEntity.GetBookByCategoryId(id);
+        ObservableList<Book> noBook = FXCollections.observableArrayList();
 
 //      Call Alert box
         Alert alert = new Alert(Alert.AlertType.NONE);
 
-//      delete data for database, if success show message "Deleted successfully !" else show message "Delete Fail !"
-        if (PublishingEntity.Delete(id)) {
+        if (existsBook.equals(noBook) || existsBook.equals(null)) {
+//          delete data for database, if success show message "Deleted successfully !" else show message "Delete Fail !"
+            if (PublishingEntity.Delete(id)) {
 //          set titile, header, content for alert box
+                alert.setAlertType(Alert.AlertType.INFORMATION);
+                alert.setTitle("Test Connection");
+                alert.setHeaderText("Publishing Manager");
+                alert.setContentText("Deleted Successfully!");
+                alert.showAndWait();
+            } else {
+//          set titile, header, content for alert box
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Test Connection");
+                alert.setHeaderText("Publishing Manager");
+                alert.setContentText("Deleted Fail!");
+                alert.showAndWait();
+            }
+        } else {
             alert.setAlertType(Alert.AlertType.INFORMATION);
             alert.setTitle("Test Connection");
-            alert.setHeaderText("Accounts Manager");
-            alert.setContentText("Deleted Successfully!");
-            alert.showAndWait();
-        } else {
-//          set titile, header, content for alert box
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Test Connection");
-            alert.setHeaderText("Accounts Manager");
-            alert.setContentText("Deleted Fail!");
+            alert.setHeaderText("Publishing Manager");
+            alert.setContentText("This publish have books! Delete books of publish");
             alert.showAndWait();
         }
 

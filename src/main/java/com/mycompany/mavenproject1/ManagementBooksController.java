@@ -17,6 +17,8 @@ import java.util.prefs.Preferences;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -41,6 +43,7 @@ import javafx.util.Duration;
  * @author PC
  */
 public class ManagementBooksController implements Initializable {
+
     private Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
 
     @FXML
@@ -159,14 +162,26 @@ public class ManagementBooksController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        sessionUsername.setText(prefs.get("username", ""));
+
+        User user = User.getInstace();
+        String sessionUser = user.getUserName();
+        try {
+
+            if (sessionUser.equals("") || sessionUser.equals(null)) {
+                SignOut();
+            } else {
+                sessionUsername.setText(sessionUser);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         initClock();
         RefeshData();
         InitItemsPublishBox();
         InitItemsCategoryBox();
         InitItemsAuthorBox();
         InitItemsStatusBox();
-        table();
+        InitData();
     }
 
     @FXML
@@ -201,6 +216,7 @@ public class ManagementBooksController implements Initializable {
 
     @FXML
     private void SignOut() throws Exception {
+        prefs.clear();
         App.setRoot("SignIn");
     }
 
@@ -276,36 +292,36 @@ public class ManagementBooksController implements Initializable {
                     alert.setContentText("Added Fail!");
                     alert.showAndWait();
                 }
-            } else {
-                book.setId(Integer.parseInt(bookId));
+            }
+        } else {
+            book.setId(Integer.parseInt(bookId));
 
-                mg.getBook().setId(Integer.parseInt(bookId));
+            mg.getBook().setId(Integer.parseInt(bookId));
 
-                if (BookEntity.Update(book)) {
+            if (BookEntity.Update(book)) {
 
-                    if (ManageBookEntity.Update(mg)) {
+                if (ManageBookEntity.Update(mg)) {
 //                      set titile, header, content for alert box
-                        alert.setAlertType(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Test Connection");
-                        alert.setHeaderText("Books Manager");
-                        alert.setContentText("Updated Successfully!");
-                        alert.showAndWait();
-                    } else {
-//                      set titile, header, content for alert box
-                        alert.setAlertType(Alert.AlertType.ERROR);
-                        alert.setTitle("Test Connection");
-                        alert.setHeaderText("Books Manager");
-                        alert.setContentText("Updated Fail!");
-                        alert.showAndWait();
-                    }
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Books Manager");
+                    alert.setContentText("Updated Successfully!");
+                    alert.showAndWait();
                 } else {
-//                  set titile, header, content for alert box
+//                      set titile, header, content for alert box
                     alert.setAlertType(Alert.AlertType.ERROR);
                     alert.setTitle("Test Connection");
                     alert.setHeaderText("Books Manager");
                     alert.setContentText("Updated Fail!");
                     alert.showAndWait();
                 }
+            } else {
+//                  set titile, header, content for alert box
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Test Connection");
+                alert.setHeaderText("Books Manager");
+                alert.setContentText("Updated Fail!");
+                alert.showAndWait();
             }
         }
 
@@ -340,20 +356,31 @@ public class ManagementBooksController implements Initializable {
         ManageBook mg = new ManageBook();
         mg.setPricePerBook(Float.valueOf(price));
         mg.getAccount().setId(accountId);
+        mg.getBook().setId(bookId);
         mg.getStatus().setId(status.getId());
-        
+
 //      Call Alert box
         Alert alert = new Alert(Alert.AlertType.NONE);
 
-        if (ManageBookEntity.Update(mg) && BookEntity.Update(book)) {
-//          set titile, header, content for alert box
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Test Connection");
-            alert.setHeaderText("Books Manager");
-            alert.setContentText("Deleted Successfully!");
-            alert.showAndWait();
-        }else{
-//          set titile, header, content for alert box
+        if (BookEntity.Update(book)) {
+
+            if (ManageBookEntity.Update(mg)) {
+//                      set titile, header, content for alert box
+                alert.setAlertType(Alert.AlertType.INFORMATION);
+                alert.setTitle("Test Connection");
+                alert.setHeaderText("Books Manager");
+                alert.setContentText("Deleted Successfully!");
+                alert.showAndWait();
+            } else {
+//                      set titile, header, content for alert box
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Test Connection");
+                alert.setHeaderText("Books Manager");
+                alert.setContentText("Deleted Fail!");
+                alert.showAndWait();
+            }
+        } else {
+//                  set titile, header, content for alert box
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setTitle("Test Connection");
             alert.setHeaderText("Books Manager");
@@ -396,12 +423,13 @@ public class ManagementBooksController implements Initializable {
     @FXML
     private void RefeshData() {
         ResetFeild();
-//        table();
+        InitData();
+        btnSave.setDisable(true);
+        CheckId();
     }
 
     @FXML
-    private void table() {
-        ObservableList<ManageBook> books = ManageBookEntity.GetAllBookInfo();
+    private void table(ObservableList<ManageBook> books) {
 
         table.setItems(books);
         colIndex.setCellValueFactory(f -> f.getValue().indexProperty().asString());
@@ -410,8 +438,16 @@ public class ManagementBooksController implements Initializable {
         colBookId.setCellValueFactory(f -> f.getValue().getBook().idProperty().asString());
         colName.setCellValueFactory(f -> f.getValue().getBook().nameProperty());
         colCoyear.setCellValueFactory(f -> f.getValue().getBook().coYearProperty());
-        colPrice.setCellValueFactory(f -> f.getValue().getBook().priceProperty().asString());
-        colQuantity.setCellValueFactory(f -> f.getValue().getBook().quantityProperty().asString());
+        colPrice.setCellValueFactory(f -> {
+            StringProperty price = new SimpleStringProperty();
+            price.setValue(String.valueOf(f.getValue().getBook().getPrice()));
+            return price;
+        });
+        colQuantity.setCellValueFactory(f -> {
+            StringProperty quantity = new SimpleStringProperty();
+            quantity.setValue(String.valueOf(f.getValue().getBook().getQuantity()));
+            return quantity;
+        });
         colDescription.setCellValueFactory(f -> f.getValue().getBook().descriptionProperty());
         colAuthor.setCellValueFactory(f -> {
             Author auth = AuthorEntity.GetAuthorWithId(f.getValue().getBook().getAuthorId());
@@ -446,7 +482,7 @@ public class ManagementBooksController implements Initializable {
                     String[] date = table.getItems().get(myIndex).getBook().getCoyear().split("-");
 
                     LocalDate coYear = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
-
+                    txtCoyear.setValue(coYear);
                     Author auth = AuthorEntity.GetAuthorWithId(table.getItems().get(myIndex).getBook().getAuthorId());
                     boxAuthors.setValue(auth);
 
@@ -462,11 +498,12 @@ public class ManagementBooksController implements Initializable {
                     txtId.setText(String.valueOf(table.getItems().get(myIndex).getBook().getId()));
                     txtName.setText(table.getItems().get(myIndex).getBook().getName());
                     txtPrice.setText(String.valueOf(table.getItems().get(myIndex).getBook().getPrice()));
-                    txtQuantity.setText(String.valueOf(table.getItems().get(myIndex).getBook().quantityProperty()));
-                    txtDescription.setText(String.valueOf(table.getItems().get(myIndex).getBook().descriptionProperty()));
+                    txtQuantity.setText(String.valueOf(table.getItems().get(myIndex).getBook().getQuantity()));
+                    txtDescription.setText(String.valueOf(table.getItems().get(myIndex).getBook().getDescription()));
                     txtCreatedAt.setText(table.getItems().get(myIndex).getCreatedAt());
                     txtUpdatedAt.setText(table.getItems().get(myIndex).getUpdatedAt());
 
+                    Validated();
                     CheckId();
                 }
             });
@@ -478,82 +515,21 @@ public class ManagementBooksController implements Initializable {
     private void Search() {
         ObservableList<ManageBook> books = ManageBookEntity.SearchByBookName(txtSearch.getText());
 
-        table.setItems(books);
-        colIndex.setCellValueFactory(f -> f.getValue().indexProperty().asString());
-        colId.setCellValueFactory(f -> f.getValue().idProperty().asString());
-        colAccount.setCellValueFactory(f -> f.getValue().getAccount().UIDProperty());
-        colBookId.setCellValueFactory(f -> f.getValue().getBook().idProperty().asString());
-        colName.setCellValueFactory(f -> f.getValue().getBook().nameProperty());
-        colCoyear.setCellValueFactory(f -> f.getValue().getBook().coYearProperty());
-        colPrice.setCellValueFactory(f -> f.getValue().getBook().priceProperty().asString());
-        colQuantity.setCellValueFactory(f -> f.getValue().getBook().quantityProperty().asString());
-        colDescription.setCellValueFactory(f -> f.getValue().getBook().descriptionProperty());
-        colAuthor.setCellValueFactory(f -> {
-            Author auth = AuthorEntity.GetAuthorWithId(f.getValue().getBook().getAuthorId());
+        table(books);
+    }
 
-            return auth.signNameProperty();
-        });
-        colCategory.setCellValueFactory(f -> {
-            Category cat = CategoryEntity.GetCategoryById(f.getValue().getBook().getCategoryId());
+    @FXML
+    private void InitData() {
+        ObservableList<ManageBook> books = ManageBookEntity.GetAllBookInfo();
 
-            return cat.nameProperty();
-        });
-        colPublish.setCellValueFactory(f -> {
-            Publishing pub = PublishingEntity.GetPublishingWithId(f.getValue().getBook().getPublishingId());
-
-            return pub.nameProperty();
-        });
-        colStatus.setCellValueFactory(f -> {
-            StatusManage status = StatusManageEntity.GetStatusManageById(f.getValue().getStatus().getId());
-
-            return status.nameProperty();
-        });
-        colCreatedAt.setCellValueFactory(f -> f.getValue().createdAtProperty());
-        colUpdatedAt.setCellValueFactory(f -> f.getValue().updatedAtProperty());
-
-        table.setRowFactory(tv -> {
-            TableRow<ManageBook> myRow = new TableRow<>();
-
-            myRow.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 1 && (!myRow.isEmpty())) {
-                    myIndex = table.getSelectionModel().getSelectedIndex();
-
-                    String[] date = table.getItems().get(myIndex).getBook().getCoyear().split("-");
-
-                    LocalDate coYear = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
-
-                    Author auth = AuthorEntity.GetAuthorWithId(table.getItems().get(myIndex).getBook().getAuthorId());
-                    boxAuthors.setValue(auth);
-
-                    Category cat = CategoryEntity.GetCategoryById(table.getItems().get(myIndex).getBook().getCategoryId());
-                    boxCategories.setValue(cat);
-
-                    Publishing pub = PublishingEntity.GetPublishingWithId(table.getItems().get(myIndex).getBook().getPublishingId());
-                    boxPublishs.setValue(pub);
-
-                    StatusManage stat = StatusManageEntity.GetStatusManageById(table.getItems().get(myIndex).getStatus().getId());
-                    boxStatus.setValue(stat);
-
-                    txtId.setText(String.valueOf(table.getItems().get(myIndex).getBook().getId()));
-                    txtName.setText(table.getItems().get(myIndex).getBook().getName());
-                    txtPrice.setText(String.valueOf(table.getItems().get(myIndex).getBook().getPrice()));
-                    txtQuantity.setText(String.valueOf(table.getItems().get(myIndex).getBook().quantityProperty()));
-                    txtDescription.setText(String.valueOf(table.getItems().get(myIndex).getBook().descriptionProperty()));
-                    txtCreatedAt.setText(table.getItems().get(myIndex).getCreatedAt());
-                    txtUpdatedAt.setText(table.getItems().get(myIndex).getUpdatedAt());
-
-                    CheckId();
-                }
-            });
-            return myRow;
-        });
+        table(books);
     }
 
     @FXML
     private void Validated() {
         boolean flag = false;
 
-        String NUMBER_PATTERN = "^\\d$";
+        String NUMBER_PATTERN = "^\\d+$";
         String FLOAT_PATTERN = "\\d+\\.\\d+";
 
         String name = txtName.getText();
