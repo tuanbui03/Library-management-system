@@ -1,3 +1,0 @@
-1. Updated account username => Update sessionUsername
-2. Authors : Dob > 18 tuổi tính theo thời gian hiện tại
-3. Lỗi validated quantity book (Number không giới hạn ký tự)

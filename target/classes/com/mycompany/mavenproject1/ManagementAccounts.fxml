@@ -25,9 +25,177 @@
 
 <AnchorPane fx:id="ap" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.ManagementAccountsController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutY="3.0" prefHeight="800.0" prefWidth="256.0" style="-fx-background-color: #EBE8F9;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <StackPane layoutX="256.0" prefHeight="800.0" prefWidth="924.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="256.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="labelClock" alignment="CENTER" contentDisplay="CENTER" text="Local Date Time" textFill="#171717">
+            <Pane fx:id="pnlOverview">
+               <children>
+                  <Label alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" text="MANAGEMENT ACCOUNTS">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <BorderPane layoutY="50.0" prefHeight="750.0" prefWidth="884.0">
+                     <bottom>
+                        <Pane prefHeight="354.0" prefWidth="884.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <TableView fx:id="table" layoutX="7.0" layoutY="49.0" prefHeight="293.0" prefWidth="873.0" stylesheets="@../../../CSS/table.css" tableMenuButtonVisible="true">
+                                 <columns>
+                                    <TableColumn fx:id="colIndex" maxWidth="60.0" prefWidth="60.0" text="No." />
+                                    <TableColumn fx:id="colUID" prefWidth="100.0" text="UID" />
+                                    <TableColumn fx:id="colUsername" maxWidth="250.0" minWidth="63.0" prefWidth="100.0" text="Username" />
+                                    <TableColumn fx:id="colPassword" editable="false" maxWidth="174.0" minWidth="63.0" prefWidth="115.0" sortable="false" text="PASSWORD" visible="false" />
+                                    <TableColumn fx:id="colFullname" editable="false" maxWidth="174.0" minWidth="63.0" prefWidth="120.0" sortable="false" text="Fullname" />
+                                    <TableColumn fx:id="colGender" editable="false" maxWidth="80.0" minWidth="63.0" sortable="false" text="GENDER" visible="false" />
+                                    <TableColumn fx:id="colRole" maxWidth="80.0" minWidth="63.0" prefWidth="70.0" text="Role" />
+                                    <TableColumn fx:id="colEmail" maxWidth="160.0" minWidth="63.0" prefWidth="150.0" text="EMAIL" />
+                                    <TableColumn fx:id="colDob" maxWidth="110.0" minWidth="63.0" prefWidth="85.0" text="BIRTHDAY" />
+                                    <TableColumn fx:id="colMobile" maxWidth="134.0" minWidth="63.0" prefWidth="85.0" text="MOBILE" />
+                                    <TableColumn fx:id="colCreatedAt" maxWidth="250.0" minWidth="63.0" prefWidth="90.0" text="Created At" />
+                                    <TableColumn fx:id="colUpdatedAt" maxWidth="250.0" minWidth="63.0" prefWidth="90.0" text="Updated At" visible="false" />
+                                 </columns>
+                              </TableView>
+                              <Button fx:id="btnRefesh" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#RefeshData" prefHeight="30.0" prefWidth="100.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Refesh" />
+                              <TextField fx:id="txtSearch" layoutX="600.0" layoutY="7.0" onKeyReleased="#Search" prefHeight="30.0" prefWidth="200.0" promptText="Search a UID" style="-fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-background-radius: 2em;" />
+                              <Button fx:id="btnSearch" layoutX="812.0" layoutY="7.0" mnemonicParsing="false" onAction="#Search" prefHeight="30.0" prefWidth="50.0" styleClass="button_primary" text="Find" />
+                           </children>
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+                        </Pane>
+                     </bottom>
+                     <top>
+                        <Pane prefHeight="395.0" prefWidth="884.0" style="-fx-background-color: #f9f7f4; -fx-background-radius: 15px;" BorderPane.alignment="CENTER">
+                           <children>
+                              <Separator layoutX="37.0" prefHeight="0.0" prefWidth="800.0" />
+                              <Label layoutX="37.0" layoutY="26.0" text="UID">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtUID" disable="true" editable="false" layoutX="131.0" layoutY="21.0" prefHeight="26.0" prefWidth="300.0" />
+                              <Label layoutX="37.0" layoutY="63.0" text="User Name">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtUsername" layoutX="131.0" layoutY="58.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a name" />
+                              <Label fx:id="errorUsername" layoutX="131.0" layoutY="86.0" styleClass="error" text="Cannot be null and less than 64 character!" visible="false">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="37.0" layoutY="113.0" text="Password">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtPassword" layoutX="132.0" layoutY="108.0" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a password" />
+                              <Label fx:id="errorPassword" layoutX="133.0" layoutY="136.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" styleClass="error" text="Must have at least once(a digit, a lower case letter), at least 8 and at most 20 places" visible="false" wrapText="true">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="37.0" layoutY="190.0" text="Full Name">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtFullname" layoutX="131.0" layoutY="185.0" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a fullname" />
+                              <Label fx:id="errorFullname" layoutX="131.0" layoutY="213.0" styleClass="error" text="Cannot be null and less than 64 character!" visible="false">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="37.0" layoutY="240.0" text="Gender">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="boxGender" layoutX="131.0" layoutY="235.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a gender!" styleClass="combo-box" />
+                              <Label fx:id="errorGender" layoutX="131.0" layoutY="263.0" styleClass="error" text="Select your gender!" visible="false">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="37.0" layoutY="290.0" text="Role">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="boxRole" layoutX="131.0" layoutY="285.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Role!" styleClass="combo-box" />
+                              <Label fx:id="errorRole" layoutX="131.0" layoutY="313.0" styleClass="error" text="Select a role!" visible="false">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="476.0" layoutY="26.0" text="Email">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtEmail" layoutX="570.0" layoutY="21.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a  email" />
+                              <Label fx:id="errorEmail" layoutX="570.0" layoutY="49.0" styleClass="error" text="Cannot valid email!" visible="false">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="476.0" layoutY="76.0" text="Birthday">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker fx:id="txtDob" editable="false" layoutX="570.0" layoutY="71.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Pick a date!" style="-fx-background-color: transparent;" />
+                              <Label fx:id="errorDob" layoutX="570.0" layoutY="99.0" styleClass="error" text="Pick a date!" visible="false">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="476.0" layoutY="126.0" text="Mobile">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtMobile" layoutX="570.0" layoutY="121.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a mobile" />
+                              <Label fx:id="errorMobile" layoutX="570.0" layoutY="149.0" styleClass="error" text="Cannot be null and  have 10 number!" visible="false">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="476.0" layoutY="190.0" text="Created At">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtCreatedAt" disable="true" editable="false" layoutX="570.0" layoutY="185.0" prefHeight="26.0" prefWidth="300.0" />
+                              <Label layoutX="476.0" layoutY="240.0" text="Updated At">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtUpdatedAt" disable="true" editable="false" layoutX="570.0" layoutY="235.0" prefHeight="26.0" prefWidth="300.0" />
+                              <Button fx:id="btnSave" layoutX="29.0" layoutY="339.0" mnemonicParsing="false" onAction="#BtnSaveClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
+                              <Button fx:id="btnDelete" layoutX="142.0" layoutY="339.0" mnemonicParsing="false" onAction="#BtnDeleteClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Delete" />
+                              <Button fx:id="btnReset" layoutX="255.0" layoutY="339.0" mnemonicParsing="false" onAction="#ResetFeild" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" stylesheets="@../../../CSS/button.css" text="Reset" />
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="30.0" right="20.0" top="50.0" />
+                           </padding>
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+                        </Pane>
+                     </top>
+                  </BorderPane>
+               </children>
+               <StackPane.margin>
+                  <Insets left="20.0" right="20.0" />
+               </StackPane.margin>
+            </Pane>
+         </children>
+      </StackPane>
+      <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="256.0" style="-fx-background-color: #EBE8F9;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="labelClock" text="Local Date Time" textFill="#171717">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -206,7 +374,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnManageAccounts" alignment="BASELINE_LEFT" disable="true" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementAccounts" prefHeight="50.0" prefWidth="259.0" styleClass="button_active" text="Management Accounts">
+            <Button fx:id="btnManageAccounts" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementAccounts" prefHeight="50.0" prefWidth="259.0" styleClass="button_active" text="Management Accounts">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -233,6 +401,31 @@
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../Icon/user_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnManageBorrowing" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementBooks" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Borrows">
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/ic_book_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -270,174 +463,6 @@
             </Button>
          </children>
       </VBox>
-      <StackPane layoutX="256.0" prefHeight="800.0" prefWidth="924.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="256.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Pane fx:id="pnlOverview">
-               <children>
-                  <Label alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" text="MANAGEMENT ACCOUNTS">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <BorderPane layoutY="50.0" prefHeight="750.0" prefWidth="884.0">
-                     <bottom>
-                        <Pane prefHeight="354.0" prefWidth="884.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <TableView fx:id="table" layoutX="7.0" layoutY="49.0" prefHeight="293.0" prefWidth="873.0" stylesheets="@../../../CSS/table.css" tableMenuButtonVisible="true">
-                                 <columns>
-                                    <TableColumn fx:id="colIndex" maxWidth="60.0" prefWidth="60.0" text="No." />
-                                    <TableColumn fx:id="colUID" prefWidth="100.0" text="UID" />
-                                    <TableColumn fx:id="colUsername" maxWidth="250.0" minWidth="63.0" prefWidth="100.0" text="Username" />
-                                    <TableColumn fx:id="colPassword" editable="false" maxWidth="174.0" minWidth="63.0" prefWidth="115.0" sortable="false" text="PASSWORD" visible="false" />
-                                    <TableColumn fx:id="colFullname" editable="false" maxWidth="174.0" minWidth="63.0" prefWidth="120.0" sortable="false" text="Fullname" />
-                                    <TableColumn fx:id="colGender" editable="false" maxWidth="80.0" minWidth="63.0" sortable="false" text="GENDER" visible="false" />
-                                    <TableColumn fx:id="colRole" maxWidth="80.0" minWidth="63.0" prefWidth="70.0" text="Role" />
-                                    <TableColumn fx:id="colEmail" maxWidth="160.0" minWidth="63.0" prefWidth="150.0" text="EMAIL" />
-                                    <TableColumn fx:id="colDob" maxWidth="110.0" minWidth="63.0" prefWidth="85.0" text="BIRTHDAY" />
-                                    <TableColumn fx:id="colMobile" maxWidth="134.0" minWidth="63.0" prefWidth="85.0" text="MOBILE" />
-                                    <TableColumn fx:id="colCreatedAt" maxWidth="250.0" minWidth="63.0" prefWidth="90.0" text="Created At" />
-                                    <TableColumn fx:id="colUpdatedAt" maxWidth="250.0" minWidth="63.0" prefWidth="90.0" text="Updated At" visible="false" />
-                                 </columns>
-                              </TableView>
-                              <Button fx:id="btnRefesh" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#RefeshData" prefHeight="30.0" prefWidth="100.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Refesh" />
-                              <TextField fx:id="txtSearch" layoutX="600.0" layoutY="7.0" onKeyReleased="#Search" prefHeight="30.0" prefWidth="200.0" promptText="Search a UID" style="-fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-background-radius: 2em;" />
-                              <Button fx:id="btnSearch" layoutX="812.0" layoutY="7.0" mnemonicParsing="false" onAction="#Search" prefHeight="30.0" prefWidth="50.0" styleClass="button_primary" text="Find" />
-                           </children>
-                           <BorderPane.margin>
-                              <Insets />
-                           </BorderPane.margin>
-                        </Pane>
-                     </bottom>
-                     <top>
-                        <Pane prefHeight="395.0" prefWidth="884.0" style="-fx-background-color: #f9f7f4; -fx-background-radius: 15px;" BorderPane.alignment="CENTER">
-                           <children>
-                              <Separator layoutX="37.0" prefHeight="0.0" prefWidth="800.0" />
-                              <Label layoutX="37.0" layoutY="26.0" text="UID">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="txtUID" disable="true" editable="false" layoutX="131.0" layoutY="21.0" prefHeight="26.0" prefWidth="300.0" />
-                              <Label layoutX="37.0" layoutY="63.0" text="User Name">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="txtUsername" layoutX="131.0" layoutY="58.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a name" />
-                              <Label fx:id="errorUsername" layoutX="131.0" layoutY="86.0" styleClass="error" text="Cannot be null and less than 64 character!" visible="false">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="37.0" layoutY="113.0" text="Password">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="txtPassword" layoutX="132.0" layoutY="108.0" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a password" />
-                              <Label fx:id="errorPassword" layoutX="133.0" layoutY="136.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" styleClass="error" text="Must have at least once(a digit, a lower case letter), at least 8 and at most 20 places" visible="false" wrapText="true">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="37.0" layoutY="190.0" text="Full Name">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="txtFullname" layoutX="131.0" layoutY="185.0" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a fullname" />
-                              <Label fx:id="errorFullname" layoutX="131.0" layoutY="213.0" styleClass="error" text="Cannot be null and less than 64 character!" visible="false">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="37.0" layoutY="240.0" text="Gender">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <ComboBox fx:id="boxGender" layoutX="131.0" layoutY="235.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a gender!" styleClass="combo-box" />
-                              <Label fx:id="errorGender" layoutX="131.0" layoutY="263.0" styleClass="error" text="Select your gender!" visible="false">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="37.0" layoutY="290.0" text="Role">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <ComboBox fx:id="boxRole" layoutX="131.0" layoutY="285.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Role!" styleClass="combo-box" />
-                              <Label fx:id="errorRole" layoutX="131.0" layoutY="313.0" styleClass="error" text="Select a role!" visible="false">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="476.0" layoutY="26.0" text="Email">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="txtEmail" layoutX="570.0" layoutY="21.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a  email" />
-                              <Label fx:id="errorEmail" layoutX="570.0" layoutY="49.0" styleClass="error" text="Cannot valid email!" visible="false">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="476.0" layoutY="76.0" text="Birthday">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <DatePicker fx:id="txtDob" editable="false" layoutX="570.0" layoutY="71.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Pick a date!" style="-fx-background-color: transparent;" />
-                              <Label fx:id="errorDob" layoutX="570.0" layoutY="99.0" styleClass="error" text="Pick a date!" visible="false">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="476.0" layoutY="126.0" text="Mobile">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="txtMobile" layoutX="570.0" layoutY="121.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a mobile" />
-                              <Label fx:id="errorMobile" layoutX="570.0" layoutY="149.0" styleClass="error" text="Cannot be null and  have 10 number!" visible="false">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="476.0" layoutY="190.0" text="Created At">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="txtCreatedAt" disable="true" editable="false" layoutX="570.0" layoutY="185.0" prefHeight="26.0" prefWidth="300.0" />
-                              <Label layoutX="476.0" layoutY="240.0" text="Updated At">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="txtUpdatedAt" disable="true" editable="false" layoutX="570.0" layoutY="235.0" prefHeight="26.0" prefWidth="300.0" />
-                              <Button fx:id="btnSave" layoutX="29.0" layoutY="339.0" mnemonicParsing="false" onAction="#BtnSaveClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
-                              <Button fx:id="btnDelete" layoutX="142.0" layoutY="339.0" mnemonicParsing="false" onAction="#BtnDeleteClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Delete" />
-                              <Button fx:id="btnReset" layoutX="255.0" layoutY="339.0" mnemonicParsing="false" onAction="#ResetFeild" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" stylesheets="@../../../CSS/button.css" text="Reset" />
-                           </children>
-                           <padding>
-                              <Insets bottom="20.0" left="30.0" right="20.0" top="50.0" />
-                           </padding>
-                           <BorderPane.margin>
-                              <Insets />
-                           </BorderPane.margin>
-                        </Pane>
-                     </top>
-                  </BorderPane>
-               </children>
-               <StackPane.margin>
-                  <Insets left="20.0" right="20.0" />
-               </StackPane.margin>
-            </Pane>
-         </children>
-      </StackPane>
    </children>
    <effect>
       <DropShadow color="#1b1eeb" />

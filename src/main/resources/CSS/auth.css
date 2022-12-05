@@ -47,3 +47,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-border-width: 0px 0px 2px 0px;
     -fx-border-color: #c5a476;
 }
+
+.error{
+    -fx-text-fill: #dc3545;
+}

@@ -60,7 +60,7 @@
                            </font>
                         </Label>
                         <DatePicker fx:id="txtDob" layoutX="567.0" layoutY="37.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" style="-fx-background-color: #f9f7f4;" />
-                        <Label fx:id="errorDob" layoutX="567.0" layoutY="63.0" styleClass="error" text="Pick a date" visible="false" />
+                        <Label fx:id="errorDob" layoutX="567.0" layoutY="63.0" styleClass="error" text="Cannot be null and must greater than 18 years old" visible="false" />
                                 <TextField fx:id="txtName" layoutX="131.0" layoutY="87.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" />
                                 <TextField fx:id="txtSignname" layoutX="131.0" layoutY="137.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" />
                                 <Button fx:id="btnSave" layoutX="29.0" layoutY="226.0" mnemonicParsing="false" onAction="#BtnSaveClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
@@ -119,7 +119,7 @@
                 <Insets left="10.0" top="10.0" />
             </padding>
         </StackPane>
-      <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="256.0" style="-fx-background-color: #EBE8F9;">
+      <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="256.0" style="-fx-background-color: #EBE8F9;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label fx:id="labelClock" text="Local Date Time" textFill="#171717">
                <font>
@@ -181,7 +181,7 @@
             </Button>
             <Button fx:id="btnManageBooks" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementBooks" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Books">
                <VBox.margin>
-                  <Insets top="-1.0" />
+                  <Insets />
                </VBox.margin>
                <textFill>
                   <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
@@ -207,7 +207,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnManageAuthors" alignment="BASELINE_LEFT" disable="true" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementAuthors" prefHeight="50.0" prefWidth="259.0" styleClass="button_active" text="Management Authors">
+            <Button fx:id="btnManageAuthors" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementAuthors" prefHeight="50.0" prefWidth="259.0" styleClass="button_active" text="Management Authors">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -327,6 +327,31 @@
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../Icon/user_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnManageBorrowing" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementBooks" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Borrows">
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/ic_book_icon.png" />
                      </image>
                   </ImageView>
                </graphic>

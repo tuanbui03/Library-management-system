@@ -25,7 +25,147 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.ManagementBooksController">
    <children>
-      <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="256.0" style="-fx-background-color: #EBE8F9;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <StackPane layoutX="256.0" prefHeight="800.0" prefWidth="924.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="256.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane fx:id="pnlOverview">
+               <children>
+                  <Label layoutX="45.0" layoutY="18.0" text="MANAGEMENT BOOKS">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <BorderPane layoutY="75.0" prefHeight="726.0" prefWidth="924.0">
+                     <bottom>
+                        <Pane prefHeight="345.0" prefWidth="924.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <TableView fx:id="table" fixedCellSize="-10.0" layoutX="7.0" layoutY="49.0" prefHeight="286.0" prefWidth="910.0" tableMenuButtonVisible="true">
+                                 <columns>
+                                    <TableColumn fx:id="colIndex" prefWidth="57.0" text="No." />
+                                    <TableColumn fx:id="colId" prefWidth="61.0" text="ID" visible="false" />
+                                    <TableColumn fx:id="colAccount" prefWidth="170.0" text="ADD BY" />
+                                    <TableColumn fx:id="colBookId" prefWidth="61.0" text="BOOK ID" visible="false" />
+                                    <TableColumn fx:id="colName" maxWidth="324.0" minWidth="110.0" prefWidth="110.0" text="NAME" />
+                                    <TableColumn fx:id="colCoyear" maxWidth="324.0" minWidth="63.0" prefWidth="90.0" text="CO YEAR" visible="false" />
+                                    <TableColumn fx:id="colPrice" maxWidth="475.0" minWidth="-Infinity" prefWidth="100.0" text="PRICE" />
+                                    <TableColumn fx:id="colQuantity" maxWidth="475.0" minWidth="-Infinity" prefWidth="70.0" text="QUANTITY" visible="false" />
+                                    <TableColumn fx:id="colDescription" maxWidth="475.0" minWidth="74.0" prefWidth="74.0" text="DESCRIPTION" visible="false" />
+                                    <TableColumn fx:id="colCategory" minWidth="-Infinity" prefWidth="100.0" text="CATEGORY" />
+                                    <TableColumn fx:id="colAuthor" minWidth="-Infinity" prefWidth="100.0" text="AUTHOR" />
+                                    <TableColumn fx:id="colPublish" minWidth="-Infinity" prefWidth="100.0" text="PUBLISHING" />
+                                    <TableColumn fx:id="colStatus" minWidth="-Infinity" prefWidth="70.0" text="STATUS" />
+                                    <TableColumn fx:id="colCreatedAt" minWidth="-Infinity" prefWidth="90.0" text="Created At" visible="false" />
+                                    <TableColumn fx:id="colUpdatedAt" minWidth="-Infinity" prefWidth="90.0" text="Updated At" />
+                                 </columns>
+                              </TableView>
+                              <Button fx:id="btnRefesh" layoutX="16.0" layoutY="7.0" mnemonicParsing="false" onAction="#RefeshData" prefHeight="30.0" prefWidth="100.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Refesh" />
+                              <TextField fx:id="txtSearch" layoutX="643.0" layoutY="10.0" onKeyReleased="#Search" prefHeight="30.0" prefWidth="200.0" promptText="Search" style="-fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-background-radius: 2em;" />
+                              <Button fx:id="btnSearch" layoutX="855.0" layoutY="10.0" mnemonicParsing="false" onAction="#Search" prefHeight="30.0" prefWidth="50.0" styleClass="button_primary" text="Find" />
+                           </children>
+                        </Pane>
+                     </bottom>
+                     <top>
+                        <Pane prefHeight="371.0" prefWidth="904.0" style="-fx-background-color: #f9f7f4; -fx-background-radius: 15px;" BorderPane.alignment="CENTER">
+                           <children>
+                              <Separator layoutX="37.0" prefHeight="0.0" prefWidth="800.0" />
+                              <Label layoutX="37.0" layoutY="18.0" text="ID">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="37.0" layoutY="68.0" text="Name">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="37.0" layoutY="118.0" text="Co Year">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="37.0" layoutY="168.0" text="Price">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="37.0" layoutY="220.0" text="Quantity">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="37.0" layoutY="268.0" text="Description">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="469.0" layoutY="18.0" text="Categories">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="469.0" layoutY="68.0" text="Authors">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="469.0" layoutY="118.0" text="Publishs">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="469.0" layoutY="168.0" text="Status">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="469.0" layoutY="220.0" text="Created At">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="467.0" layoutY="270.0" text="Updated At">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtId" disable="true" editable="false" layoutX="131.0" layoutY="14.0" prefHeight="26.0" prefWidth="300.0" styleClass="input-disabled" />
+                              <TextField fx:id="txtName" layoutX="131.0" layoutY="64.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a name" styleClass="input" />
+                              <Label fx:id="errorName" layoutX="131.0" layoutY="91.0" styleClass="error" text="Cannot be null and less than 64 characters" visible="false" />
+                              <Label fx:id="errorCoyear" layoutX="131.0" layoutY="141.0" styleClass="error" text="Pick a date!" visible="false" />
+                              <TextField fx:id="txtPrice" layoutX="131.0" layoutY="164.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="0.0" styleClass="input" />
+                              <Label fx:id="errorPrice" layoutX="131.0" layoutY="191.0" styleClass="error" text="Cannot be null and is number" visible="false" />
+                              <TextField fx:id="txtQuantity" layoutX="131.0" layoutY="216.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="0" styleClass="input" />
+                              <Label fx:id="errorQuantity" layoutX="131.0" layoutY="244.0" styleClass="error" text="Cannot be null and is number" visible="false" />
+                              <TextField fx:id="txtDescription" layoutX="131.0" layoutY="264.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a text" styleClass="input" />
+                              <Label fx:id="errorDescription" layoutX="131.0" layoutY="292.0" styleClass="error" text="Enter a description" visible="false" />
+                              <ComboBox fx:id="boxCategories" layoutX="563.0" layoutY="14.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Category !" />
+                              <Label fx:id="errorCategory" layoutX="563.0" layoutY="42.0" styleClass="error" text="Please choose a Category !" visible="false" />
+                              <ComboBox fx:id="boxAuthors" layoutX="563.0" layoutY="64.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Author !" />
+                              <Label fx:id="errorAuthors" layoutX="563.0" layoutY="92.0" styleClass="error" text="Please choose a Author !" visible="false" />
+                              <ComboBox fx:id="boxPublishs" layoutX="563.0" layoutY="114.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Publishing Company !" />
+                              <Label fx:id="errorPublish" layoutX="563.0" layoutY="142.0" styleClass="error" text="Please choose a Publishing Company !" visible="false" />
+                              <ComboBox fx:id="boxStatus" layoutX="563.0" layoutY="164.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Status !" />
+                              <Label fx:id="errorStatus" layoutX="563.0" layoutY="191.0" styleClass="error" text="Please choose a Status !" visible="false" />
+                              <TextField fx:id="txtUpdatedAt" disable="true" editable="false" layoutX="561.0" layoutY="266.0" prefHeight="26.0" prefWidth="300.0" styleClass="input-disabled" />
+                              <TextField fx:id="txtCreatedAt" disable="true" editable="false" layoutX="563.0" layoutY="216.0" prefHeight="26.0" prefWidth="300.0" styleClass="input-disabled" />
+                              <Button fx:id="btnSave" layoutX="29.0" layoutY="325.0" mnemonicParsing="false" onAction="#BtnSaveClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
+                              <Button fx:id="btnDelete" layoutX="142.0" layoutY="325.0" mnemonicParsing="false" onAction="#BtnDeleteClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Delete" />
+                              <Button fx:id="btnReset" layoutX="255.0" layoutY="325.0" mnemonicParsing="false" onAction="#ResetFeild" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" stylesheets="@../../../CSS/button.css" text="Reset" />
+                              <DatePicker fx:id="txtCoyear" editable="false" layoutX="131.0" layoutY="114.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" style="-fx-background-color: #f9f7f4;" />
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="30.0" right="20.0" top="50.0" />
+                           </padding>
+                           <BorderPane.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </BorderPane.margin>
+                        </Pane>
+                     </top>
+                  </BorderPane>
+               </children>
+            </Pane>
+         </children>
+      </StackPane>
+      <VBox alignment="TOP_CENTER" layoutX="47.0" prefHeight="800.0" prefWidth="256.0" style="-fx-background-color: #EBE8F9;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label fx:id="labelClock" text="Local Date Time" textFill="#171717">
                <font>
@@ -85,9 +225,9 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnManageBooks" alignment="BASELINE_LEFT" disable="true" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementBooks" prefHeight="50.0" prefWidth="259.0" styleClass="button_active" text="Management Books">
+            <Button fx:id="btnManageBooks" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementBooks" prefHeight="50.0" prefWidth="259.0" styleClass="button_active" text="Management Books">
                <VBox.margin>
-                  <Insets top="-1.0" />
+                  <Insets />
                </VBox.margin>
                <textFill>
                   <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
@@ -237,6 +377,31 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Button fx:id="btnManageBorrowing" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToManagementBooks" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Management Borrows">
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icon/ic_book_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#SignOut" prefHeight="50.0" prefWidth="259.0" styleClass="button_deffault" text="Sign Out">
                <VBox.margin>
                   <Insets />
@@ -270,146 +435,6 @@
             </Button>
          </children>
       </VBox>
-      <StackPane layoutX="256.0" prefHeight="800.0" prefWidth="924.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="256.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Pane fx:id="pnlOverview">
-               <children>
-                  <Label layoutX="45.0" layoutY="18.0" text="MANAGEMENT BOOKS">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <BorderPane layoutY="75.0" prefHeight="726.0" prefWidth="924.0">
-                     <bottom>
-                        <Pane prefHeight="345.0" prefWidth="924.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <TableView fx:id="table" fixedCellSize="-10.0" layoutX="7.0" layoutY="49.0" prefHeight="286.0" prefWidth="910.0" tableMenuButtonVisible="true">
-                                 <columns>
-                                    <TableColumn fx:id="colIndex" prefWidth="57.0" text="No." />
-                                    <TableColumn fx:id="colId" prefWidth="61.0" text="ID" visible="false" />
-                                    <TableColumn fx:id="colAccount" prefWidth="170.0" text="ADD BY" />
-                                    <TableColumn fx:id="colBookId" prefWidth="61.0" text="BOOK ID" visible="false" />
-                                    <TableColumn fx:id="colName" maxWidth="324.0" minWidth="110.0" prefWidth="110.0" text="NAME" />
-                                    <TableColumn fx:id="colCoyear" maxWidth="324.0" minWidth="63.0" prefWidth="90.0" text="CO YEAR" visible="false" />
-                                    <TableColumn fx:id="colPrice" maxWidth="475.0" minWidth="-Infinity" prefWidth="100.0" text="PRICE" />
-                                    <TableColumn fx:id="colQuantity" maxWidth="475.0" minWidth="-Infinity" prefWidth="70.0" text="QUANTITY" visible="false" />
-                                    <TableColumn fx:id="colDescription" maxWidth="475.0" minWidth="74.0" prefWidth="74.0" text="DESCRIPTION" visible="false" />
-                                    <TableColumn fx:id="colCategory" minWidth="-Infinity" prefWidth="100.0" text="CATEGORY" />
-                                    <TableColumn fx:id="colAuthor" minWidth="-Infinity" prefWidth="100.0" text="AUTHOR" />
-                                    <TableColumn fx:id="colPublish" minWidth="-Infinity" prefWidth="100.0" text="PUBLISHING" />
-                                    <TableColumn fx:id="colStatus" minWidth="-Infinity" prefWidth="70.0" text="STATUS" />
-                                    <TableColumn fx:id="colCreatedAt" minWidth="-Infinity" prefWidth="90.0" text="Created At" visible="false" />
-                                    <TableColumn fx:id="colUpdatedAt" minWidth="-Infinity" prefWidth="90.0" text="Updated At" />
-                                 </columns>
-                              </TableView>
-                              <Button fx:id="btnRefesh" layoutX="16.0" layoutY="7.0" mnemonicParsing="false" onAction="#RefeshData" prefHeight="30.0" prefWidth="100.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Refesh" />
-                              <TextField fx:id="txtSearch" layoutX="643.0" layoutY="10.0" onKeyReleased="#Search" prefHeight="30.0" prefWidth="200.0" promptText="Search" style="-fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-background-radius: 2em;" />
-                              <Button fx:id="btnSearch" layoutX="855.0" layoutY="10.0" mnemonicParsing="false" onAction="#Search" prefHeight="30.0" prefWidth="50.0" styleClass="button_primary" text="Find" />
-                           </children>
-                        </Pane>
-                     </bottom>
-                     <top>
-                        <Pane prefHeight="371.0" prefWidth="904.0" style="-fx-background-color: #f9f7f4; -fx-background-radius: 15px;" BorderPane.alignment="CENTER">
-                           <children>
-                              <Separator layoutX="37.0" prefHeight="0.0" prefWidth="800.0" />
-                              <Label layoutX="37.0" layoutY="18.0" text="ID">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="37.0" layoutY="68.0" text="Name">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="37.0" layoutY="118.0" text="Co Year">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="37.0" layoutY="168.0" text="Price">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="37.0" layoutY="220.0" text="Quantity">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="37.0" layoutY="268.0" text="Description">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="469.0" layoutY="18.0" text="Categories">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="469.0" layoutY="68.0" text="Authors">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="469.0" layoutY="118.0" text="Publishs">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="469.0" layoutY="168.0" text="Status">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="469.0" layoutY="220.0" text="Created At">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="467.0" layoutY="270.0" text="Updated At">
-                                 <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="txtId" disable="true" editable="false" layoutX="131.0" layoutY="14.0" prefHeight="26.0" prefWidth="300.0" styleClass="input-disabled" />
-                              <TextField fx:id="txtName" layoutX="131.0" layoutY="64.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a name" styleClass="input" />
-                              <Label fx:id="errorName" layoutX="131.0" layoutY="91.0" styleClass="error" text="Cannot be null and less than 64 characters" visible="false" />
-                              <Label fx:id="errorCoyear" layoutX="131.0" layoutY="141.0" styleClass="error" text="Pick a date!" visible="false" />
-                              <TextField fx:id="txtPrice" layoutX="131.0" layoutY="164.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="0.0" styleClass="input" />
-                              <Label fx:id="errorPrice" layoutX="131.0" layoutY="191.0" styleClass="error" text="Cannot be null and is number" visible="false" />
-                              <TextField fx:id="txtQuantity" layoutX="131.0" layoutY="216.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="0" styleClass="input" />
-                              <Label fx:id="errorQuantity" layoutX="131.0" layoutY="244.0" styleClass="error" text="Cannot be null and is number" visible="false" />
-                              <TextField fx:id="txtDescription" layoutX="131.0" layoutY="264.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a text" styleClass="input" />
-                              <Label fx:id="errorDescription" layoutX="131.0" layoutY="292.0" styleClass="error" text="Enter a description" visible="false" />
-                              <ComboBox fx:id="boxCategories" layoutX="563.0" layoutY="14.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Category !" />
-                              <Label fx:id="errorCategory" layoutX="563.0" layoutY="42.0" styleClass="error" text="Please choose a Category !" visible="false" />
-                              <ComboBox fx:id="boxAuthors" layoutX="563.0" layoutY="64.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Author !" />
-                              <Label fx:id="errorAuthors" layoutX="563.0" layoutY="92.0" styleClass="error" text="Please choose a Author !" visible="false" />
-                              <ComboBox fx:id="boxPublishs" layoutX="563.0" layoutY="114.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Publishing Company !" />
-                              <Label fx:id="errorPublish" layoutX="563.0" layoutY="142.0" styleClass="error" text="Please choose a Publishing Company !" visible="false" />
-                              <ComboBox fx:id="boxStatus" layoutX="563.0" layoutY="164.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Status !" />
-                              <Label fx:id="errorStatus" layoutX="563.0" layoutY="191.0" styleClass="error" text="Please choose a Status !" visible="false" />
-                              <TextField fx:id="txtUpdatedAt" disable="true" editable="false" layoutX="561.0" layoutY="266.0" prefHeight="26.0" prefWidth="300.0" styleClass="input-disabled" />
-                              <TextField fx:id="txtCreatedAt" disable="true" editable="false" layoutX="563.0" layoutY="216.0" prefHeight="26.0" prefWidth="300.0" styleClass="input-disabled" />
-                              <Button fx:id="btnSave" layoutX="29.0" layoutY="325.0" mnemonicParsing="false" onAction="#BtnSaveClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
-                              <Button fx:id="btnDelete" layoutX="142.0" layoutY="325.0" mnemonicParsing="false" onAction="#BtnDeleteClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Delete" />
-                              <Button fx:id="btnReset" layoutX="255.0" layoutY="325.0" mnemonicParsing="false" onAction="#ResetFeild" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" stylesheets="@../../../CSS/button.css" text="Reset" />
-                              <DatePicker fx:id="txtCoyear" editable="false" layoutX="131.0" layoutY="114.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" style="-fx-background-color: #f9f7f4;" />
-                           </children>
-                           <padding>
-                              <Insets bottom="20.0" left="30.0" right="20.0" top="50.0" />
-                           </padding>
-                           <BorderPane.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </BorderPane.margin>
-                        </Pane>
-                     </top>
-                  </BorderPane>
-               </children>
-            </Pane>
-         </children>
-      </StackPane>
    </children>
    <effect>
       <DropShadow color="#1b1eeb" />

@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.SignInController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.SignUpController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -26,7 +26,7 @@
                <children>
                   <Pane layoutX="20.0" prefHeight="503.0" prefWidth="380.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label alignment="CENTER" layoutX="134.0" layoutY="251.0" text="Let's become to Member of Westmaster">
+                        <Label alignment="CENTER" layoutX="134.0" layoutY="212.0" text="Let's become to Member of Westmaster">
                            <font>
                               <Font name="System Bold" size="25.0" />
                            </font>
@@ -36,45 +36,47 @@
                               <Image url="@../../../Images/Logo.png" />
                            </image>
                         </ImageView>
-                        <TextField fx:id="txtUsername" layoutX="164.0" layoutY="335.0" onKeyReleased="#Validated" prefHeight="40.0" prefWidth="400.0" promptText="Username" />
-                        <TextField fx:id="txtPassword" layoutX="164.0" layoutY="405.0" onKeyReleased="#Validated" prefHeight="40.0" prefWidth="400.0" promptText="Password" visible="false" />
-                        <PasswordField fx:id="passPassword" layoutX="164.0" layoutY="405.0" onKeyReleased="#Validated" prefHeight="40.0" prefWidth="400.0" promptText="Password" />
-                        <Button fx:id="hidePassword" alignment="BASELINE_RIGHT" layoutX="504.0" layoutY="410.0" mnemonicParsing="false" onAction="#HidePassword" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: transparent;" text="Hide" visible="false">
+                        <TextField fx:id="txtUsername" layoutX="164.0" layoutY="263.0" onKeyReleased="#Validated" prefHeight="40.0" prefWidth="400.0" promptText="Username" />
+                        <TextField fx:id="txtPassword" layoutX="164.0" layoutY="333.0" onAction="#Validated" onKeyReleased="#Validated" prefHeight="40.0" prefWidth="400.0" promptText="Password" visible="false" />
+                        <PasswordField fx:id="passPassword" layoutX="164.0" layoutY="333.0" onKeyReleased="#Validated" prefHeight="40.0" prefWidth="400.0" promptText="Password" />
+                        <Button fx:id="hidePassword" alignment="BASELINE_RIGHT" layoutX="504.0" layoutY="338.0" mnemonicParsing="false" onAction="#HidePassword" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: transparent;" text="Hide" visible="false">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="showPassword" alignment="BASELINE_RIGHT" layoutX="506.0" layoutY="410.0" mnemonicParsing="false" onAction="#ShowPassword" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: transparent;" text="Show">
+                        <Button fx:id="showPassword" alignment="BASELINE_RIGHT" layoutX="506.0" layoutY="338.0" mnemonicParsing="false" onAction="#ShowPassword" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: transparent;" text="Show">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <TextField fx:id="txtRePassword" layoutX="164.0" layoutY="476.0" onKeyReleased="#Validated" prefHeight="40.0" prefWidth="400.0" promptText="Password" visible="false" />
-                        <PasswordField fx:id="passRePassword" layoutX="164.0" layoutY="476.0" onKeyReleased="#Validated" prefHeight="40.0" prefWidth="400.0" promptText="Confirm Password" />
-                        <Button fx:id="hideRePassword" alignment="BASELINE_RIGHT" layoutX="504.0" layoutY="481.0" mnemonicParsing="false" onAction="#HidePassword" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: transparent;" text="Hide" visible="false">
+                        <TextField fx:id="txtRePassword" layoutX="164.0" layoutY="404.0" onAction="#Validated" onKeyReleased="#Validated" prefHeight="40.0" prefWidth="400.0" promptText="Confirm Password" visible="false" />
+                        <PasswordField fx:id="passRePassword" layoutX="164.0" layoutY="404.0" onKeyReleased="#Validated" prefHeight="40.0" prefWidth="400.0" promptText="Confirm Password" />
+                        <Button fx:id="hideRePassword" alignment="BASELINE_RIGHT" layoutX="504.0" layoutY="409.0" mnemonicParsing="false" onAction="#HideRePassword" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: transparent;" text="Hide" visible="false">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="showRePassword" alignment="BASELINE_RIGHT" layoutX="506.0" layoutY="481.0" mnemonicParsing="false" onAction="#ShowPassword" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: transparent;" text="Show">
+                        <Button fx:id="showRePassword" alignment="BASELINE_RIGHT" layoutX="506.0" layoutY="409.0" mnemonicParsing="false" onAction="#ShowRePassword" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: transparent;" text="Show">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnSubmit" layoutX="175.0" layoutY="728.0" mnemonicParsing="false" onAction="#Login" prefHeight="40.0" prefWidth="390.0" styleClass="button_submit" text="Signup" textFill="WHITE">
+                        <Button fx:id="btnSubmit" layoutX="175.0" layoutY="728.0" mnemonicParsing="false" onAction="#SignUp" prefHeight="40.0" prefWidth="390.0" styleClass="button_submit" text="Signup" textFill="WHITE">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnSignUp" layoutX="248.0" layoutY="678.0" mnemonicParsing="false" onAction="#switchToSignIn" prefHeight="40.0" prefWidth="110.0" text="Login" />
-                        <Label layoutX="164.0" layoutY="690.0" text="Already an account ?" />
-                        <ComboBox fx:id="boxGender" layoutX="164.0" layoutY="546.0" prefHeight="35.0" prefWidth="400.0" promptText="Select a Gender" />
+                        <Button fx:id="btnSignIn" layoutX="248.0" layoutY="676.0" mnemonicParsing="false" onAction="#switchToSignIn" prefHeight="40.0" prefWidth="110.0" text="Login" />
+                        <Label layoutX="164.0" layoutY="688.0" text="Already an account ?" />
+                        <ComboBox fx:id="boxGender" layoutX="164.0" layoutY="546.0" onAction="#Validated" prefHeight="35.0" prefWidth="400.0" promptText="Select a Gender" />
                         <TextField fx:id="txtMobile" layoutX="164.0" layoutY="611.0" onKeyReleased="#Validated" prefHeight="40.0" prefWidth="400.0" promptText="Mobile" />
-                        <Label fx:id="errorUsername" layoutX="164.0" layoutY="375.0" styleClass="error" text="Label" />
-                        <Label fx:id="errorPassword" layoutX="164.0" layoutY="445.0" styleClass="error" text="Label" />
-                        <Label fx:id="errorRePassword" layoutX="164.0" layoutY="516.0" styleClass="error" text="Label" />
-                        <Label fx:id="errorGender" layoutX="164.0" layoutY="581.0" styleClass="error" text="Label" />
-                        <Label fx:id="errorMobile" layoutX="164.0" layoutY="651.0" styleClass="error" text="Label" />
+                        <Label fx:id="errorUsername" layoutX="163.0" layoutY="303.0" styleClass="error" text="Cannot be null and less than 64 character!" visible="false" />
+                        <Label fx:id="errorPassword" layoutX="163.0" layoutY="373.0" styleClass="error" text="At least once(a digit, a lower case letter), at least 8 and at most 20 characters" visible="false" />
+                        <Label fx:id="errorRePassword" layoutX="163.0" layoutY="444.0" styleClass="error" text="Wrong Password" visible="false" />
+                        <Label fx:id="errorGender" layoutX="163.0" layoutY="581.0" styleClass="error" text="Select a Gender" visible="false" />
+                        <Label fx:id="errorMobile" layoutX="163.0" layoutY="651.0" styleClass="error" text="Have 10 numbers" visible="false" />
+                        <TextField fx:id="txtFullname" layoutX="164.0" layoutY="475.0" onKeyReleased="#Validated" prefHeight="40.0" prefWidth="400.0" promptText="Fullname" />
+                        <Label fx:id="errorFullname" layoutX="163.0" layoutY="515.0" styleClass="error" text="Cannot be null and less than 64 character!" visible="false" />
                      </children>
                   </Pane>
                </children>

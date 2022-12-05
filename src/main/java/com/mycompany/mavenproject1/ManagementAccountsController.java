@@ -42,8 +42,6 @@ import javax.imageio.ImageIO;
  */
 public class ManagementAccountsController implements Initializable {
 
-    private Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
-
     @FXML
     private AnchorPane ap;
     @FXML
@@ -64,6 +62,8 @@ public class ManagementAccountsController implements Initializable {
     private Button btnManagePublishing;
     @FXML
     private Button btnManageAccounts;
+    @FXML
+    private Button btnManageBorrowing;
     @FXML
     private Button btnSignout;
     @FXML
@@ -189,6 +189,11 @@ public class ManagementAccountsController implements Initializable {
     @FXML
     private void switchToManagementAccounts() throws IOException {
         App.setRoot("ManagementAccounts");
+    }
+
+    @FXML
+    private void switchToManagementBorrowing() throws IOException {
+        App.setRoot("ManagementBorrow");
     }
 
     @FXML
@@ -552,8 +557,8 @@ public class ManagementAccountsController implements Initializable {
     }
 
     @FXML
-    private boolean Validated() {
-        boolean flag = true;
+    private void Validated() {
+        boolean flag = false;
         String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{8,20}$";
         String MOBILE_PATTERN = "^\\d{10}$";
         String EMAIL_PATTERN = "^(?=.{1,64}@)[\\p{L}0-9_-]+(\\.[\\p{L}0-9_-]+)*@[^-][\\p{L}0-9-]+(\\.[\\p{L}0-9-]+)*(\\.[\\p{L}]{2,})$";
@@ -569,7 +574,7 @@ public class ManagementAccountsController implements Initializable {
 //
         if (username.isEmpty() || username.length() > 64) {
             errorUsername.setVisible(true);
-            flag = false;
+            flag = true;
 
 //            return false;
         } else {
@@ -578,7 +583,7 @@ public class ManagementAccountsController implements Initializable {
 
         if (password.isEmpty() || !password.matches(PASSWORD_PATTERN)) {
             errorPassword.setVisible(true);
-            flag = false;
+            flag = true;
 //            return false;
         } else {
             errorPassword.setVisible(false);
@@ -586,7 +591,7 @@ public class ManagementAccountsController implements Initializable {
 
         if (fullname.isEmpty() || fullname.length() > 64) {
             errorFullname.setVisible(true);
-            flag = false;
+            flag = true;
 
 //            return false;
         } else {
@@ -595,7 +600,7 @@ public class ManagementAccountsController implements Initializable {
 
         if (gender == null) {
             errorGender.setVisible(true);
-            flag = false;
+            flag = true;
 
 //            return false;
         } else {
@@ -604,7 +609,7 @@ public class ManagementAccountsController implements Initializable {
 
         if (role == null) {
             errorRole.setVisible(true);
-            flag = false;
+            flag = true;
 
 //            return false;
         } else {
@@ -613,7 +618,7 @@ public class ManagementAccountsController implements Initializable {
 
         if (email.isEmpty() || !email.matches(EMAIL_PATTERN)) {
             errorEmail.setVisible(true);
-            flag = false;
+            flag = true;
 
 //            return false;
         } else {
@@ -622,7 +627,7 @@ public class ManagementAccountsController implements Initializable {
 
         if (dob == null) {
             errorDob.setVisible(true);
-            flag = false;
+            flag = true;
 
 //            return false;
         } else {
@@ -632,7 +637,7 @@ public class ManagementAccountsController implements Initializable {
         if (mobile.isEmpty() || !mobile.matches(MOBILE_PATTERN)) {
             errorMobile.setVisible(true);
 
-            flag = false;
+            flag = true;
 //            return false;
         } else {
             errorMobile.setVisible(false);
@@ -646,13 +651,7 @@ public class ManagementAccountsController implements Initializable {
 //        } else {
 //            errorAvatar.setVisible(false);
 //        }
-        if (flag == false) {
-            btnSave.setDisable(true);
-        } else {
-            btnSave.setDisable(false);
-        }
-
-        return flag;
+        btnSave.setDisable(flag);
     }
 
     @FXML

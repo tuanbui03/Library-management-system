@@ -23,6 +23,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.AccessibleRole;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -46,14 +47,42 @@ public class SignInController implements Initializable {
     private TextField txtPassword;
     @FXML
     private Button btnSubmit;
-    @FXML
-    private Button btnSignUp;
-    @FXML
     private Button hide;
-    @FXML
     private Button show;
     @FXML
     private Label labelClock;
+    @FXML
+    private Button hidePassword;
+    @FXML
+    private Button showPassword;
+    @FXML
+    private TextField txtRePassword;
+    @FXML
+    private PasswordField passRePassword;
+    @FXML
+    private Button hideRePassword;
+    @FXML
+    private Button showRePassword;
+    @FXML
+    private ComboBox<?> boxGender;
+    @FXML
+    private TextField txtMobile;
+    @FXML
+    private Label errorUsername;
+    @FXML
+    private Label errorPassword;
+    @FXML
+    private Label errorRePassword;
+    @FXML
+    private Label errorGender;
+    @FXML
+    private Label errorMobile;
+    @FXML
+    private Button btnSignIn;
+    @FXML
+    private TextField txtFullname;
+    @FXML
+    private Label errorUsername1;
 
     /**
      * Initializes the controller class.
@@ -68,14 +97,22 @@ public class SignInController implements Initializable {
     @FXML
     private void Login() throws IOException {
         String inpUsername = txtUsername.getText();
+        String inpPassword = "";
         String showPassword = txtPassword.getText();
         String hidePassword = passPassword.getText();
+
+        if (hidePassword.length() > showPassword.length()) {
+            inpPassword = hidePassword;
+        } else {
+            inpPassword = showPassword;
+        }
 
         Account acc = AccountEntity.GetAccountByUsername(inpUsername);
         if (acc != null) {
             String password = acc.getPassword();
             String role = acc.getRoleName();
-            if (password.equals(showPassword) || hidePassword.equals(password)) {
+
+            if (password.equals(inpPassword)) {
 
                 user.setUserSession(inpUsername);
 
@@ -146,6 +183,7 @@ public class SignInController implements Initializable {
         btnSubmit.setDisable(flag);
     }
 
+    @FXML
     private void initClock() {
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

@@ -57,6 +57,8 @@ public class ManagementCategoriesController implements Initializable {
     @FXML
     private Button btnManageAccounts;
     @FXML
+    private Button btnManageBorrowing;
+    @FXML
     private Button btnSignout;
     @FXML
     private Pane pnlOverview;
@@ -124,6 +126,11 @@ public class ManagementCategoriesController implements Initializable {
     @FXML
     private void switchToManagementAccounts() throws IOException {
         App.setRoot("ManagementAccounts");
+    }
+
+    @FXML
+    private void switchToManagementBorrowing() throws IOException {
+        App.setRoot("ManagementBorrow");
     }
 
     @FXML

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
@@ -93,6 +94,8 @@ public class ManagementAuthorsController implements Initializable {
     @FXML
     private Button btnManageAccounts;
     @FXML
+    private Button btnManageBorrowing;
+    @FXML
     private Button btnSignout;
 
     /**
@@ -150,6 +153,11 @@ public class ManagementAuthorsController implements Initializable {
     @FXML
     private void switchToManagementAccounts() throws IOException {
         App.setRoot("ManagementAccounts");
+    }
+
+    @FXML
+    private void switchToManagementBorrowing() throws IOException {
+        App.setRoot("ManagementBorrow");
     }
 
     @FXML
@@ -366,6 +374,7 @@ public class ManagementAuthorsController implements Initializable {
         String name = txtName.getText();
         String signName = txtSignname.getText();
         LocalDate dob = txtDob.getValue();
+        LocalDate curDate = LocalDate.now();
 
         if (name.isEmpty() || name.length() > 64) {
             errorName.setVisible(true);
@@ -388,6 +397,12 @@ public class ManagementAuthorsController implements Initializable {
 
             flag = true;
         } else {
+            int age = Period.between(dob, curDate).getYears();
+            if (age < 18) {
+                errorDob.setVisible(true);
+
+                flag = true;
+            }
             errorDob.setVisible(false);
         }
 
