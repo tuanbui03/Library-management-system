@@ -229,7 +229,7 @@ public class ManagementBooksController implements Initializable {
 
     private void initClock() {
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss\ndd/MM/yyyy");
             labelClock.setText(LocalDateTime.now().format(formatter));
         }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);
@@ -360,11 +360,13 @@ public class ManagementBooksController implements Initializable {
         book.setAuthorId(author.getId());
         book.setPublishingId(publish.getId());
 
+        StatusManage sm = StatusManageEntity.GetStatusManageByName("Deleted");
+        
         ManageBook mg = new ManageBook();
         mg.setPricePerBook(Float.valueOf(price));
         mg.getAccount().setId(accountId);
         mg.getBook().setId(bookId);
-        mg.getStatus().setId(status.getId());
+        mg.getStatus().setId(sm.getId());
 
 //      Call Alert box
         Alert alert = new Alert(Alert.AlertType.NONE);

@@ -5,6 +5,8 @@
 package Entites;
 
 import Models.ManageBook;
+import Models.Top5AuthorsIntersted;
+import Models.Top5CategoriesInterested;
 import db.*;
 import java.sql.*;
 import javafx.collections.*;
@@ -116,6 +118,246 @@ public class ManageBookEntity {
             JDBCConnect.closePreparedStatement(preparedStatement);
             JDBCConnect.closeConnection(connection);
         }
+        return null;
+    }
+
+    public static int CountBookInterestedByUID(String UID) {
+        ObservableList<ManageBook> categories = FXCollections.observableArrayList();
+        String sql = "Select mb.* "
+                + "FROM  manage_library.manage_book AS mb "
+                + "JOIN accounts ON mb.accountId = accounts.id "
+                + "WHERE accounts.UID = ? "
+                + "GROUP BY mb.bookId";
+
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareCall(sql);
+            preparedStatement.setString(1, UID);
+            rs = preparedStatement.executeQuery();
+
+            for (int i = 1; rs.next(); i++) {
+                ManageBook mb = new ManageBook();
+
+                mb.setIndex(i);
+                mb.setId(rs.getInt("id"));
+                mb.getAccount().setId(rs.getInt("accountId"));
+                mb.getBook().setId(rs.getInt("bookId"));
+                mb.getStatus().setId(rs.getInt("statusId"));
+                mb.setCreatedAt(rs.getString("createdAt"));
+                mb.setUpdatedAt(rs.getString("updatedAt"));
+
+                categories.add(mb);
+            }
+
+            return categories.size();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+//          Close databse at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+        return 0;
+    }
+
+    public static int CountAuthorInterestedByUID(String UID) {
+        ObservableList<ManageBook> categories = FXCollections.observableArrayList();
+        String sql = "Select mb.* "
+                + "FROM  manage_library.manage_book AS mb "
+                + "JOIN accounts ON mb.accountId = accounts.id "
+                + "JOIN books ON mb.bookId = books.id "
+                + "WHERE accounts.UID = ? "
+                + "GROUP BY books.authorId";
+
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareCall(sql);
+            preparedStatement.setString(1, UID);
+            rs = preparedStatement.executeQuery();
+
+            for (int i = 1; rs.next(); i++) {
+                ManageBook mb = new ManageBook();
+
+                mb.setIndex(i);
+                mb.setId(rs.getInt("id"));
+                mb.getAccount().setId(rs.getInt("accountId"));
+                mb.getBook().setId(rs.getInt("bookId"));
+                mb.getStatus().setId(rs.getInt("statusId"));
+                mb.setCreatedAt(rs.getString("createdAt"));
+                mb.setUpdatedAt(rs.getString("updatedAt"));
+
+                categories.add(mb);
+            }
+
+            return categories.size();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+//          Close databse at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+        return 0;
+    }
+
+    public static int CountCategoryInterestedByUID(String UID) {
+        ObservableList<ManageBook> categories = FXCollections.observableArrayList();
+        String sql = "Select mb.* "
+                + "FROM  manage_library.manage_book AS mb "
+                + "JOIN accounts ON mb.accountId = accounts.id "
+                + "JOIN books ON mb.bookId = books.id "
+                + "WHERE accounts.UID = ? "
+                + "GROUP BY books.categoryId";
+
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareCall(sql);
+            preparedStatement.setString(1, UID);
+            rs = preparedStatement.executeQuery();
+
+            for (int i = 1; rs.next(); i++) {
+                ManageBook mb = new ManageBook();
+
+                mb.setIndex(i);
+                mb.setId(rs.getInt("id"));
+                mb.getAccount().setId(rs.getInt("accountId"));
+                mb.getBook().setId(rs.getInt("bookId"));
+                mb.getStatus().setId(rs.getInt("statusId"));
+                mb.setCreatedAt(rs.getString("createdAt"));
+                mb.setUpdatedAt(rs.getString("updatedAt"));
+
+                categories.add(mb);
+            }
+
+            return categories.size();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+//          Close databse at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+        return 0;
+    }
+
+    public static int CountPublishingInterestedByUID(String UID) {
+        ObservableList<ManageBook> categories = FXCollections.observableArrayList();
+        String sql = "Select mb.* "
+                + "FROM  manage_library.manage_book AS mb "
+                + "JOIN accounts ON mb.accountId = accounts.id "
+                + "JOIN books ON mb.bookId = books.id "
+                + "WHERE accounts.UID = ? "
+                + "GROUP BY books.publishId";
+
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareCall(sql);
+            preparedStatement.setString(1, UID);
+            rs = preparedStatement.executeQuery();
+
+            for (int i = 1; rs.next(); i++) {
+                ManageBook mb = new ManageBook();
+
+                mb.setIndex(i);
+                mb.setId(rs.getInt("id"));
+                mb.getAccount().setId(rs.getInt("accountId"));
+                mb.getBook().setId(rs.getInt("bookId"));
+                mb.getStatus().setId(rs.getInt("statusId"));
+                mb.setCreatedAt(rs.getString("createdAt"));
+                mb.setUpdatedAt(rs.getString("updatedAt"));
+
+                categories.add(mb);
+            }
+
+            return categories.size();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+//          Close databse at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+        return 0;
+    }
+
+    public static ObservableList<Top5CategoriesInterested> Top5CategoryInterestedByUID(String UID) {
+        ObservableList<Top5CategoriesInterested> categories = FXCollections.observableArrayList();
+        String sql = "Select books.authorId AS id , COUNT(books.id) AS totalBook "
+                + "FROM  manage_library.manage_book AS mb "
+                + "JOIN accounts ON mb.accountId = accounts.id "
+                + "JOIN books ON mb.bookId = books.id "
+                + "WHERE accounts.UID = ? "
+                + "GROUP BY books.categoryId "
+                + "LIMIT ?";
+
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareCall(sql);
+            preparedStatement.setString(1, UID);
+            preparedStatement.setInt(2, 5);
+            rs = preparedStatement.executeQuery();
+
+            for (int i = 1; rs.next(); i++) {
+                Top5CategoriesInterested mb = new Top5CategoriesInterested();
+
+                mb.setId(rs.getInt("id"));
+                mb.setTotal(rs.getInt("totalBook"));
+
+                categories.add(mb);
+            }
+
+            return categories;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+//          Close databse at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+        return null;
+    }
+
+    public static ObservableList<Top5AuthorsIntersted> Top5AuthorInterestedByUID(String UID) {
+        ObservableList<Top5AuthorsIntersted> categories = FXCollections.observableArrayList();
+        String sql = "Select books.authorId AS id , COUNT(books.id) AS totalBook "
+                + "FROM  manage_library.manage_book AS mb "
+                + "JOIN accounts ON mb.accountId = accounts.id "
+                + "JOIN books ON mb.bookId = books.id "
+                + "WHERE accounts.UID = ? "
+                + "GROUP BY books.authorId "
+                + "LIMIT ?";
+
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareCall(sql);
+            preparedStatement.setString(1, UID);
+            preparedStatement.setInt(2, 5);
+            rs = preparedStatement.executeQuery();
+
+            for (int i = 1; rs.next(); i++) {
+                Top5AuthorsIntersted mb = new Top5AuthorsIntersted();
+
+                mb.setId(rs.getInt("id"));
+                mb.setTotal(rs.getInt("totalBook"));
+
+                categories.add(mb);
+            }
+
+            return categories;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+//          Close databse at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+
         return null;
     }
 
@@ -264,7 +506,7 @@ public class ManageBookEntity {
 
         return false;
     }
-    
+
     public static void main(String[] args) {
         System.out.println(GetAllBookImported());
     }

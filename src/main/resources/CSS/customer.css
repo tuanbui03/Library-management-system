@@ -92,23 +92,28 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 
-.text-field{
+.text-field {
     -fx-background-color: transparent;
     -fx-border-color: #000000;
     -fx-border-width: 0px 0px 1px 0px;
-    color: black;
 }
-.text-field:focused{
+
+.text-field:hover {
+    -fx-border-width: 0px 0px 1px 0px;
+    -fx-border-color: #c5a476;
+}
+
+.text-field:focused {
     -fx-border-width: 0px 0px 2px 0px;
-    -fx-border-color: #2196f3;
+    -fx-border-color: #c5a476;
 }
+
 .text-field:disabled{
     -fx-background-color: transparent;
     -fx-border-color: #000000;
     -fx-border-width: 0px 0px 1px 0px;
     -fx-border-style: segments(2, 1, 2, 1);
     -fx-opacity: 0.2;
-    color: black;
 }
 
 .combo-box {
@@ -160,10 +165,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .table-view .column-header-background{
-/*    -fx-background-color: linear-gradient(to bottom left, #f4e7b8, #cadce9),
-        linear-gradient(to top right, #e9d3ca, #cce1cb);*/
+    /*    -fx-background-color: linear-gradient(to bottom left, #f4e7b8, #cadce9),
+            linear-gradient(to top right, #e9d3ca, #cce1cb);*/
     -fx-background-color: linear-gradient(to bottom left, #cec7b2, #ccb9b0);
-        /* linear-gradient(to top right, #c7d8c7, #d8cac4); */
+    /* linear-gradient(to top right, #c7d8c7, #d8cac4); */
     -fx-background-radius: 7px 7px 0px 0px;
     -fx-background-insets: 0 0px 0 0;
     -fx-padding: 0 0 5px 0;

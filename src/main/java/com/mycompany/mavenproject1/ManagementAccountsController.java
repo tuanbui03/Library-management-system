@@ -226,9 +226,6 @@ public class ManagementAccountsController implements Initializable {
                     myIndex = table.getSelectionModel().getSelectedIndex();
 
                     int indexGender = table.getItems().get(myIndex).getGender();
-                    ObservableList<Gender> gender = FXCollections.observableArrayList();
-
-                    gender.addAll(new Gender(1, "Male"), new Gender(2, "Female"), new Gender(3, "Other"));
 
                     boxGender.setValue(boxGender.getItems().get(indexGender - 1));
 
@@ -264,7 +261,7 @@ public class ManagementAccountsController implements Initializable {
 
     private void initClock() {
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss\ndd/MM/yyyy");
             labelClock.setText(LocalDateTime.now().format(formatter));
         }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);

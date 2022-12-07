@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -20,27 +21,28 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1180.0" stylesheets="@../../../CSS/customer.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1180.0" stylesheets="@../../../CSS/customer.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.CustomerBorrowController">
    <children>
       <VBox alignment="TOP_CENTER" layoutY="5.0" prefHeight="800.0" prefWidth="300.0" style="-fx-background-color: #c7b090;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="labelClock" text="Local Date Time" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Label>
+            <VBox alignment="CENTER" prefHeight="70.0" prefWidth="401.0">
+               <children>
+                  <Label fx:id="labelClock" text="LocalDateTime" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
             <ImageView disable="true" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="avatar">
                <image>
                   <Image url="@../../../Images/icon_avatar_empty.png" />
                </image>
                <VBox.margin>
-                  <Insets bottom="20.0" top="30.0" />
+                  <Insets bottom="20.0" top="10.0" />
                </VBox.margin>
             </ImageView>
-            <Label fx:id="sessionUsername" alignment="CENTER" text="Pham Quang Hung" textFill="WHITE">
+            <Label fx:id="sessionUsername" alignment="CENTER" text="Pham Quang Hung" textFill="#02030a">
                <font>
                   <Font size="14.0" />
                </font>
@@ -193,6 +195,7 @@
                                     <Font name="System Bold Italic" size="15.0" />
                                  </font>
                               </Label>
+                              <TextField fx:id="id" disable="true" layoutX="356.0" layoutY="2.0" visible="false" />
                               <ComboBox fx:id="boxPublishing" layoutX="111.0" layoutY="20.0" prefWidth="250.0" promptText="Select a Publishing" />
                               <ComboBox fx:id="boxAuthor" layoutX="111.0" layoutY="61.0" prefWidth="250.0" promptText="Select a Author" />
                               <ComboBox fx:id="boxCategory" layoutX="505.0" layoutY="20.0" prefWidth="250.0" promptText="Select a Category" />
@@ -202,21 +205,51 @@
                         <TableView fx:id="table" layoutX="20.0" layoutY="183.0" prefHeight="487.0" prefWidth="840.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="190.0">
                           <columns>
                               <TableColumn fx:id="colIndex" prefWidth="60.0" text="No." />
-                            <TableColumn fx:id="colName" prefWidth="475.0" text="Book's Name" />
+                              <TableColumn fx:id="colId" prefWidth="60.0" text="ID" visible="false" />
+                            <TableColumn fx:id="colBook" prefWidth="480.0" text="Book's Name" />
+                              <TableColumn fx:id="colPublishing" prefWidth="144.0" text="Publishs" visible="false" />
+                              <TableColumn fx:id="colAuthor" prefWidth="144.0" text="Authors" visible="false" />
+                              <TableColumn fx:id="colCategory" prefWidth="144.0" text="Categories" visible="false" />
                             <TableColumn fx:id="colBorrowAt" prefWidth="150.0" text="Borrowed At" />
-                              <TableColumn prefWidth="150.0" text="Refuned At" />
+                              <TableColumn fx:id="colRefundedAt" prefWidth="150.0" text="Refunded At" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btnSearch" layoutX="24.0" layoutY="139.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" style="-fx-background-radius: 20px;" styleClass="button_primary" text="Search">
-                           <font>
-                              <Font size="14.0" />
-                           </font></Button>
-                        <TextField fx:id="txtSearch" layoutX="105.0" layoutY="139.0" onKeyReleased="#Search" prefHeight="30.0" prefWidth="200.0" promptText="Search borrow books" style="-fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-background-radius: 2em;" />
-                        <Button fx:id="btnBooking" layoutX="784.0" layoutY="137.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="76.0" style="-fx-background-radius: 20px;" styleClass="button_success" text="Booking">
+                        <HBox layoutX="26.0" layoutY="140.0" spacing="10.0" AnchorPane.leftAnchor="26.0" AnchorPane.topAnchor="140.0">
+                           <children>
+                              <Button fx:id="btnSearch" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-radius: 20px;" styleClass="button_primary" text="Search">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../Icon/search.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="-5.0" />
+                                 </padding>
+                              </Button>
+                              <TextField fx:id="txtSearch" onKeyReleased="#Search" prefHeight="30.0" prefWidth="200.0" promptText="Search borrow books" style="-fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-background-radius: 2em;" />
+                           </children>
+                        </HBox>
+                        <Button fx:id="btnBooking" layoutX="755.0" layoutY="134.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="105.0" style="-fx-background-radius: 20px;" styleClass="button_success" text="Booking" AnchorPane.rightAnchor="20.0">
                            <font>
                               <Font size="14.0" />
                            </font>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
                         </Button>
+                        <ImageView disable="true" fitHeight="30.0" fitWidth="30.0" layoutX="750.0" layoutY="146.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../Icon/booking.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </ImageView>
                      </children>
                   </AnchorPane>
                </center>

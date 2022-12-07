@@ -20,10 +20,15 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.AccessibleRole;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -47,42 +52,16 @@ public class SignInController implements Initializable {
     private TextField txtPassword;
     @FXML
     private Button btnSubmit;
+    @FXML
     private Button hide;
+    @FXML
     private Button show;
     @FXML
     private Label labelClock;
     @FXML
-    private Button hidePassword;
-    @FXML
-    private Button showPassword;
-    @FXML
-    private TextField txtRePassword;
-    @FXML
-    private PasswordField passRePassword;
-    @FXML
-    private Button hideRePassword;
-    @FXML
-    private Button showRePassword;
-    @FXML
-    private ComboBox<?> boxGender;
-    @FXML
-    private TextField txtMobile;
-    @FXML
-    private Label errorUsername;
-    @FXML
     private Label errorPassword;
     @FXML
-    private Label errorRePassword;
-    @FXML
-    private Label errorGender;
-    @FXML
-    private Label errorMobile;
-    @FXML
-    private Button btnSignIn;
-    @FXML
-    private TextField txtFullname;
-    @FXML
-    private Label errorUsername1;
+    private Button btnSignUp;
 
     /**
      * Initializes the controller class.
@@ -92,6 +71,8 @@ public class SignInController implements Initializable {
         // TODO
         initClock();
         Validated();
+        errorPassword.setVisible(false);
+        hide.setVisible(false);
     }
 
     @FXML
@@ -107,6 +88,8 @@ public class SignInController implements Initializable {
             inpPassword = showPassword;
         }
 
+//      Call Alert box
+        Alert alert = new Alert(Alert.AlertType.NONE);
         Account acc = AccountEntity.GetAccountByUsername(inpUsername);
         if (acc != null) {
             String password = acc.getPassword();
@@ -117,27 +100,59 @@ public class SignInController implements Initializable {
                 user.setUserSession(inpUsername);
 
                 if (role.equals("Admin")) {
-                    System.out.println("is Admin");
+
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+                    try {
+                        alert.setDialogPane(loader.load());
+                        MessageController mc = loader.getController();
+                        mc.setMessage("Login Successfully!\nWelcome to Westmaster " + acc.getFull_name());
+                    } catch (Exception e) {
+                    }
+                    alert.showAndWait();
+
                     switchToAdminDashboard();
                 } else if (role.equals("Reader")) {
-                    System.out.println("is Reader");
-                    switchToSignUp();
+
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+                    try {
+                        alert.setDialogPane(loader.load());
+                        MessageController mc = loader.getController();
+                        mc.setMessage("Login Successfully!\nWelcome to Westmaster " + acc.getFull_name());
+                    } catch (Exception e) {
+                    }
+                    alert.showAndWait();
+
+                    switchToCustomerDashboard();
                 }
             } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+                try {
+                    alert.setDialogPane(loader.load());
+                    MessageController mc = loader.getController();
+                    mc.setMessage("Wrong Username or Password!");
+                } catch (Exception e) {
+                }
 
+                alert.showAndWait();
             }
         } else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+            try {
+                alert.setDialogPane(loader.load());
+                MessageController mc = loader.getController();
+                mc.setMessage("Wrong Username or Password!");
+            } catch (Exception e) {
+            }
 
+            alert.showAndWait();
         }
 
     }
 
-    @FXML
     private void switchToAdminDashboard() throws IOException {
         App.setRoot("AdminDashboard");
     }
 
-    @FXML
     private void switchToCustomerDashboard() throws IOException {
         App.setRoot("CustomerDashboard");
     }
@@ -153,8 +168,8 @@ public class SignInController implements Initializable {
         passPassword.setText(showPassword);
         txtPassword.setVisible(false);
         passPassword.setVisible(true);
-        hide.setVisible(false);
         show.setVisible(true);
+        hide.setVisible(false);
     }
 
     @FXML
@@ -163,8 +178,8 @@ public class SignInController implements Initializable {
         txtPassword.setText(hidePassword);
         passPassword.setVisible(false);
         txtPassword.setVisible(true);
-        show.setVisible(false);
         hide.setVisible(true);
+        show.setVisible(false);
     }
 
     @FXML
@@ -174,22 +189,37 @@ public class SignInController implements Initializable {
         String hidePassword = passPassword.getText();
         String showPassword = txtPassword.getText();
 
-        if (username.isEmpty() || (hidePassword.isEmpty() && showPassword.isEmpty())) {
+        String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{8,20}$";
+
+        if (username.isEmpty()) {
             flag = true;
         } else {
-            flag = false;
+        }
+
+        if ((hidePassword.isEmpty() && showPassword.isEmpty())) {
+            errorPassword.setVisible(true);
+
+            flag = true;
+        } else {
+            if (hidePassword.matches(PASSWORD_PATTERN) && !hidePassword.isEmpty() || showPassword.matches(PASSWORD_PATTERN) && !showPassword.isEmpty()) {
+                errorPassword.setVisible(false);
+            } else {
+                errorPassword.setVisible(true);
+
+                flag = true;
+            }
         }
 
         btnSubmit.setDisable(flag);
     }
 
-    @FXML
     private void initClock() {
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss\ndd/MM/yyyy");
             labelClock.setText(LocalDateTime.now().format(formatter));
         }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
     }
+
 }

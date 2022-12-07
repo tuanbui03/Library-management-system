@@ -251,6 +251,45 @@ public class AccountEntity {
 
         return null;
     }
+    
+    public static boolean SignUp(Account acc) {
+        String insertOne = "INSERT INTO accounts (UID, username, avatar, password, full_name, gender, email, mobile, status, roleId, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+//      set time at present with accuracy approximately is millis
+        long milis = System.currentTimeMillis();
+        Date preDate = new Date(milis);
+        try {
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareStatement(insertOne);
+
+            preparedStatement.setString(1, acc.getUID());
+            preparedStatement.setString(2, acc.getUsername());
+            preparedStatement.setString(3, acc.getAvatar());
+            preparedStatement.setString(4, acc.getPassword());
+            preparedStatement.setString(5, acc.getFull_name());
+            preparedStatement.setInt(6, acc.getGender());
+            preparedStatement.setInt(7, acc.getGender());
+            preparedStatement.setString(8, acc.getMobile());
+            preparedStatement.setInt(9, acc.getStatus());
+            preparedStatement.setInt(10, acc.getRoleId());
+            preparedStatement.setDate(11, preDate);
+            preparedStatement.setDate(12, preDate);
+
+            if (preparedStatement.executeUpdate() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+
+        return false;
+    }
 
     public static boolean Add(Account acc) {
         String insertOne = "INSERT INTO accounts (UID, username, avatar, password, full_name, gender, email, dob, mobile, status, roleId, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

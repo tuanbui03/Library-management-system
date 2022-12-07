@@ -22,20 +22,21 @@
    <children>
       <VBox alignment="TOP_CENTER" layoutY="5.0" prefHeight="800.0" prefWidth="300.0" style="-fx-background-color: #c7b090;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="labelClock" text="Local Date Time">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Label>
+            <VBox alignment="CENTER" prefHeight="70.0" prefWidth="401.0">
+               <children>
+                  <Label fx:id="labelClock" text="LocalDateTime" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
             <ImageView disable="true" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="avatar">
                <image>
                   <Image url="@../../../Images/icon_avatar_empty.png" />
                </image>
                <VBox.margin>
-                  <Insets bottom="20.0" top="30.0" />
+                  <Insets bottom="20.0" top="10.0" />
                </VBox.margin>
             </ImageView>
             <Label fx:id="sessionUsername" alignment="CENTER" text="Pham Quang Hung">
@@ -171,28 +172,38 @@
                      <children>
                         <Pane layoutX="4.0" prefHeight="686.0" prefWidth="247.0" style="-fx-background-radius: 10px; -fx-background-color: #dddddd;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                            <children>
-                              <TableView fx:id="tableCategories" layoutX="20.0" layoutY="47.0" prefHeight="250.0" prefWidth="211.0">
+                              <TableView fx:id="tableCategories" layoutX="18.0" layoutY="51.0" prefHeight="270.0" prefWidth="211.0">
                                  <columns>
                                     <TableColumn fx:id="colCategoryName" editable="false" prefWidth="134.0" resizable="false" text="Categories" />
                                     <TableColumn fx:id="colCategoryTotal" editable="false" prefWidth="76.0" resizable="false" text="Total" />
                                  </columns>
                               </TableView>
-                              <TableView fx:id="tableAuthors" layoutX="18.0" layoutY="392.0" prefHeight="250.0" prefWidth="211.0">
+                              <TableView fx:id="tableAuthors" layoutX="18.0" layoutY="386.0" prefHeight="270.0" prefWidth="211.0">
                                  <columns>
                                     <TableColumn fx:id="colAuthorsName" prefWidth="134.0" text="Authors" />
                                     <TableColumn fx:id="colAuthorsTotal" prefWidth="76.0" text="Total" />
                                  </columns>
                               </TableView>
-                              <Label layoutX="14.0" layoutY="14.0" text="Top 5 Favorites Categories">
+                              <Label layoutX="35.0" layoutY="15.0" text="Top 5 Favorites Categories">
                                  <font>
                                     <Font name="System Bold Italic" size="16.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="14.0" layoutY="349.0" text="Top 5 Favorites Authors">
+                              <Label layoutX="35.0" layoutY="350.0" text="Top 5 Favorites Authors">
                                  <font>
                                     <Font name="System Bold Italic" size="16.0" />
                                  </font>
                               </Label>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../Icon/star.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="8.0" layoutY="352.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../Icon/star.png" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </Pane>
                      </children>
@@ -212,12 +223,12 @@
                                                 <Image url="@../../../Icon/book_icon.png" />
                                              </image>
                                           </ImageView>
-                                          <Label fx:id="totalBooks" text="1000" textFill="#02030a">
+                                          <Label fx:id="totalBooksInterested" text="1000" textFill="#02030a">
                                              <font>
                                                 <Font name="System Bold" size="26.0" />
                                              </font>
                                           </Label>
-                                          <Label text="Total Books" textFill="#02030a">
+                                          <Label text="Total Book Interested" textFill="#02030a">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -234,12 +245,12 @@
                                                 <Image url="@../../../Icon/author_icon.png" />
                                              </image>
                                           </ImageView>
-                                          <Label fx:id="totalAuthors" text="1000" textFill="#02030a">
+                                          <Label fx:id="totalAuthorsInterested" text="1000" textFill="#02030a">
                                              <font>
                                                 <Font name="System Bold" size="26.0" />
                                              </font>
                                           </Label>
-                                          <Label text="Total Authors" textFill="#02030a">
+                                          <Label text="Total Authors Interested" textFill="#02030a">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -263,12 +274,12 @@
                                                 <Image url="@../../../Icon/category_icon.png" />
                                              </image>
                                           </ImageView>
-                                          <Label fx:id="totalCategories" text="1000" textFill="#02030a">
+                                          <Label fx:id="totalCategoriesInterested" text="1000" textFill="#02030a">
                                              <font>
                                                 <Font name="System Bold" size="26.0" />
                                              </font>
                                           </Label>
-                                          <Label text="Total Categories" textFill="#02030a">
+                                          <Label text="Total Categories Interested" textFill="#02030a">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -285,12 +296,12 @@
                                                 <Image url="@../../../Icon/publish_icon.png" />
                                              </image>
                                           </ImageView>
-                                          <Label fx:id="totalPublishs" text="1000" textFill="#02030a">
+                                          <Label fx:id="totalPublishsingInterested" text="1000" textFill="#02030a">
                                              <font>
                                                 <Font name="System Bold" size="26.0" />
                                              </font>
                                           </Label>
-                                          <Label text="Total Publishing" textFill="#02030a">
+                                          <Label text="Total Publishing Interested" textFill="#02030a">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>

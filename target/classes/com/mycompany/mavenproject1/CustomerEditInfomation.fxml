@@ -22,27 +22,28 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1180.0" stylesheets="@../../../CSS/customer.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1180.0" stylesheets="@../../../CSS/customer.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.CustomerEditInfomationController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="300.0" style="-fx-background-color: #c7b090;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="labelClock" text="Local Date Time" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Label>
-            <ImageView disable="true" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="avatar">
+            <VBox alignment="CENTER" prefHeight="70.0" prefWidth="401.0">
+               <children>
+                  <Label fx:id="labelClock" text="LocalDateTime" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="avatar">
                <image>
                   <Image url="@../../../Images/icon_avatar_empty.png" />
                </image>
                <VBox.margin>
-                  <Insets bottom="20.0" top="30.0" />
+                  <Insets bottom="20.0" top="10.0" />
                </VBox.margin>
             </ImageView>
-            <Label fx:id="sessionUsername" alignment="CENTER" text="Pham Quang Hung" textFill="WHITE">
+            <Label fx:id="sessionUsername" alignment="CENTER" text="Pham Quang Hung" textFill="#02030a">
                <font>
                   <Font size="14.0" />
                </font>
@@ -71,7 +72,7 @@
                   </RadialGradient>
                </textFill>
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView disable="true" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../Icon/dashboard_icon.png" />
                      </image>
@@ -99,7 +100,7 @@
                   </RadialGradient>
                </textFill>
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView disable="true" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../Icon/user_icon.png" />
                      </image>
@@ -127,7 +128,7 @@
                   </RadialGradient>
                </textFill>
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView disable="true" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../Icon/ic_book_icon.png" />
                      </image>
@@ -142,7 +143,7 @@
                   <Insets />
                </VBox.margin>
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView disable="true" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../Icon/sign_out_icon.png" />
                      </image>
@@ -209,73 +210,98 @@
                               </Label>
                               <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                                  <children>
-                                    <TextField fx:id="txtUsername" promptText="Less than 64 characters">
+                                    <TextField fx:id="txtUsername" onKeyReleased="#Validated" promptText="Less than 64 characters">
                                        <VBox.margin>
                                           <Insets top="15.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <Label fx:id="errorUsername" styleClass="error" text="Cannot be null and less than 64 characters" visible="false" />
+                                    <Label fx:id="errorUsername" styleClass="error" text="Cannot be null and less than 64 characters" textFill="#dc3545" visible="false" />
                                  </children>
                               </VBox>
                               <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <PasswordField fx:id="txtPassword" promptText="Password have at least once(a digit, a lower case letter), at least 8 and at most 20 places)" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <PasswordField fx:id="txtPassword" onKeyReleased="#Validated" promptText="Password have at least once(a digit, a lower case letter), at least 8 and at most 20 places)" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <VBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <children>
-                                    <TextField fx:id="txtFullname" promptText="Less than 64 characters">
+                                    <TextField fx:id="txtFullname" onKeyReleased="#Validated" promptText="Less than 64 characters">
                                        <VBox.margin>
                                           <Insets top="15.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <Label fx:id="errorFullname" styleClass="error" text="Cannot be null and less than 64 characters" visible="false" />
+                                    <Label fx:id="errorFullname" styleClass="error" text="Cannot be null and less than 64 characters" textFill="#dc3545" visible="false" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <children>
-                                    <ComboBox fx:id="boxGender" prefWidth="526.0" promptText="Select Your Gender">
+                                    <ComboBox fx:id="boxGender" onAction="#Validated" prefWidth="526.0" promptText="Select Your Gender">
                                        <VBox.margin>
                                           <Insets top="15.0" />
                                        </VBox.margin>
                                     </ComboBox>
-                                    <Label fx:id="errorGender" styleClass="error" text="Select a gender" visible="false" />
+                                    <Label fx:id="errorGender" styleClass="error" text="Select a gender" textFill="#dc3545" visible="false" />
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <children>
-                                    <TextField fx:id="txtEmail" promptText="abc@gmail.com">
+                                    <TextField fx:id="txtEmail" onKeyReleased="#Validated" promptText="abc@gmail.com">
                                        <VBox.margin>
                                           <Insets top="15.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <Label fx:id="errorEmail" styleClass="error" text="Cannot valid email" visible="false" />
+                                    <Label fx:id="errorEmail" styleClass="error" text="Cannot valid email" textFill="#dc3545" visible="false" />
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <children>
-                                    <DatePicker fx:id="datePickerDob" prefHeight="25.0" prefWidth="526.0" promptText="yyyy-mm-dd" style="-fx-background-color: transparent;">
+                                    <DatePicker fx:id="datePickerDob" onAction="#Validated" prefHeight="25.0" prefWidth="526.0" promptText="yyyy-mm-dd" style="-fx-background-color: transparent;">
                                        <VBox.margin>
                                           <Insets top="15.0" />
                                        </VBox.margin>
                                     </DatePicker>
-                                    <Label fx:id="errorDob" styleClass="error" text="Pick your birthday" visible="false" />
+                                    <Label fx:id="errorDob" styleClass="error" text="Pick your birthday" textFill="#dc3545" visible="false" />
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                  <children>
-                                    <TextField fx:id="txtMobile" promptText="xxxx-xxx-xxx">
+                                    <TextField fx:id="txtMobile" onKeyReleased="#Validated" promptText="xxxx-xxx-xxx">
                                        <VBox.margin>
                                           <Insets top="15.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <Label fx:id="errorMobile" styleClass="error" text="Cannot be null and have 10 numbers" visible="false" />
+                                    <Label fx:id="errorMobile" styleClass="error" text="Cannot be null and have 10 numbers" textFill="#dc3545" visible="false" />
                                  </children>
                               </VBox>
                            </children>
                         </GridPane>
-                        <Label fx:id="errorPassword" layoutX="242.0" layoutY="180.0" styleClass="error" text="Must have at least once(a digit, a lower case letter), at least 8 and at most 20 places)" visible="false" />
-                        <Button fx:id="btnSave" layoutX="688.0" layoutY="508.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" style="-fx-background-radius: 30px;" styleClass="button_success" text="Save">
+                        <Label fx:id="errorPassword" layoutX="242.0" layoutY="180.0" styleClass="error" text="Must have at least once(a digit, a lower case letter), at least 8 and at most 20 places)" textFill="#dc3545" visible="false" />
+                        <Button fx:id="btnBack" layoutX="547.0" layoutY="508.0" mnemonicParsing="false" onAction="#switchToCustomerInfomation" prefHeight="35.0" prefWidth="95.0" style="-fx-background-radius: 30px;" styleClass="button_primary" text="Back">
                            <font>
                               <Font size="16.0" />
                            </font>
+                           <padding>
+                              <Insets left="-10.0" />
+                           </padding>
+                           <graphic>
+                              <ImageView disable="true" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../Icon/sign_out_icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnSave" layoutX="673.0" layoutY="508.0" mnemonicParsing="false" onAction="#BtnSaveClick" prefHeight="35.0" prefWidth="95.0" style="-fx-background-radius: 30px;" styleClass="button_success" text="Save">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <padding>
+                              <Insets left="-10.0" />
+                           </padding>
+                           <graphic>
+                              <ImageView disable="true" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../Icon/save_icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Button>
                      </children>
                   </AnchorPane>
@@ -283,7 +309,7 @@
                <top>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="922.0" BorderPane.alignment="CENTER">
                      <children>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView disable="true" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../Images/Logo.png" />
                            </image>

@@ -4,7 +4,8 @@
  */
 package com.mycompany.mavenproject1;
 
-import Models.User;
+import Models.*;
+import Entites.*;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +13,7 @@ import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,6 +30,7 @@ import javafx.util.Duration;
  */
 public class CustomerDashboardController implements Initializable {
 
+    User user = User.getInstace();
     @FXML
     private Label labelClock;
     @FXML
@@ -41,25 +44,25 @@ public class CustomerDashboardController implements Initializable {
     @FXML
     private Button btnSignout;
     @FXML
-    private Label totalBooks;
+    private TableView<Top5CategoriesInterested> tableCategories;
     @FXML
-    private Label totalAuthors;
+    private TableColumn<Top5CategoriesInterested, String> colCategoryName;
     @FXML
-    private Label totalCategories;
+    private TableColumn<Top5CategoriesInterested, String> colCategoryTotal;
     @FXML
-    private Label totalPublishs;
+    private TableView<Top5AuthorsIntersted> tableAuthors;
     @FXML
-    private TableView<?> tableCategories;
+    private TableColumn<Top5AuthorsIntersted, String> colAuthorsName;
     @FXML
-    private TableColumn<?, ?> colCategoryName;
+    private TableColumn<Top5AuthorsIntersted, String> colAuthorsTotal;
     @FXML
-    private TableColumn<?, ?> colCategoryTotal;
+    private Label totalBooksInterested;
     @FXML
-    private TableView<?> tableAuthors;
+    private Label totalAuthorsInterested;
     @FXML
-    private TableColumn<?, ?> colAuthorsName;
+    private Label totalCategoriesInterested;
     @FXML
-    private TableColumn<?, ?> colAuthorsTotal;
+    private Label totalPublishsingInterested;
 
     /**
      * Initializes the controller class.
@@ -67,8 +70,8 @@ public class CustomerDashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        User user = User.getInstace();
-        String sessionUser = user.getUserName();
+        Account acc = AccountEntity.GetAccountByUsername(user.getUserName());
+        String sessionUser = acc.getFull_name();
         try {
 
             if (sessionUser.equals("") || sessionUser.equals(null)) {
@@ -81,7 +84,10 @@ public class CustomerDashboardController implements Initializable {
         }
 //      run real time and replace a time String for labelClock
         initClock();
-    }    
+        Total();
+        Top5CategoriesFavorites();
+        Top5AuthorsFavorites();
+    }
 
     @FXML
     private void switchToCustomerDashboard() throws Exception {
@@ -90,14 +96,14 @@ public class CustomerDashboardController implements Initializable {
 
     @FXML
     private void switchToCustomerInfomation() throws Exception {
-        App.setRoot("CustomerBorrow");
+        App.setRoot("CustomerInfomation");
     }
 
     @FXML
     private void switchToCustomerBorrowing() throws Exception {
         App.setRoot("CustomerBorrow");
     }
-    
+
     @FXML
     private void switchToSignIn() throws Exception {
         App.setRoot("SignIn");
@@ -105,10 +111,61 @@ public class CustomerDashboardController implements Initializable {
 
     private void initClock() {
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss\ndd/MM/yyyy");
             labelClock.setText(LocalDateTime.now().format(formatter));
         }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+    }
+
+    @FXML
+    private void Total() {
+        String username = user.getUserName();
+
+        Account acc = AccountEntity.GetAccountByUsername(username);
+
+        int totalBook = ManageBookEntity.CountBookInterestedByUID(acc.getUID());
+        int totalCategory = ManageBookEntity.CountCategoryInterestedByUID(acc.getUID());
+        int totalPublish = ManageBookEntity.CountPublishingInterestedByUID(acc.getUID());
+        int totalAuthor = ManageBookEntity.CountAuthorInterestedByUID(acc.getUID());
+
+        totalBooksInterested.setText(String.valueOf(totalBook));
+        totalCategoriesInterested.setText(String.valueOf(totalCategory));
+        totalPublishsingInterested.setText(String.valueOf(totalPublish));
+        totalAuthorsInterested.setText(String.valueOf(totalAuthor));
+    }
+
+    @FXML
+    private void Top5CategoriesFavorites() {
+        String username = user.getUserName();
+
+        Account acc = AccountEntity.GetAccountByUsername(username);
+//        tableCategories
+        ObservableList<Top5CategoriesInterested> t5c = ManageBookEntity.Top5CategoryInterestedByUID(acc.getUID());
+        tableCategories.setItems(t5c);
+        colCategoryName.setCellValueFactory(f -> {
+            int id = f.getValue().getId();
+            Category c = CategoryEntity.GetCategoryById(id);
+
+            return c.nameProperty();
+        });
+        colCategoryTotal.setCellValueFactory(f -> f.getValue().totalProperty().asString());
+    }
+
+    @FXML
+    private void Top5AuthorsFavorites() {
+        String username = user.getUserName();
+
+        Account acc = AccountEntity.GetAccountByUsername(username);
+//        tableAuthors
+        ObservableList<Top5AuthorsIntersted> t5c = ManageBookEntity.Top5AuthorInterestedByUID(acc.getUID());
+        tableAuthors.setItems(t5c);
+        colAuthorsName.setCellValueFactory(f -> {
+            int id = f.getValue().getId();
+            Author c = AuthorEntity.GetAuthorWithId(id);
+
+            return c.nameProperty();
+        });
+        colAuthorsTotal.setCellValueFactory(f -> f.getValue().totalProperty().asString());
     }
 }

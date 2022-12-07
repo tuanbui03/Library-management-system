@@ -22,6 +22,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -170,13 +171,13 @@ public class SignUpController implements Initializable {
 
             flag = true;
         } else {
-            if (!hidePassword.matches(PASSWORD_PATTERN) || !hidePassword.matches(PASSWORD_PATTERN)) {
+            if (hidePassword.matches(PASSWORD_PATTERN) && !hidePassword.isEmpty() || showPassword.matches(PASSWORD_PATTERN) && !showPassword.isEmpty()) {
+                validPass = true;
+                errorPassword.setVisible(false);
+            } else {
                 errorPassword.setVisible(true);
                 validPass = false;
                 flag = true;
-            } else {
-                validPass = true;
-                errorPassword.setVisible(false);
             }
         }
 
@@ -191,7 +192,7 @@ public class SignUpController implements Initializable {
                 hidePassword = showPassword;
             }
 
-            if ( validPass && ( showRePassword.equals(hidePassword) || hideRePassword.equals(hidePassword) ) ) {
+            if (validPass && (showRePassword.equals(hidePassword) || hideRePassword.equals(hidePassword))) {
                 errorRePassword.setVisible(false);
 
             } else {
@@ -235,8 +236,8 @@ public class SignUpController implements Initializable {
 
         String UID = role.getName() + accounts.size();
         String username = txtUsername.getText();
-        String hidePass = hidePassword.getText();
-        String showPass = showPassword.getText();
+        String hidePass = passPassword.getText();
+        String showPass = txtPassword.getText();
         String fullname = txtFullname.getText();
         Gender gender = boxGender.getValue();
         String mobile = txtMobile.getText();
@@ -249,28 +250,59 @@ public class SignUpController implements Initializable {
 
         Account acc = new Account();
         acc.setUID(UID);
+        acc.setAvatar(UID + ".png");
         acc.setUsername(username);
         acc.setPassword(password);
         acc.setFull_name(fullname);
+        acc.setStatus(1);
+        acc.setRoleId(role.getId());
         acc.setGender(gender.getId());
         acc.setMobile(mobile);
 
 //      Call Alert box
         Alert alert = new Alert(Alert.AlertType.NONE);
+        if (AccountEntity.GetAccountByUsername(username) == null) {
+            if (AccountEntity.SignUp(acc)) {
+                user.setUserSession(username);
 
-        if (AccountEntity.Add(acc)) {
-            user.setUserSession(username);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+                try {
+                    alert.setDialogPane(loader.load());
+                    MessageController mc = loader.getController();
+                    mc.setMessage("Signup Successfully! And Login again!");
+                } catch (Exception e) {
+                }
 
-            alert.setAlertType(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Westmaster");
-            alert.setContentText("Signup Successfully!");
-            alert.showAndWait();
+                alert.showAndWait();
+
+                try {
+                    switchToSignIn();
+                } catch (Exception e) {
+                }
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+                try {
+                    alert.setDialogPane(loader.load());
+                    MessageController mc = loader.getController();
+                    mc.setMessage("Signup Fail!");
+                } catch (Exception e) {
+                }
+
+                alert.showAndWait();
+            }
         } else {
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setHeaderText("Westmaster");
-            alert.setContentText("Signup Fail!");
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+            try {
+                alert.setDialogPane(loader.load());
+                MessageController mc = loader.getController();
+                mc.setMessage("This Username is exists! Let's Signup again!");
+            } catch (Exception e) {
+            }
+
             alert.showAndWait();
         }
+
     }
 
     @FXML
@@ -280,7 +312,7 @@ public class SignUpController implements Initializable {
 
     private void initClock() {
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss\ndd/MM/yyyy");
             labelClock.setText(LocalDateTime.now().format(formatter));
         }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);
