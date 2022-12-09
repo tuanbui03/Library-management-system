@@ -265,7 +265,41 @@ public class CustomerEditInfomationController implements Initializable {
         acc.setMobile(mobile);
 
         Alert alert = new Alert(Alert.AlertType.NONE);
-        if (AccountEntity.GetAccountByUsername(acc.getUsername()) == null) {
+        if (!user.getUserName().equals(username)) {
+            if (AccountEntity.GetAccountByUsername(acc.getUsername()) == null) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ConfirmPassword.fxml"));
+                try {
+                    alert.setDialogPane(loader.load());
+                    alert.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+                    alert.getDialogPane().lookupButton(ButtonType.OK).addEventFilter(ActionEvent.ANY, c -> {
+                        ConfirmPasswordController confirmPage = loader.getController();
+                        if (confirmPage.Confirm()) {
+                            try {
+                                if (AccountEntity.Update(acc)) {
+                                    user.setUserSession(acc.getUsername());
+                                    switchToCustomerInfomation();
+                                }
+                            } catch (Exception ex) {
+                                System.out.println(ex.getMessage());
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                alert.showAndWait();
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+                try {
+                    alert.setDialogPane(loader.load());
+                    MessageController mc = loader.getController();
+                    mc.setMessage("This Username is exists! Let's Signup again!");
+                } catch (Exception e) {
+                }
+
+                alert.showAndWait();
+            }
+        } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ConfirmPassword.fxml"));
             try {
                 alert.setDialogPane(loader.load());
@@ -286,16 +320,6 @@ public class CustomerEditInfomationController implements Initializable {
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-            alert.showAndWait();
-        } else {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
-            try {
-                alert.setDialogPane(loader.load());
-                MessageController mc = loader.getController();
-                mc.setMessage("This Username is exists! Let's Signup again!");
-            } catch (Exception e) {
-            }
-
             alert.showAndWait();
         }
 

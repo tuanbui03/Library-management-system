@@ -68,24 +68,37 @@ public class ManagementAccountsController implements Initializable {
     private Pane pnlOverview;
     @FXML
     private TextField txtUID;
+    @FXML
     private TextField txtUsername;
+    @FXML
     private Label errorUsername;
+    @FXML
     private TextField txtPassword;
+    @FXML
     private Label errorPassword;
+    @FXML
     private TextField txtFullname;
+    @FXML
     private Label errorFullname;
     @FXML
     private ComboBox<Gender> boxGender;
+    @FXML
     private Label errorGender;
     @FXML
     private ComboBox<Role> boxRole;
+    @FXML
     private Label errorRole;
+    @FXML
     private TextField txtEmail;
+    @FXML
     private Label errorEmail;
     @FXML
     private DatePicker txtDob;
+    @FXML
     private Label errorDob;
+    @FXML
     private TextField txtMobile;
+    @FXML
     private Label errorMobile;
 //    @FXML
 //    private TextField txtAvatar;
@@ -95,7 +108,9 @@ public class ManagementAccountsController implements Initializable {
 //    private ImageView imgAvatar;
 //    @FXML
 //    private Label errorAvatar;
+    @FXML
     private TextField txtCreatedAt;
+    @FXML
     private TextField txtUpdatedAt;
     @FXML
     private Button btnSave;
@@ -113,16 +128,21 @@ public class ManagementAccountsController implements Initializable {
 //    private TableColumn<Account, String> colAvatar;
     @FXML
     private TableColumn<Account, String> colUsername;
+    @FXML
     private TableColumn<Account, String> colPassword;
     @FXML
     private TableColumn<Account, String> colFullname;
+    @FXML
     private TableColumn<Account, String> colGender;
     @FXML
     private TableColumn<Account, String> colRole;
     @FXML
     private TableColumn<Account, String> colEmail;
+    @FXML
     private TableColumn<Account, String> colDob;
+    @FXML
     private TableColumn<Account, String> colMobile;
+    @FXML
     private TableColumn<Account, String> colCreatedAt;
     @FXML
     private TableColumn<Account, String> colUpdatedAt;
@@ -136,14 +156,6 @@ public class ManagementAccountsController implements Initializable {
     int myIndex;
     int id;
     Image av;
-    @FXML
-    private DatePicker txtDob1;
-    @FXML
-    private TextField txtUID1;
-    @FXML
-    private ComboBox<?> boxGender1;
-    @FXML
-    private TextField txtUID2;
 
     @FXML
     private void switchToAdminDashboard() throws IOException {
@@ -217,10 +229,11 @@ public class ManagementAccountsController implements Initializable {
 
                     boxRole.setValue(role);
 
-                    String[] date = table.getItems().get(myIndex).getDob().split("-");
-
-                    LocalDate dob = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
-                    txtDob.setValue(dob);
+                    if (table.getItems().get(myIndex).getDob() != null) {
+                        String[] date = table.getItems().get(myIndex).getDob().split("-");
+                        LocalDate dob = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
+                        txtDob.setValue(dob);
+                    }
 
                     txtUID.setText(table.getItems().get(myIndex).getUID());
                     txtUsername.setText(table.getItems().get(myIndex).getUsername());
@@ -358,8 +371,37 @@ public class ManagementAccountsController implements Initializable {
             a.setDob(date);
             a.setMobile(mobile);
             a.setRoleId(role.getId());
+            if (AccountEntity.GetAccountByUID(UID).getUsername().equals(a.getUsername())) {
 //              if update success, show a box with message "Updated Successfully!" else show message "Updated Fail!"
-            if (AccountEntity.GetAccountByUsername(a.getUsername()) == null) {
+                if (AccountEntity.GetAccountByUsername(a.getUsername()) == null) {
+                    if (AccountEntity.Update(a)) {
+                        if (a.getUID().equals(UID)) {
+                            sessionUsername.setText(userName);
+                        }
+//                saveToFile(av, UID + ".jpg");
+//                  set titile, header, content for alert box
+                        alert.setAlertType(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Test Connection");
+                        alert.setHeaderText("Accounts Manager");
+                        alert.setContentText("Updated Successfully!");
+                        alert.showAndWait();
+                    } else {
+//                  set titile, header, content for alert box
+                        alert.setAlertType(Alert.AlertType.ERROR);
+                        alert.setTitle("Test Connection");
+                        alert.setHeaderText("Accounts Manager");
+                        alert.setContentText("Updated Fail!");
+                        alert.showAndWait();
+                    }
+                } else {
+//              set titile, header, content for alert box
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Accounts Manager");
+                    alert.setContentText("This username is exists!");
+                    alert.showAndWait();
+                }
+            } else {
                 if (AccountEntity.Update(a)) {
                     if (a.getUID().equals(UID)) {
                         sessionUsername.setText(userName);
@@ -379,18 +421,12 @@ public class ManagementAccountsController implements Initializable {
                     alert.setContentText("Updated Fail!");
                     alert.showAndWait();
                 }
-            } else {
-//              set titile, header, content for alert box
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Test Connection");
-                alert.setHeaderText("Accounts Manager");
-                alert.setContentText("This username is exists!");
-                alert.showAndWait();
             }
         }
         RefeshData();
     }
 
+    @FXML
     public void Search() {
         String search = txtSearch.getText();
         ObservableList<Account> accounts = AccountEntity.SearchByUID(search);
@@ -705,7 +741,7 @@ public class ManagementAccountsController implements Initializable {
                 new Gender(2, "Female"),
                 new Gender(3, "Other"))
         );
-
+        InitItemsRoleBox();
 //        Image img = new Image("file:/D:/Documents/NetBeansProjects/Library-management-system/src/main/resources/Avatar/Admin0.jpg", false);
 //        avatar.setFill(new ImagePattern(img));
     }

@@ -299,37 +299,81 @@ public class ManagementBooksController implements Initializable {
                     alert.setContentText("Added Fail!");
                     alert.showAndWait();
                 }
+            } else {
+//              set titile, header, content for alert box
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Test Connection");
+                alert.setHeaderText("Books Manager");
+                alert.setContentText("This book is exists!");
+                alert.showAndWait();
             }
         } else {
             book.setId(Integer.parseInt(bookId));
 
             mg.getBook().setId(Integer.parseInt(bookId));
+            if (!BookEntity.GetBookWithBookId(mg.getBook().getId()).getName().equals(book.getName())) {
+                if (BookEntity.GetBookWithBookName(bookName) == null) {
+                    if (BookEntity.Update(book)) {
 
-            if (BookEntity.Update(book)) {
-
-                if (ManageBookEntity.Update(mg)) {
+                        if (ManageBookEntity.Update(mg)) {
 //                      set titile, header, content for alert box
-                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                            alert.setAlertType(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Test Connection");
+                            alert.setHeaderText("Books Manager");
+                            alert.setContentText("Updated Successfully!");
+                            alert.showAndWait();
+                        } else {
+//                      set titile, header, content for alert box
+                            alert.setAlertType(Alert.AlertType.ERROR);
+                            alert.setTitle("Test Connection");
+                            alert.setHeaderText("Books Manager");
+                            alert.setContentText("Updated Fail!");
+                            alert.showAndWait();
+                        }
+                    } else {
+//                  set titile, header, content for alert box
+                        alert.setAlertType(Alert.AlertType.ERROR);
+                        alert.setTitle("Test Connection");
+                        alert.setHeaderText("Books Manager");
+                        alert.setContentText("Updated Fail!");
+                        alert.showAndWait();
+                    }
+                } else {
+//              set titile, header, content for alert box
+                    alert.setAlertType(Alert.AlertType.ERROR);
                     alert.setTitle("Test Connection");
                     alert.setHeaderText("Books Manager");
-                    alert.setContentText("Updated Successfully!");
+                    alert.setContentText("This book is exists!");
                     alert.showAndWait();
-                } else {
+                }
+            } else {
+                if (BookEntity.Update(book)) {
+
+                    if (ManageBookEntity.Update(mg)) {
 //                      set titile, header, content for alert box
+                        alert.setAlertType(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Test Connection");
+                        alert.setHeaderText("Books Manager");
+                        alert.setContentText("Updated Successfully!");
+                        alert.showAndWait();
+                    } else {
+//                      set titile, header, content for alert box
+                        alert.setAlertType(Alert.AlertType.ERROR);
+                        alert.setTitle("Test Connection");
+                        alert.setHeaderText("Books Manager");
+                        alert.setContentText("Updated Fail!");
+                        alert.showAndWait();
+                    }
+                } else {
+//                  set titile, header, content for alert box
                     alert.setAlertType(Alert.AlertType.ERROR);
                     alert.setTitle("Test Connection");
                     alert.setHeaderText("Books Manager");
                     alert.setContentText("Updated Fail!");
                     alert.showAndWait();
                 }
-            } else {
-//                  set titile, header, content for alert box
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Test Connection");
-                alert.setHeaderText("Books Manager");
-                alert.setContentText("Updated Fail!");
-                alert.showAndWait();
             }
+
         }
 
         RefeshData();
@@ -361,7 +405,7 @@ public class ManagementBooksController implements Initializable {
         book.setPublishingId(publish.getId());
 
         StatusManage sm = StatusManageEntity.GetStatusManageByName("Deleted");
-        
+
         ManageBook mg = new ManageBook();
         mg.setPricePerBook(Float.valueOf(price));
         mg.getAccount().setId(accountId);

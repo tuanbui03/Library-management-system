@@ -12,6 +12,7 @@ import javafx.beans.property.*;
  * @author PC
  */
 public class Borrow {
+ 
     private final IntegerProperty index;
     private final IntegerProperty id;
     private final StringProperty borrowAt;
@@ -20,7 +21,14 @@ public class Borrow {
     private final FloatProperty amount_of_pay;
     private final IntegerProperty manageId;
     private final IntegerProperty statusId;
+
+//    join manage_book, status_borrow
+    private final IntegerProperty bookid;
+    private final IntegerProperty accountid;
+
     private final StringProperty statusName;
+    private final StringProperty bookName;
+    private final StringProperty accountName;
 
     public Borrow() {
         this.index = new SimpleIntegerProperty(this, "index");
@@ -32,9 +40,37 @@ public class Borrow {
         this.manageId = new SimpleIntegerProperty(this, "manageId");
         this.statusId = new SimpleIntegerProperty(this, "statusId");
         this.statusName = new SimpleStringProperty(this, "statusName");
+        this.bookName = new SimpleStringProperty(this, "bookName");
+        this.accountName = new SimpleStringProperty(this, "accountName");
+        this.accountid = new SimpleIntegerProperty(this, "accountid");
+        this.bookid = new SimpleIntegerProperty(this, "bookid");
+
     }
-    
-    
+
+    public IntegerProperty getBookid() {
+        return bookid;
+    }
+
+    public IntegerProperty getAccountid() {
+        return accountid;
+    }
+
+    public void setBookID(int index) {
+        this.bookid.set(index);
+    }
+
+    public void setAccountID(int index) {
+        this.accountid.set(index);
+    }
+
+    public StringProperty bookNameProperty() {
+        return bookName;
+    }
+
+    public StringProperty accountNameProperty() {
+        return accountName;
+    }
+
     public IntegerProperty indexProperty() {
         return index;
     }
@@ -42,31 +78,31 @@ public class Borrow {
     public IntegerProperty idProperty() {
         return id;
     }
-    
+
     public StringProperty borrowAtProperty() {
         return borrowAt;
     }
-    
+
     public IntegerProperty time_outProperty() {
         return time_out;
     }
-    
+
     public StringProperty refundAtProperty() {
         return refundAt;
     }
-    
-    public FloatProperty amountOfPayProperty() {
+
+    public FloatProperty amount_of_payProperty() {
         return amount_of_pay;
     }
-    
+
     public IntegerProperty manageIdProperty() {
         return manageId;
     }
-    
+
     public IntegerProperty statusIdProperty() {
         return statusId;
     }
-    
+
     public StringProperty statusNameProperty() {
         return statusName;
     }
@@ -123,6 +159,22 @@ public class Borrow {
         return manageId.get();
     }
 
+    public void setBookName(String book) {
+        this.bookName.set(book);
+    }
+
+    public void setAccountName(String account) {
+        this.accountName.set(account);
+    }
+
+    public String getBookName() {
+        return bookName.get();
+    }
+
+    public String getAccountName() {
+        return accountName.get();
+    }
+
     public void setManageId(int manageId) {
         this.manageId.set(manageId);
     }
@@ -135,12 +187,12 @@ public class Borrow {
         this.statusId.set(statusId);
     }
 
-    public int getStatusName() {
-        return statusId.get();
+    public String getStatusName() {
+        return statusName.get();
     }
 
-    public void setStatusName(int statusId) {
-        this.statusId.set(statusId);
+    public void setStatusName(String statusId) {
+        this.statusName.set(statusId);
     }
 
     @Override
@@ -152,7 +204,11 @@ public class Borrow {
                 + ", amount_of_pay=" + amount_of_pay.get()
                 + ", manageId=" + manageId.get()
                 + ", statusId=" + statusId.get()
+                + ", bookId=" + bookid.get()
+                + ", accountId=" + accountid.get()
                 + ", statusName=" + statusName.get()
+                + ", bookName=" + bookName.get()
+                + ", accountName=" + accountName.get()
                 + '}';
     }
 }

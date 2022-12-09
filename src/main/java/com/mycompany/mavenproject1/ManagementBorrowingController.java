@@ -330,6 +330,8 @@ public class ManagementBorrowingController implements Initializable {
         });
     }
 
+    
+
     @FXML
     private void switchToAdminDashboard() throws IOException {
         App.setRoot("AdminDashboard");
@@ -361,7 +363,13 @@ public class ManagementBorrowingController implements Initializable {
     }
 
     @FXML
+    private void switchToManagementBorrowing() throws IOException {
+        App.setRoot("ManagementBorrow");
+    }
+
+    @FXML
     private void SignOut() throws Exception {
+        prefs.clear();
         App.setRoot("SignIn");
     }
 

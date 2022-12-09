@@ -275,21 +275,53 @@ public class ManagementAuthorsController implements Initializable {
 //          set id for object category
             author.setId(Integer.parseInt(id));
 
-//          if Update success, show a box with message "Updated Successfully!" else show message "Updated Fail!"
-            if (AuthorEntity.Update(author)) {
+            if (AuthorEntity.GetAuthorWithId(author.getId()).equals(author.getName())) {
+//              if Update success, show a box with message "Updated Successfully!" else show message "Updated Fail!"
+                if (AuthorEntity.Update(author)) {
 //              set titile, header, content for alert box
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setTitle("Test Connection");
-                alert.setHeaderText("Authors Manager");
-                alert.setContentText("Updated Successfully!");
-                alert.showAndWait();
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Authors Manager");
+                    alert.setContentText("Updated Successfully!");
+                    alert.showAndWait();
+                } else {
+//              set titile, header, content for alert box
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Authors Manager");
+                    alert.setContentText("Updated Fail!");
+                    alert.showAndWait();
+                }
             } else {
+                if (AuthorEntity.GetAuthorWithSignName(signName) == null) {
+//                    if Update  {
+//                        success
+//                    }
+//                    , show a box with message "Updated Successfully!" else show message "Updated Fail!"
+                    if (AuthorEntity.Update(author)) {
+//                      set titile, header, content for alert box
+                        alert.setAlertType(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Test Connection");
+                        alert.setHeaderText("Authors Manager");
+                        alert.setContentText("Updated Successfully!");
+                        alert.showAndWait();
+                    } else {
+//                      set titile, header, content for alert box
+                        alert.setAlertType(Alert.AlertType.ERROR);
+                        alert.setTitle("Test Connection");
+                        alert.setHeaderText("Authors Manager");
+                        alert.setContentText("Updated Fail!");
+                        alert.showAndWait();
+                    }
+                } else {
+
 //              set titile, header, content for alert box
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Test Connection");
-                alert.setHeaderText("Authors Manager");
-                alert.setContentText("Updated Fail!");
-                alert.showAndWait();
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Authors Manager");
+                    alert.setContentText("This Author exists!");
+                    alert.showAndWait();
+                }
             }
 
         }

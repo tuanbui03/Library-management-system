@@ -254,28 +254,61 @@ public class ManagementPublishingController implements Initializable {
         } else {
 //          set id for object publishing
             pub.setId(Integer.parseInt(id));
-
-//          if Update success, show a box with message "Updated Successfully!" else show message "Updated Fail!"
-            if (PublishingEntity.Update(pub)) {
+            if (PublishingEntity.GetPublishingWithId(pub.getId()).getName().equals(pub.getName())) {
+//              if Update success, show a box with message "Updated Successfully!" else show message "Updated Fail!"
+                if (PublishingEntity.Update(pub)) {
 
 //              set titile, header, content for alert box
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setTitle("Test Connection");
-                alert.setHeaderText("Publishings Manager");
-                alert.setContentText("Updated Successfully!");
-                alert.showAndWait();
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Publishings Manager");
+                    alert.setContentText("Updated Successfully!");
+                    alert.showAndWait();
+
+                } else {
+
+//              set titile, header, content for alert box
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Publishings Manager");
+                    alert.setContentText("Updated Fail!");
+                    alert.showAndWait();
+
+                }
 
             } else {
 
+                if (PublishingEntity.GetPublishingWithName(name) == null) {
+//              if Update success, show a box with message "Updated Successfully!" else show message "Updated Fail!"
+                    if (PublishingEntity.Update(pub)) {
+
 //              set titile, header, content for alert box
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Test Connection");
-                alert.setHeaderText("Publishings Manager");
-                alert.setContentText("Updated Fail!");
-                alert.showAndWait();
+                        alert.setAlertType(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Test Connection");
+                        alert.setHeaderText("Publishings Manager");
+                        alert.setContentText("Updated Successfully!");
+                        alert.showAndWait();
 
+                    } else {
+
+//              set titile, header, content for alert box
+                        alert.setAlertType(Alert.AlertType.ERROR);
+                        alert.setTitle("Test Connection");
+                        alert.setHeaderText("Publishings Manager");
+                        alert.setContentText("Updated Fail!");
+                        alert.showAndWait();
+
+                    }
+
+                } else {
+//              set titile, header, content for alert box
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Publishings Manager");
+                    alert.setContentText("This Publishing exists!");
+                    alert.showAndWait();
+                }
             }
-
         }
 
         RefeshData();

@@ -254,28 +254,60 @@ public class ManagementCategoriesController implements Initializable {
         } else {
 //          set id for object category
             category.setId(Integer.parseInt(inpId));
+            if (!CategoryEntity.GetCategoryById(category.getId()).getName().equals(category.getName())) {
+                if (CategoryEntity.GetCategoryByName(category.getName()).equals(null)) {
+//                  if Update success, show a box with message "Updated Successfully!" else show message "Updated Fail!"
+                    if (CategoryEntity.Update(category)) {
 
-//          if Update success, show a box with message "Updated Successfully!" else show message "Updated Fail!"
-            if (CategoryEntity.Update(category)) {
+//                      set titile, header, content for alert box
+                        alert.setAlertType(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Test Connection");
+                        alert.setHeaderText("Categories Manager");
+                        alert.setContentText("Updated Successfully!");
+                        alert.showAndWait();
 
-//              set titile, header, content for alert box
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setTitle("Test Connection");
-                alert.setHeaderText("Categories Manager");
-                alert.setContentText("Updated Successfully!");
-                alert.showAndWait();
+                    } else {
 
+//                      set titile, header, content for alert box
+                        alert.setAlertType(Alert.AlertType.ERROR);
+                        alert.setTitle("Test Connection");
+                        alert.setHeaderText("Categories Manager");
+                        alert.setContentText("Updated Fail!");
+                        alert.showAndWait();
+
+                    }
+
+                } else {
+//                      set titile, header, content for alert box
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Categories Manager");
+                    alert.setContentText("This category exists!");
+                    alert.showAndWait();
+                }
             } else {
+//          if Update success, show a box with message "Updated Successfully!" else show message "Updated Fail!"
+                if (CategoryEntity.Update(category)) {
 
 //              set titile, header, content for alert box
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Test Connection");
-                alert.setHeaderText("Categories Manager");
-                alert.setContentText("Updated Fail!");
-                alert.showAndWait();
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Categories Manager");
+                    alert.setContentText("Updated Successfully!");
+                    alert.showAndWait();
+
+                } else {
+
+//              set titile, header, content for alert box
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Categories Manager");
+                    alert.setContentText("Updated Fail!");
+                    alert.showAndWait();
+
+                }
 
             }
-
         }
 
         RefeshData();
