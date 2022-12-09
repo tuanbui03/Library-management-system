@@ -60,8 +60,8 @@ public class AdminDashboardController implements Initializable {
     private Label totalPublishs;
     @FXML
     private Label totalAccounts;
-    @FXML
-    private Label totalLibrarians;
+//    @FXML
+//    private Label totalLibrarians;
     @FXML
     private Label totalReaders;
 
@@ -129,7 +129,7 @@ public class AdminDashboardController implements Initializable {
 
     private void initClock() {
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss\ndd/MM/yyyy");
             labelClock.setText(LocalDateTime.now().format(formatter));
         }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);
@@ -137,20 +137,21 @@ public class AdminDashboardController implements Initializable {
     }
 
     public void Total() {
+        Role readerRole = RoleEntity.GetOneByName("Reader");
         ObservableList<Book> books = BookEntity.GetAll();
         ObservableList<Category> categories = CategoryEntity.GetAll();
         ObservableList<Author> authors = AuthorEntity.GetAll();
         ObservableList<Publishing> publishs = PublishingEntity.GetAll();
         ObservableList<Account> accounts = AccountEntity.GetAll();
-        ObservableList<Account> librarians = AccountEntity.GetAccountByRole(2);
-        ObservableList<Account> readers = AccountEntity.GetAccountByRole(3);
+//        ObservableList<Account> librarians = AccountEntity.GetAccountByRole(2);
+        ObservableList<Account> readers = AccountEntity.GetAccountByRole(readerRole.getId());
 
         totalBooks.setText(String.valueOf(books.size()));
         totalCategories.setText(String.valueOf(categories.size()));
         totalAuthors.setText(String.valueOf(authors.size()));
         totalPublishs.setText(String.valueOf(publishs.size()));
         totalAccounts.setText(String.valueOf(accounts.size()));
-        totalLibrarians.setText(String.valueOf(librarians.size()));
+//        totalLibrarians.setText(String.valueOf(librarians.size()));
         totalReaders.setText(String.valueOf(readers.size()));
     }
 }

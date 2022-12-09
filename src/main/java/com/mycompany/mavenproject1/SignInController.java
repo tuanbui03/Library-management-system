@@ -105,7 +105,7 @@ public class SignInController implements Initializable {
                     try {
                         alert.setDialogPane(loader.load());
                         MessageController mc = loader.getController();
-                        mc.setMessage("Login Successfully!\nWelcome to Westmaster " + acc.getFull_name());
+                        mc.setMessage("Login Successfully!\nWelcome to Westmaster " + acc.getUsername());
                     } catch (Exception e) {
                     }
                     alert.showAndWait();

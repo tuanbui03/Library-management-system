@@ -47,8 +47,6 @@ public class ManagementAccountsController implements Initializable {
     @FXML
     private Label labelClock;
     @FXML
-    private Circle avatar;
-    @FXML
     private Label sessionUsername;
     @FXML
     private Button btnDashboard;
@@ -69,40 +67,25 @@ public class ManagementAccountsController implements Initializable {
     @FXML
     private Pane pnlOverview;
     @FXML
-    private TextField txtId;
-    @FXML
     private TextField txtUID;
-    @FXML
     private TextField txtUsername;
-    @FXML
     private Label errorUsername;
-    @FXML
     private TextField txtPassword;
-    @FXML
     private Label errorPassword;
-    @FXML
     private TextField txtFullname;
-    @FXML
     private Label errorFullname;
     @FXML
     private ComboBox<Gender> boxGender;
-    @FXML
     private Label errorGender;
     @FXML
     private ComboBox<Role> boxRole;
-    @FXML
     private Label errorRole;
-    @FXML
     private TextField txtEmail;
-    @FXML
     private Label errorEmail;
     @FXML
     private DatePicker txtDob;
-    @FXML
     private Label errorDob;
-    @FXML
     private TextField txtMobile;
-    @FXML
     private Label errorMobile;
 //    @FXML
 //    private TextField txtAvatar;
@@ -112,9 +95,7 @@ public class ManagementAccountsController implements Initializable {
 //    private ImageView imgAvatar;
 //    @FXML
 //    private Label errorAvatar;
-    @FXML
     private TextField txtCreatedAt;
-    @FXML
     private TextField txtUpdatedAt;
     @FXML
     private Button btnSave;
@@ -132,21 +113,16 @@ public class ManagementAccountsController implements Initializable {
 //    private TableColumn<Account, String> colAvatar;
     @FXML
     private TableColumn<Account, String> colUsername;
-    @FXML
     private TableColumn<Account, String> colPassword;
     @FXML
     private TableColumn<Account, String> colFullname;
-    @FXML
     private TableColumn<Account, String> colGender;
     @FXML
     private TableColumn<Account, String> colRole;
     @FXML
     private TableColumn<Account, String> colEmail;
-    @FXML
     private TableColumn<Account, String> colDob;
-    @FXML
     private TableColumn<Account, String> colMobile;
-    @FXML
     private TableColumn<Account, String> colCreatedAt;
     @FXML
     private TableColumn<Account, String> colUpdatedAt;
@@ -160,6 +136,14 @@ public class ManagementAccountsController implements Initializable {
     int myIndex;
     int id;
     Image av;
+    @FXML
+    private DatePicker txtDob1;
+    @FXML
+    private TextField txtUID1;
+    @FXML
+    private ComboBox<?> boxGender1;
+    @FXML
+    private TextField txtUID2;
 
     @FXML
     private void switchToAdminDashboard() throws IOException {
@@ -191,7 +175,6 @@ public class ManagementAccountsController implements Initializable {
         App.setRoot("ManagementAccounts");
     }
 
-    @FXML
     private void switchToManagementBorrowing() throws IOException {
         App.setRoot("ManagementBorrow");
     }
@@ -376,30 +359,38 @@ public class ManagementAccountsController implements Initializable {
             a.setMobile(mobile);
             a.setRoleId(role.getId());
 //              if update success, show a box with message "Updated Successfully!" else show message "Updated Fail!"
-            if (AccountEntity.Update(a)) {
-                if (AccountEntity.GetAccountByUsername(sessionUsername.getText()).getUID().equals(UID)) {
-                    sessionUsername.setText(userName);
-                }
+            if (AccountEntity.GetAccountByUsername(a.getUsername()) == null) {
+                if (AccountEntity.Update(a)) {
+                    if (a.getUID().equals(UID)) {
+                        sessionUsername.setText(userName);
+                    }
 //                saveToFile(av, UID + ".jpg");
-//              set titile, header, content for alert box
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setTitle("Test Connection");
-                alert.setHeaderText("Accounts Manager");
-                alert.setContentText("Updated Successfully!");
-                alert.showAndWait();
+//                  set titile, header, content for alert box
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Accounts Manager");
+                    alert.setContentText("Updated Successfully!");
+                    alert.showAndWait();
+                } else {
+//                  set titile, header, content for alert box
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Test Connection");
+                    alert.setHeaderText("Accounts Manager");
+                    alert.setContentText("Updated Fail!");
+                    alert.showAndWait();
+                }
             } else {
 //              set titile, header, content for alert box
                 alert.setAlertType(Alert.AlertType.ERROR);
                 alert.setTitle("Test Connection");
                 alert.setHeaderText("Accounts Manager");
-                alert.setContentText("Updated Fail!");
+                alert.setContentText("This username is exists!");
                 alert.showAndWait();
             }
         }
         RefeshData();
     }
 
-    @FXML
     public void Search() {
         String search = txtSearch.getText();
         ObservableList<Account> accounts = AccountEntity.SearchByUID(search);
@@ -529,7 +520,6 @@ public class ManagementAccountsController implements Initializable {
         CheckUID();
     }
 
-    @FXML
     public void CheckUID() {
 //      get value of UID feild
         String UID = txtUID.getText();
@@ -541,7 +531,6 @@ public class ManagementAccountsController implements Initializable {
         }
     }
 
-    @FXML
     public void CheckRole() {
 //      get value of role combo box
         Role role = boxRole.getValue();
@@ -651,7 +640,6 @@ public class ManagementAccountsController implements Initializable {
         btnSave.setDisable(flag);
     }
 
-    @FXML
     private void FormatFullName() {
         String inpFullname = txtFullname.getText();
         String newFullname = "";

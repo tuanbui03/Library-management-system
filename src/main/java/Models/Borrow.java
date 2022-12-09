@@ -33,6 +33,43 @@ public class Borrow {
         this.statusId = new SimpleIntegerProperty(this, "statusId");
         this.statusName = new SimpleStringProperty(this, "statusName");
     }
+    
+    
+    public IntegerProperty indexProperty() {
+        return index;
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+    
+    public StringProperty borrowAtProperty() {
+        return borrowAt;
+    }
+    
+    public IntegerProperty time_outProperty() {
+        return time_out;
+    }
+    
+    public StringProperty refundAtProperty() {
+        return refundAt;
+    }
+    
+    public FloatProperty amountOfPayProperty() {
+        return amount_of_pay;
+    }
+    
+    public IntegerProperty manageIdProperty() {
+        return manageId;
+    }
+    
+    public IntegerProperty statusIdProperty() {
+        return statusId;
+    }
+    
+    public StringProperty statusNameProperty() {
+        return statusName;
+    }
 
     public int getIndex() {
         return id.get();

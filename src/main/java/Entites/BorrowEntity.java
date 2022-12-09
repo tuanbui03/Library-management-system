@@ -108,6 +108,51 @@ public class BorrowEntity {
         return null;
     }
 
+    public ObservableList<Borrow> GetBorrowByAccountId(int accountId) {
+//      Call array list with type is Borrow
+        ObservableList<Borrow> list = FXCollections.observableArrayList();
+//      Query SELECT in SQL
+        String query = "SELECT b.* "
+                + "FROM borrows AS b "
+                + "JOIN manage_book AS mb ON b.manageId = mb.id "
+                + "WHERE manageId.accountId = ?";
+
+        try {
+//          Connect to database and execute query
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, accountId);
+            rs = preparedStatement.executeQuery();
+
+//          Call value in databse and set for list Borrow
+            while (rs.next()) {
+                Borrow borrow = new Borrow();
+
+                borrow.setId(rs.getInt("id"));
+                borrow.setBorrowAt(rs.getString("borrowAt"));
+                borrow.setTime_out(rs.getInt("time_out"));
+                borrow.setRefundAt(rs.getString("refundAt"));
+                borrow.setAmount_of_pay(rs.getFloat("amount_of_pay"));
+                borrow.setManageId(rs.getInt("manageId"));
+                borrow.setStatusId(rs.getInt("statusId"));
+
+                list.add(borrow);
+            }
+
+            return list;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+//          Close databse at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+
+        return null;
+    }
+    
     public ObservableList<Borrow> Search(String name) {
 //      Call array list with type is Borrow
         ObservableList<Borrow> list = FXCollections.observableArrayList();
@@ -153,7 +198,7 @@ public class BorrowEntity {
         return null;
     }
 
-    public boolean insert(Borrow obj) {
+    public boolean Add(Borrow obj) {
         boolean flag = false;
         BorrowEntity be = new BorrowEntity();
 //      Query insert in database with hidden value
@@ -163,7 +208,7 @@ public class BorrowEntity {
 //          Connect to database and set hidden value
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setDate(1, be.convertStringToDate(obj.getBorrowAt()));
+            preparedStatement.setDate(1, Date.valueOf(LocalDate.now()));
             preparedStatement.setInt(2, obj.getTime_out());
             preparedStatement.setDate(3, be.convertStringToDate(obj.getRefundAt()));
             preparedStatement.setFloat(4, obj.getAmount_of_pay());

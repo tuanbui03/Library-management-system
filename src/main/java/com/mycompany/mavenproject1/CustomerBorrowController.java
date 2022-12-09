@@ -4,24 +4,28 @@
  */
 package com.mycompany.mavenproject1;
 
-import Entites.AccountEntity;
-import Models.Account;
-import Models.Borrow;
-import Models.User;
+import Entites.*;
+import Models.*;
 import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -48,39 +52,38 @@ public class CustomerBorrowController implements Initializable {
     @FXML
     private Button btnSignout;
     @FXML
-    private TextField id;
+    private TextField txtId;
     @FXML
-    private ComboBox<?> boxPublishing;
+    private ComboBox<Publishing> boxPublishing;
     @FXML
-    private ComboBox<?> boxAuthor;
+    private ComboBox<Author> boxAuthor;
     @FXML
-    private ComboBox<?> boxCategory;
+    private ComboBox<Category> boxCategory;
     @FXML
-    private ComboBox<?> boxBook;
+    private ComboBox<Book> boxBook;
     @FXML
-    private TableView<?> table;
+    private TableView<Borrow> table;
     @FXML
-    private TableColumn<?, ?> colIndex;
+    private TableColumn<Borrow, String> colIndex;
     @FXML
-    private TableColumn<?, ?> colId;
+    private TableColumn<Borrow, String> colId;
     @FXML
-    private TableColumn<?, ?> colBook;
+    private TableColumn<Borrow, String> colBook;
     @FXML
-    private TableColumn<?, ?> colPublishing;
+    private TableColumn<Borrow, String> colBorrowAt;
     @FXML
-    private TableColumn<?, ?> colAuthor;
-    @FXML
-    private TableColumn<?, ?> colCategory;
-    @FXML
-    private TableColumn<?, ?> colBorrowAt;
-    @FXML
-    private TableColumn<?, ?> colRefundedAt;
+    private TableColumn<Borrow, String> colRefundedAt;
     @FXML
     private Button btnSearch;
     @FXML
     private TextField txtSearch;
     @FXML
     private Button btnBooking;
+    @FXML
+    private Label errorBook;
+
+    int myIndex;
+    int id;
 
     /**
      * Initializes the controller class.
@@ -101,7 +104,42 @@ public class CustomerBorrowController implements Initializable {
         }
 //      run real time and replace a time String for labelClock
         initClock();
-    }    
+        initBoxAuthors();
+        initBoxCategory();
+        initBoxPublishing();
+    }
+
+    @FXML
+    private void Validated() {
+        boolean flag = false;
+
+        Publishing pub = boxPublishing.getValue();
+        Category cat = boxCategory.getValue();
+        Author author = boxAuthor.getValue();
+
+        if (pub == null || cat == null || author == null) {
+            boxBook.setPromptText("Choose a Publishing, a Author and a Category!");
+            errorBook.setText("Choose a Publishing, a Author and a Category!");
+            errorBook.setVisible(true);
+
+            flag = true;
+        } else {
+            initBoxBook(pub, author, cat);
+            errorBook.setVisible(false);
+        }
+
+        if ((pub != null && cat != null && author != null) && boxBook.getValue() == null) {
+            boxBook.setPromptText("Choose a Book!");
+            errorBook.setText("Choose a Book!");
+            errorBook.setVisible(true);
+
+            flag = true;
+        } else {
+            errorBook.setVisible(false);
+        }
+
+        btnBooking.setDisable(flag);
+    }
 
     @FXML
     private void switchToCustomerDashboard() throws Exception {
@@ -124,15 +162,112 @@ public class CustomerBorrowController implements Initializable {
     }
 
     @FXML
-    private void Search() {
+    private void BtnBooking() {
+//      Call Alert box
+        Alert alert = new Alert(Alert.AlertType.NONE);
+
+        StatusManage borrowStatusManage = StatusManageEntity.GetStatusManageByName("Borrowed");
+        StatusManage outOfStockStatusManage = StatusManageEntity.GetStatusManageByName("Out Of Stock");
+        StatusBorrow borrowStatusBorrow = StatusBorrowEntity.GetStatusBorrowWithName("Borrowing");
+
+        Account acc = AccountEntity.GetAccountByUsername(user.getUserName());
+
+        Book book = boxBook.getValue();
+        int newQuantityBook = book.getQuantity() - 1;
+        book.setQuantity(newQuantityBook);
+
+        ManageBook mg = new ManageBook();
+        mg.setPricePerBook(book.getPrice());
+        mg.getBook().setId(book.getId());
+        mg.getAccount().setId(acc.getId());
+
+        if (newQuantityBook == 0) {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+            try {
+                alert.setDialogPane(loader.load());
+                MessageController mc = loader.getController();
+                mc.setMessage("The library is out of this books! You were the last to choose it!");
+            } catch (Exception e) {
+            }
+
+            alert.showAndWait();
+            mg.getStatus().setId(outOfStockStatusManage.getId());
+        } else {
+            mg.getStatus().setId(borrowStatusManage.getId());
+        }
+
+        ManageBookEntity.Add(mg);
+        BookEntity.Update(book);
+
+        ObservableList<ManageBook> newMg = ManageBookEntity.GetAllBookBorrowByUID(acc.getUID());
+        ManageBook newBook = newMg.get(newMg.size() - 1);
+        Borrow br = new Borrow();
+        br.setAmount_of_pay(book.getPrice());
+        br.setManageId(newBook.getId());
+        br.setTime_out(3);
+        LocalDate preDate = LocalDate.now();
+        LocalDate refundAt = preDate.withDayOfYear(preDate.getDayOfYear() + 3);
+        br.setRefundAt(refundAt.toString());
+        br.setStatusId(borrowStatusBorrow.getId());
+
+        BorrowEntity bre = new BorrowEntity();
+        bre.Add(br);
+
     }
-    
+
+    @FXML
+    private void Search() {
+        Account acc = AccountEntity.GetAccountByUsername(user.getUserName());
+        BorrowEntity be = new BorrowEntity();
+        ObservableList<Borrow> b = be.GetBorrowByAccountId(acc.getId());
+        table(b);
+    }
+
     @FXML
     private void InitData() {
+        Account acc = AccountEntity.GetAccountByUsername(user.getUserName());
+        BorrowEntity be = new BorrowEntity();
+        ObservableList<Borrow> b = be.GetBorrowByAccountId(acc.getId());
+        table(b);
     }
-    
+
     @FXML
-    private void table(Borrow b) {
+    private void table(ObservableList<Borrow> b) {
+        table.setItems(b);
+        colIndex.setCellValueFactory(f -> f.getValue().indexProperty().asString());
+        colId.setCellValueFactory(f -> f.getValue().idProperty().asString());
+        colBook.setCellValueFactory(f -> {
+            int mangeId = f.getValue().getManageId();
+            ManageBook mg = ManageBookEntity.GetAllBookInfoById(mangeId);
+            Book book = BookEntity.GetBookWithBookId(mg.getBook().getId());
+            return book.nameProperty();
+        });
+        colBorrowAt.setCellValueFactory(f -> f.getValue().borrowAtProperty());
+        colRefundedAt.setCellValueFactory(f -> f.getValue().refundAtProperty());
+
+        table.setRowFactory(tv -> {
+            TableRow<Borrow> myRow = new TableRow<>();
+            myRow.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && (!myRow.isEmpty())) {
+                    myIndex = table.getSelectionModel().getSelectedIndex();
+
+                    txtId.setText(String.valueOf(table.getItems().get(myIndex).getId()));
+                    ManageBook mg = ManageBookEntity.GetAllBookInfoById(table.getItems().get(myIndex).getId());
+                    Book book = BookEntity.GetBookWithBookId(mg.getBook().getId());
+                    Publishing pub = PublishingEntity.GetPublishingWithId(book.getPublishingId());
+                    Author author = AuthorEntity.GetAuthorWithId(book.getAuthorId());
+                    Category cate = CategoryEntity.GetCategoryById(book.getCategoryId());
+
+                    boxAuthor.setValue(author);
+                    boxCategory.setValue(cate);
+                    boxPublishing.setValue(pub);
+                    boxBook.setValue(book);
+                    Validated();
+                }
+            });
+            return myRow;
+        });
     }
 
     private void initClock() {
@@ -142,5 +277,25 @@ public class CustomerBorrowController implements Initializable {
         }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+    }
+
+    private void initBoxPublishing() {
+        ObservableList<Publishing> publishs = PublishingEntity.GetAll();
+        boxPublishing.setItems(publishs);
+    }
+
+    private void initBoxAuthors() {
+        ObservableList<Author> authors = AuthorEntity.GetAll();
+        boxAuthor.setItems(authors);
+    }
+
+    private void initBoxCategory() {
+        ObservableList<Category> categories = CategoryEntity.GetAll();
+        boxCategory.setItems(categories);
+    }
+
+    private void initBoxBook(Publishing pub, Author author, Category cat) {
+        ObservableList<Book> books = BookEntity.GetBookWithPublishCategoryAuthor(pub, author, cat);
+        boxBook.setItems(books);
     }
 }
