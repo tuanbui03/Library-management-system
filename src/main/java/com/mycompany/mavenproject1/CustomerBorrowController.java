@@ -173,47 +173,77 @@ public class CustomerBorrowController implements Initializable {
         Account acc = AccountEntity.GetAccountByUsername(user.getUserName());
 
         Book book = boxBook.getValue();
-        int newQuantityBook = book.getQuantity() - 1;
-        book.setQuantity(newQuantityBook);
-
         ManageBook mg = new ManageBook();
         mg.setPricePerBook(book.getPrice());
         mg.getBook().setId(book.getId());
         mg.getAccount().setId(acc.getId());
-
-        if (newQuantityBook == 0) {
+        if (book.getQuantity() == 0) {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
             try {
                 alert.setDialogPane(loader.load());
                 MessageController mc = loader.getController();
-                mc.setMessage("The library is out of this books! You were the last to choose it!");
+                mc.setMessage("The library is out of this books!");
             } catch (Exception e) {
             }
 
             alert.showAndWait();
             mg.getStatus().setId(outOfStockStatusManage.getId());
+            
+            RefeshData();
         } else {
-            mg.getStatus().setId(borrowStatusManage.getId());
+            int newQuantityBook = book.getQuantity() - 1;
+            book.setQuantity(newQuantityBook);
+
+            if (newQuantityBook == 0) {
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+                try {
+                    alert.setDialogPane(loader.load());
+                    MessageController mc = loader.getController();
+                    mc.setMessage("The library is out of this books! You were the last to choose it!");
+                } catch (Exception e) {
+                }
+
+                alert.showAndWait();
+                mg.getStatus().setId(outOfStockStatusManage.getId());
+            } else {
+                mg.getStatus().setId(borrowStatusManage.getId());
+            }
+
+            ManageBookEntity.Add(mg);
+            BookEntity.Update(book);
+
+            ObservableList<ManageBook> newMg = ManageBookEntity.GetAllBookBorrowByUID(acc.getUID());
+            ManageBook newBook = newMg.get(newMg.size() - 1);
+            Borrow br = new Borrow();
+            br.setAmount_of_pay(book.getPrice());
+            br.setManageId(newBook.getId());
+            br.setTime_out(3);
+            LocalDate preDate = LocalDate.now();
+            LocalDate refundAt = preDate.withDayOfYear(preDate.getDayOfYear() + 3);
+            br.setRefundAt(refundAt.toString());
+            br.setStatusId(borrowStatusBorrow.getId());
+
+            BorrowEntity bre = new BorrowEntity();
+            bre.Add(br);
+            RefeshData();
         }
+    }
 
-        ManageBookEntity.Add(mg);
-        BookEntity.Update(book);
+    @FXML
+    private void ResetFeild() {
+        boxAuthor.setValue(null);
+        boxBook.setValue(null);
+        boxPublishing.setValue(null);
+        boxCategory.setValue(null);
+        errorBook.setVisible(false);
+    }
 
-        ObservableList<ManageBook> newMg = ManageBookEntity.GetAllBookBorrowByUID(acc.getUID());
-        ManageBook newBook = newMg.get(newMg.size() - 1);
-        Borrow br = new Borrow();
-        br.setAmount_of_pay(book.getPrice());
-        br.setManageId(newBook.getId());
-        br.setTime_out(3);
-        LocalDate preDate = LocalDate.now();
-        LocalDate refundAt = preDate.withDayOfYear(preDate.getDayOfYear() + 3);
-        br.setRefundAt(refundAt.toString());
-        br.setStatusId(borrowStatusBorrow.getId());
-
-        BorrowEntity bre = new BorrowEntity();
-        bre.Add(br);
-
+    @FXML
+    private void RefeshData() {
+        ResetFeild();
+        InitData();
     }
 
     @FXML
