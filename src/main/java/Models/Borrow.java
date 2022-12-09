@@ -108,7 +108,7 @@ public class Borrow {
     }
 
     public int getIndex() {
-        return id.get();
+        return index.get();
     }
 
     public void setIndex(int index) {

@@ -10,6 +10,7 @@ import Models.User;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -22,9 +23,8 @@ import javafx.scene.control.PasswordField;
  */
 public class ConfirmPasswordController implements Initializable {
 
-    private PasswordField txtPassword;
     @FXML
-    private Label message;
+    private PasswordField txtPassword;
 
     /**
      * Initializes the controller class.
@@ -43,19 +43,24 @@ public class ConfirmPasswordController implements Initializable {
         Account acc = AccountEntity.GetAccountByUsername(username);
 
         if (password.equals(acc.getPassword())) {
-            alert.setAlertType(Alert.AlertType.INFORMATION);
-            System.out.println("is Admin");
-            alert.setHeaderText("Westmaster");
-            alert.setContentText("Confirm Successfully!");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+            try {
+                alert.setDialogPane(loader.load());
+                MessageController mc = loader.getController();
+                mc.setMessage("Confirm Successfully!");
+            } catch (Exception e) {
+            }
             alert.showAndWait();
 
             return true;
         }
-
-        alert.setAlertType(Alert.AlertType.ERROR);
-        System.out.println("is Admin");
-        alert.setHeaderText("Westmaster");
-        alert.setContentText("Wrong Password! Let's confirm old password again!");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+        try {
+            alert.setDialogPane(loader.load());
+            MessageController mc = loader.getController();
+            mc.setMessage("Wrong Password! Let's confirm old password again!");
+        } catch (Exception e) {
+        }
         alert.showAndWait();
 
         return false;

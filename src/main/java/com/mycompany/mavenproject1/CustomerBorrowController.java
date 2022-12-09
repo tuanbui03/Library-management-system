@@ -265,7 +265,7 @@ public class CustomerBorrowController implements Initializable {
     private void Search() {
         Account acc = AccountEntity.GetAccountByUsername(user.getUserName());
         BorrowEntity be = new BorrowEntity();
-        ObservableList<Borrow> b = be.GetBorrowByAccountId(acc.getId());
+        ObservableList<Borrow> b = be.SearchBorrowByAccountId(acc.getId(), txtSearch.getText());
         table(b);
     }
 

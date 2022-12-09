@@ -129,9 +129,58 @@ public class BorrowEntity {
             rs = preparedStatement.executeQuery();
 
 //          Call value in databse and set for list Borrow
-            while (rs.next()) {
+            for (int i=1; rs.next(); i++) {
                 Borrow borrow = new Borrow();
+                
+                borrow.setIndex(i);
+                borrow.setId(rs.getInt("id"));
+                borrow.setBorrowAt(rs.getString("borrowAt"));
+                borrow.setTime_out(rs.getInt("time_out"));
+                borrow.setRefundAt(rs.getString("refundAt"));
+                borrow.setAmount_of_pay(rs.getFloat("amount_of_pay"));
+                borrow.setManageId(rs.getInt("manageId"));
+                borrow.setStatusId(rs.getInt("statusId"));
 
+                list.add(borrow);
+            }
+
+            return list;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+//          Close databse at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+
+        return null;
+    }
+    
+    public ObservableList<Borrow> SearchBorrowByAccountId(int accountId, String search) {
+//      Call array list with type is Borrow
+        ObservableList<Borrow> list = FXCollections.observableArrayList();
+//      Query SELECT in SQL
+        String query = "SELECT b.* "
+                + "FROM borrow AS b "
+                + "JOIN manage_book AS mb ON b.manageId = mb.id "
+                + "JOIN books ON mb.id = books.id "
+                + "WHERE mb.accountId = ? AND books.name like ?";
+
+        try {
+//          Connect to database and execute query
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, accountId);
+            preparedStatement.setString(2, "%" + search + "%");
+            rs = preparedStatement.executeQuery();
+
+//          Call value in databse and set for list Borrow
+            for (int i=1; rs.next(); i++) {
+                Borrow borrow = new Borrow();
+                
+                borrow.setIndex(i);
                 borrow.setId(rs.getInt("id"));
                 borrow.setBorrowAt(rs.getString("borrowAt"));
                 borrow.setTime_out(rs.getInt("time_out"));
