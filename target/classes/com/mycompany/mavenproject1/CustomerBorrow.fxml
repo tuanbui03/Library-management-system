@@ -175,31 +175,31 @@
                      <children>
                         <Pane layoutX="14.0" layoutY="14.0" prefHeight="120.0" prefWidth="860.0" style="-fx-background-color: #c7b090; -fx-background-radius: 20px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
                            <children>
-                              <Label layoutX="42.0" layoutY="29.0" text="Publishing" textFill="WHITE">
+                              <Label layoutX="32.0" layoutY="29.0" text="Publishing" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold Italic" size="15.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="42.0" layoutY="70.0" text="Author" textFill="WHITE">
+                              <Label layoutX="32.0" layoutY="70.0" text="Author" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold Italic" size="15.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="493.0" layoutY="29.0" text="Category" textFill="WHITE">
+                              <Label layoutX="453.0" layoutY="29.0" text="Category" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold Italic" size="15.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="493.0" layoutY="70.0" text="Book" textFill="WHITE">
+                              <Label layoutX="453.0" layoutY="70.0" text="Book" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold Italic" size="15.0" />
                                  </font>
                               </Label>
                               <TextField fx:id="txtId" disable="true" layoutX="356.0" layoutY="2.0" visible="false" />
-                              <ComboBox fx:id="boxPublishing" layoutX="128.0" layoutY="27.0" onAction="#Validated" prefWidth="250.0" promptText="Select a Publishing" />
-                              <ComboBox fx:id="boxAuthor" layoutX="128.0" layoutY="68.0" onAction="#Validated" prefWidth="250.0" promptText="Select a Author" />
-                              <ComboBox fx:id="boxCategory" layoutX="568.0" layoutY="27.0" onAction="#Validated" prefWidth="250.0" promptText="Select a Category" />
-                              <ComboBox fx:id="boxBook" layoutX="568.0" layoutY="68.0" prefWidth="250.0" />
+                              <ComboBox fx:id="boxPublishing" layoutX="118.0" layoutY="27.0" onAction="#ValidatedFilter" prefWidth="300.0" promptText="Select a Publishing" />
+                              <ComboBox fx:id="boxAuthor" layoutX="118.0" layoutY="68.0" onAction="#ValidatedFilter" prefWidth="300.0" promptText="Select a Author" />
+                              <ComboBox fx:id="boxCategory" layoutX="528.0" layoutY="27.0" onAction="#ValidatedFilter" prefWidth="300.0" promptText="Select a Category" />
+                              <ComboBox fx:id="boxBook" layoutX="528.0" layoutY="68.0" onAction="#ValidatedBook" prefWidth="300.0" promptText="Choose a Publishing, a Author and a Category!" />
                               <Label fx:id="errorBook" layoutX="568.0" layoutY="93.0" styleClass="error" text="Choose Publishing, Author and Category!" visible="false" />
                            </children>
                         </Pane>
@@ -232,7 +232,7 @@
                               <TextField fx:id="txtSearch" onKeyReleased="#Search" prefHeight="40.0" prefWidth="300.0" promptText="Search borrow books" style="-fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-background-radius: 2em;" />
                            </children>
                         </HBox>
-                        <Button fx:id="btnBooking" layoutX="755.0" layoutY="148.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="105.0" style="-fx-background-radius: 20px;" styleClass="button_success" text="Booking" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="148.0">
+                        <Button fx:id="btnBooking" disable="true" layoutX="755.0" layoutY="148.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="105.0" style="-fx-background-radius: 20px;" styleClass="button_success" text="Booking" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="148.0">
                            <font>
                               <Font size="14.0" />
                            </font>

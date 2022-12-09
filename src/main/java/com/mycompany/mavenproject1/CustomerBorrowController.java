@@ -11,12 +11,18 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,6 +30,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -107,10 +114,11 @@ public class CustomerBorrowController implements Initializable {
         initBoxAuthors();
         initBoxCategory();
         initBoxPublishing();
+        InitData();
     }
 
     @FXML
-    private void Validated() {
+    private void ValidatedFilter() {
         boolean flag = false;
 
         Publishing pub = boxPublishing.getValue();
@@ -128,7 +136,14 @@ public class CustomerBorrowController implements Initializable {
             errorBook.setVisible(false);
         }
 
-        if ((pub != null && cat != null && author != null) && boxBook.getValue() == null) {
+        boxBook.setDisable(flag);
+    }
+
+    @FXML
+    private void ValidatedBook() {
+        boolean flag = false;
+
+        if (boxBook.getValue() == null) {
             boxBook.setPromptText("Choose a Book!");
             errorBook.setText("Choose a Book!");
             errorBook.setVisible(true);
@@ -189,7 +204,7 @@ public class CustomerBorrowController implements Initializable {
 
             alert.showAndWait();
             mg.getStatus().setId(outOfStockStatusManage.getId());
-            
+
             RefeshData();
         } else {
             int newQuantityBook = book.getQuantity() - 1;
@@ -293,7 +308,7 @@ public class CustomerBorrowController implements Initializable {
                     boxCategory.setValue(cate);
                     boxPublishing.setValue(pub);
                     boxBook.setValue(book);
-                    Validated();
+                    ValidatedFilter();
                 }
             });
             return myRow;
@@ -328,4 +343,5 @@ public class CustomerBorrowController implements Initializable {
         ObservableList<Book> books = BookEntity.GetBookWithPublishCategoryAuthor(pub, author, cat);
         boxBook.setItems(books);
     }
+
 }

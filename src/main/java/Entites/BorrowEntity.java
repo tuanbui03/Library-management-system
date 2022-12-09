@@ -117,9 +117,9 @@ public class BorrowEntity {
         ObservableList<Borrow> list = FXCollections.observableArrayList();
 //      Query SELECT in SQL
         String query = "SELECT b.* "
-                + "FROM borrows AS b "
+                + "FROM borrow AS b "
                 + "JOIN manage_book AS mb ON b.manageId = mb.id "
-                + "WHERE manageId.accountId = ?";
+                + "WHERE mb.accountId = ?";
 
         try {
 //          Connect to database and execute query

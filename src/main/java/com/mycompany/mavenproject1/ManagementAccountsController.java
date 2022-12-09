@@ -187,6 +187,7 @@ public class ManagementAccountsController implements Initializable {
         App.setRoot("ManagementAccounts");
     }
 
+    @FXML
     private void switchToManagementBorrowing() throws IOException {
         App.setRoot("ManagementBorrow");
     }
