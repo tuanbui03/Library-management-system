@@ -232,7 +232,7 @@
                               <TextField fx:id="txtSearch" onKeyReleased="#Search" prefHeight="40.0" prefWidth="300.0" promptText="Search borrow books" style="-fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-background-radius: 2em;" />
                            </children>
                         </HBox>
-                        <Button fx:id="btnBooking" disable="true" layoutX="755.0" layoutY="148.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="105.0" style="-fx-background-radius: 20px;" styleClass="button_success" text="Booking" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="148.0">
+                        <Button fx:id="btnBooking" disable="true" layoutX="755.0" layoutY="148.0" mnemonicParsing="false" onAction="#BtnBooking" prefHeight="40.0" prefWidth="105.0" style="-fx-background-radius: 20px;" styleClass="button_success" text="Booking" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="148.0">
                            <font>
                               <Font size="14.0" />
                            </font>
