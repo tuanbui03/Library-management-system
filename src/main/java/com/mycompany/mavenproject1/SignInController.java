@@ -195,9 +195,10 @@ public class SignInController implements Initializable {
         String hidePassword = passPassword.getText();
         String showPassword = txtPassword.getText();
 
+        String USERNAME_PATTERN = "^(?=\\S+$).{1,64}$";
         String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{8,20}$";
 
-        if (username.isEmpty()) {
+        if (!username.matches(USERNAME_PATTERN)) {
             flag = true;
         } else {
         }

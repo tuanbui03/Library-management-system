@@ -131,9 +131,9 @@
                               <TextField fx:id="txtName" layoutX="131.0" layoutY="64.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a name" styleClass="input" />
                               <Label fx:id="errorName" layoutX="131.0" layoutY="91.0" styleClass="error" text="Cannot be null and less than 64 characters" visible="false" />
                               <Label fx:id="errorCoyear" layoutX="131.0" layoutY="141.0" styleClass="error" text="Pick a date!" visible="false" />
-                              <TextField fx:id="txtPrice" layoutX="131.0" layoutY="164.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="0.0" styleClass="input" />
+                              <TextField fx:id="txtPrice" layoutX="131.0" layoutY="164.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a price folllow valid(0.0 VND)" styleClass="input" />
                               <Label fx:id="errorPrice" layoutX="131.0" layoutY="191.0" styleClass="error" text="Cannot be null and is number" visible="false" />
-                              <TextField fx:id="txtQuantity" layoutX="131.0" layoutY="216.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="0" styleClass="input" />
+                              <TextField fx:id="txtQuantity" layoutX="131.0" layoutY="216.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a price folllow valid(0)" styleClass="input" />
                               <Label fx:id="errorQuantity" layoutX="131.0" layoutY="244.0" styleClass="error" text="Must be is number and greater than 10" visible="false" />
                               <TextField fx:id="txtDescription" layoutX="131.0" layoutY="264.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a text" styleClass="input" />
                               <Label fx:id="errorDescription" layoutX="131.0" layoutY="292.0" styleClass="error" text="Enter a description" visible="false" />
@@ -150,7 +150,7 @@
                               <Button fx:id="btnSave" layoutX="29.0" layoutY="325.0" mnemonicParsing="false" onAction="#BtnSaveClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_success" text="Save" />
                               <Button fx:id="btnDelete" layoutX="142.0" layoutY="325.0" mnemonicParsing="false" onAction="#BtnDeleteClick" prefHeight="30.0" prefWidth="85.0" styleClass="button_danger" stylesheets="@../../../CSS/button.css" text="Delete" />
                               <Button fx:id="btnReset" layoutX="255.0" layoutY="325.0" mnemonicParsing="false" onAction="#ResetFeild" prefHeight="30.0" prefWidth="85.0" styleClass="button_primary" stylesheets="@../../../CSS/button.css" text="Reset" />
-                              <DatePicker fx:id="txtCoyear" editable="false" layoutX="131.0" layoutY="114.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" style="-fx-background-color: #f9f7f4;" />
+                              <DatePicker fx:id="txtCoyear" editable="false" layoutX="131.0" layoutY="114.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Pick a date!" style="-fx-background-color: #f9f7f4;" />
                            </children>
                            <padding>
                               <Insets bottom="20.0" left="30.0" right="20.0" top="50.0" />
