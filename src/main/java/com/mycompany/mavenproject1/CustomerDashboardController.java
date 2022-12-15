@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 /**
@@ -63,6 +64,8 @@ public class CustomerDashboardController implements Initializable {
     private Label totalCategoriesInterested;
     @FXML
     private Label totalPublishsingInterested;
+    @FXML
+    private AnchorPane page;
 
     /**
      * Initializes the controller class.
@@ -91,21 +94,25 @@ public class CustomerDashboardController implements Initializable {
 
     @FXML
     private void switchToCustomerDashboard() throws Exception {
+        page.setDisable(true);
         App.setRoot("CustomerDashboard");
     }
 
     @FXML
     private void switchToCustomerInfomation() throws Exception {
+        page.setDisable(true);
         App.setRoot("CustomerInfomation");
     }
 
     @FXML
     private void switchToCustomerBorrowing() throws Exception {
+        page.setDisable(true);
         App.setRoot("CustomerBorrow");
     }
 
     @FXML
     private void switchToSignIn() throws Exception {
+        page.setDisable(true);
         App.setRoot("SignIn");
     }
 
@@ -118,7 +125,6 @@ public class CustomerDashboardController implements Initializable {
         clock.play();
     }
 
-    @FXML
     private void Total() {
         String username = user.getUserName();
 
@@ -135,7 +141,6 @@ public class CustomerDashboardController implements Initializable {
         totalAuthorsInterested.setText(String.valueOf(totalAuthor));
     }
 
-    @FXML
     private void Top5CategoriesFavorites() {
         String username = user.getUserName();
 
@@ -152,7 +157,6 @@ public class CustomerDashboardController implements Initializable {
         colCategoryTotal.setCellValueFactory(f -> f.getValue().totalProperty().asString());
     }
 
-    @FXML
     private void Top5AuthorsFavorites() {
         String username = user.getUserName();
 

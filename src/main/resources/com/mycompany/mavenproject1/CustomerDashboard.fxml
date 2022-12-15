@@ -18,7 +18,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1180.0" stylesheets="@../../../CSS/customer.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.CustomerDashboardController">
+<AnchorPane id="AnchorPane" fx:id="page" prefHeight="800.0" prefWidth="1180.0" stylesheets="@../../../CSS/customer.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.CustomerDashboardController">
    <children>
       <VBox alignment="TOP_CENTER" layoutY="5.0" prefHeight="800.0" prefWidth="300.0" style="-fx-background-color: #c7b090;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>

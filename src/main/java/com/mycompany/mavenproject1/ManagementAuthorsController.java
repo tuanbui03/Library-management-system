@@ -21,6 +21,7 @@ import javafx.scene.control.*;
 import javafx.util.Duration;
 import javafx.animation.*;
 import javafx.collections.*;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -95,6 +96,8 @@ public class ManagementAuthorsController implements Initializable {
     private Button btnManageBorrowing;
     @FXML
     private Button btnSignout;
+    @FXML
+    private AnchorPane page;
 
     /**
      * Initializes the controller class.
@@ -125,41 +128,49 @@ public class ManagementAuthorsController implements Initializable {
 
     @FXML
     private void switchToAdminDashboard() throws IOException {
+        page.setDisable(true);
         App.setRoot("AdminDashboard");
     }
 
     @FXML
     private void switchToManagementAuthors() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementAuthors");
     }
 
     @FXML
     private void switchToManagementBooks() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementBooks");
     }
 
     @FXML
     private void switchToManagementCategories() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementCategories");
     }
 
     @FXML
     private void switchToManagementPublishing() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementPublishing");
     }
 
     @FXML
     private void switchToManagementAccounts() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementAccounts");
     }
 
     @FXML
     private void switchToManagementBorrowing() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementBorrow");
     }
 
     @FXML
     private void SignOut() throws Exception {
+        page.setDisable(true);
         App.setRoot("SignIn");
     }
 
@@ -172,7 +183,6 @@ public class ManagementAuthorsController implements Initializable {
         clock.play();
     }
 
-    @FXML
     public void table(ObservableList<Author> authors) {
         table.setItems(authors);
         colIndex.setCellValueFactory(f -> f.getValue().indexProperty().asString());
@@ -207,7 +217,6 @@ public class ManagementAuthorsController implements Initializable {
         });
     }
 
-    @FXML
     public void initData() {
         ObservableList<Author> authors = AuthorEntity.GetAll();
 
@@ -398,6 +407,7 @@ public class ManagementAuthorsController implements Initializable {
         }
     }
 
+    @FXML
     public void Validated() {
         boolean flag = false;
 

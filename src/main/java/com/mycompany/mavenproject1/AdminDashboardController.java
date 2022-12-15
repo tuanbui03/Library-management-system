@@ -21,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 /**
@@ -29,7 +30,6 @@ import javafx.util.Duration;
  * @author PC
  */
 public class AdminDashboardController implements Initializable {
-
     @FXML
     private Label labelClock;
     @FXML
@@ -64,6 +64,8 @@ public class AdminDashboardController implements Initializable {
 //    private Label totalLibrarians;
     @FXML
     private Label totalReaders;
+    @FXML
+    private AnchorPane page;
 
     /**
      * Initializes the controller class.
@@ -89,41 +91,49 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     private void switchToAdminDashboard() throws IOException {
+        page.setDisable(true);
         App.setRoot("AdminDashboard");
     }
 
     @FXML
     private void switchToManagementAuthors() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementAuthors");
     }
 
     @FXML
     private void switchToManagementBooks() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementBooks");
     }
 
     @FXML
     private void switchToManagementCategories() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementCategories");
     }
 
     @FXML
     private void switchToManagementPublishing() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementPublishing");
     }
 
     @FXML
     private void switchToManagementAccounts() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementAccounts");
     }
 
     @FXML
     private void switchToManagementBorrowing() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementBorrow");
     }
 
     @FXML
     private void SignOut() throws Exception {
+        page.setDisable(true);
         App.setRoot("SignIn");
     }
 

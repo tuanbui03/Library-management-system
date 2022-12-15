@@ -21,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 /**
@@ -57,6 +58,8 @@ public class CustomerInfomationController implements Initializable {
     private Label labelMobile;
     @FXML
     private Button btnEdit;
+    @FXML
+    private AnchorPane page;
 
     /**
      * Initializes the controller class.
@@ -113,27 +116,32 @@ public class CustomerInfomationController implements Initializable {
 
     @FXML
     private void switchToCustomerDashboard() throws Exception {
+        page.setDisable(true);
         App.setRoot("CustomerDashboard");
     }
 
     @FXML
     private void switchToCustomerInfomation() throws Exception {
+        page.setDisable(true);
         App.setRoot("CustomerInfomation");
     }
 
     @FXML
     private void switchToCustomerBorrowing() throws Exception {
+        page.setDisable(true);
         App.setRoot("CustomerBorrow");
     }
 
     @FXML
-    private void switchToSignIn() throws Exception {
-        App.setRoot("SignIn");
+    private void swtichToCustomerEditInfomation() throws Exception {
+        page.setDisable(true);
+        App.setRoot("CustomerEditInfomation");
     }
 
     @FXML
-    private void swtichToCustomerEditInfomation() throws Exception {
-        App.setRoot("CustomerEditInfomation");
+    private void switchToSignIn() throws Exception {
+        page.setDisable(true);
+        App.setRoot("SignIn");
     }
 
     private void initClock() {

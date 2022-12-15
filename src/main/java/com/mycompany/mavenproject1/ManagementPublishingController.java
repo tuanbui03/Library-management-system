@@ -34,6 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
@@ -117,6 +118,8 @@ public class ManagementPublishingController implements Initializable {
 
     int myIndex;
     int id;
+    @FXML
+    private AnchorPane page;
 
     /**
      * Initializes the controller class.
@@ -155,7 +158,6 @@ public class ManagementPublishingController implements Initializable {
         clock.play();
     }
 
-    @FXML
     public void CheckId() {
 //      get value of UID feild
         String id = txtId.getText();
@@ -375,7 +377,6 @@ public class ManagementPublishingController implements Initializable {
         table();
     }
 
-    @FXML
     public void table() {
         ObservableList<Publishing> publishing = PublishingEntity.GetAll();
 
@@ -456,41 +457,49 @@ public class ManagementPublishingController implements Initializable {
 
     @FXML
     private void switchToAdminDashboard() throws IOException {
+        page.setDisable(true);
         App.setRoot("AdminDashboard");
     }
 
     @FXML
     private void switchToManagementAuthors() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementAuthors");
     }
 
     @FXML
     private void switchToManagementBooks() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementBooks");
     }
 
     @FXML
     private void switchToManagementCategories() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementCategories");
     }
 
     @FXML
     private void switchToManagementPublishing() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementPublishing");
     }
 
     @FXML
     private void switchToManagementAccounts() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementAccounts");
     }
 
     @FXML
     private void switchToManagementBorrowing() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementBorrow");
     }
 
     @FXML
     private void SignOut() throws Exception {
+        page.setDisable(true);
         App.setRoot("SignIn");
     }
 }

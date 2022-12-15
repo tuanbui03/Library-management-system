@@ -36,6 +36,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 /**
@@ -91,6 +92,8 @@ public class CustomerBorrowController implements Initializable {
 
     int myIndex;
     int id;
+    @FXML
+    private AnchorPane page;
 
     /**
      * Initializes the controller class.
@@ -160,21 +163,25 @@ public class CustomerBorrowController implements Initializable {
 
     @FXML
     private void switchToCustomerDashboard() throws Exception {
+        page.setDisable(true);
         App.setRoot("CustomerDashboard");
     }
 
     @FXML
     private void switchToCustomerInfomation() throws Exception {
+        page.setDisable(true);
         App.setRoot("CustomerInfomation");
     }
 
     @FXML
     private void switchToCustomerBorrowing() throws Exception {
+        page.setDisable(true);
         App.setRoot("CustomerBorrow");
     }
 
     @FXML
     private void switchToSignIn() throws Exception {
+        page.setDisable(true);
         App.setRoot("SignIn");
     }
 
@@ -272,7 +279,6 @@ public class CustomerBorrowController implements Initializable {
 
     }
 
-    @FXML
     private void ResetFeild() {
         boxAuthor.setValue(null);
         boxBook.setValue(null);
@@ -281,7 +287,6 @@ public class CustomerBorrowController implements Initializable {
         errorBook.setVisible(false);
     }
 
-    @FXML
     private void RefeshData() {
         ResetFeild();
         InitData();
@@ -295,7 +300,6 @@ public class CustomerBorrowController implements Initializable {
         table(b);
     }
 
-    @FXML
     private void InitData() {
         Account acc = AccountEntity.GetAccountByUsername(user.getUserName());
         BorrowEntity be = new BorrowEntity();
@@ -303,7 +307,6 @@ public class CustomerBorrowController implements Initializable {
         table(b);
     }
 
-    @FXML
     private void table(ObservableList<Borrow> b) {
         table.setItems(b);
         colIndex.setCellValueFactory(f -> f.getValue().indexProperty().asString());

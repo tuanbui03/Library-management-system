@@ -72,8 +72,6 @@ public class ManagementBorrowingController implements Initializable {
     @FXML
     private TableColumn<Borrow, String> colIndex, colUID, colBook, colBorrow, colRefund, colTime, colStatus;
     @FXML
-    private AnchorPane ap;
-    @FXML
     private Pane pnlOverview;
     @FXML
     private Button btnReset;
@@ -99,6 +97,8 @@ public class ManagementBorrowingController implements Initializable {
     private Button btnManageBorrowing;
     @FXML
     private Button btnSignout;
+    @FXML
+    private AnchorPane page;
 
     private void initClock() {
 
@@ -215,7 +215,6 @@ public class ManagementBorrowingController implements Initializable {
         table(borrow);
     }
 
-    @FXML
     public void table(ObservableList<Borrow> borrow) {
         table.setItems(borrow);
 
@@ -285,41 +284,49 @@ public class ManagementBorrowingController implements Initializable {
 
     @FXML
     private void switchToAdminDashboard() throws IOException {
+        page.setDisable(true);
         App.setRoot("AdminDashboard");
     }
 
     @FXML
     private void switchToManagementAuthors() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementAuthors");
     }
 
     @FXML
     private void switchToManagementBooks() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementBooks");
     }
 
     @FXML
     private void switchToManagementCategories() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementCategories");
     }
 
     @FXML
     private void switchToManagementPublishing() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementPublishing");
     }
 
     @FXML
     private void switchToManagementAccounts() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementAccounts");
     }
 
     @FXML
     private void switchToManagementBorrowing() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementBorrow");
     }
 
     @FXML
     private void SignOut() throws Exception {
+        page.setDisable(true);
         App.setRoot("SignIn");
     }
 

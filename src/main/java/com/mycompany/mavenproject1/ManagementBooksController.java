@@ -34,6 +34,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
@@ -43,9 +44,6 @@ import javafx.util.Duration;
  * @author PC
  */
 public class ManagementBooksController implements Initializable {
-
-    private Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
-
     @FXML
     private Label labelClock;
     @FXML
@@ -157,14 +155,14 @@ public class ManagementBooksController implements Initializable {
 
     int myIndex;
     int id;
+    @FXML
+    private AnchorPane page;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-
         User user = User.getInstace();
         String sessionUser = user.getUserName();
         try {
@@ -188,42 +186,49 @@ public class ManagementBooksController implements Initializable {
 
     @FXML
     private void switchToAdminDashboard() throws IOException {
+        page.setDisable(true);
         App.setRoot("AdminDashboard");
     }
 
     @FXML
     private void switchToManagementAuthors() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementAuthors");
     }
 
     @FXML
     private void switchToManagementBooks() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementBooks");
     }
 
     @FXML
     private void switchToManagementCategories() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementCategories");
     }
 
     @FXML
     private void switchToManagementPublishing() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementPublishing");
     }
 
     @FXML
     private void switchToManagementAccounts() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementAccounts");
     }
 
     @FXML
     private void switchToManagementBorrowing() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementBorrow");
     }
 
     @FXML
     private void SignOut() throws Exception {
-        prefs.clear();
+        page.setDisable(true);
         App.setRoot("SignIn");
     }
 
@@ -481,7 +486,6 @@ public class ManagementBooksController implements Initializable {
         CheckId();
     }
 
-    @FXML
     private void table(ObservableList<ManageBook> books) {
 
         table.setItems(books);
@@ -571,7 +575,6 @@ public class ManagementBooksController implements Initializable {
         table(books);
     }
 
-    @FXML
     private void InitData() {
         ObservableList<ManageBook> books = ManageBookEntity.GetAllBookInfo();
 
@@ -680,7 +683,6 @@ public class ManagementBooksController implements Initializable {
         }
     }
 
-    @FXML
     private void InitItemsPublishBox() {
         ObservableList<Publishing> publishs = PublishingEntity.GetAll();
 
@@ -693,7 +695,6 @@ public class ManagementBooksController implements Initializable {
         }
     }
 
-    @FXML
     private void InitItemsCategoryBox() {
         ObservableList<Category> categories = CategoryEntity.GetAll();
         if (categories == null) {
@@ -705,7 +706,6 @@ public class ManagementBooksController implements Initializable {
         }
     }
 
-    @FXML
     private void InitItemsAuthorBox() {
         ObservableList<Author> authors = AuthorEntity.GetAll();
 
@@ -718,7 +718,6 @@ public class ManagementBooksController implements Initializable {
         }
     }
 
-    @FXML
     private void InitItemsStatusBox() {
         ObservableList<StatusManage> status = StatusManageEntity.GetAll();
 

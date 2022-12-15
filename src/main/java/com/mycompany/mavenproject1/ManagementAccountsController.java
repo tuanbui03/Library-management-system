@@ -43,8 +43,6 @@ import javax.imageio.ImageIO;
 public class ManagementAccountsController implements Initializable {
 
     @FXML
-    private AnchorPane ap;
-    @FXML
     private Label labelClock;
     @FXML
     private Label sessionUsername;
@@ -155,45 +153,55 @@ public class ManagementAccountsController implements Initializable {
 
     int myIndex;
     int id;
-    Image av;
+//    Image av;
+    @FXML
+    private AnchorPane page;
 
     @FXML
     private void switchToAdminDashboard() throws IOException {
+        page.setDisable(true);
         App.setRoot("AdminDashboard");
     }
 
     @FXML
     private void switchToManagementAuthors() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementAuthors");
     }
 
     @FXML
     private void switchToManagementBooks() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementBooks");
     }
 
     @FXML
     private void switchToManagementCategories() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementCategories");
     }
 
     @FXML
     private void switchToManagementPublishing() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementPublishing");
     }
 
     @FXML
     private void switchToManagementAccounts() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementAccounts");
     }
 
     @FXML
     private void switchToManagementBorrowing() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementBorrow");
     }
 
     @FXML
     private void SignOut() throws Exception {
+        page.setDisable(true);
         App.setRoot("SignIn");
     }
 

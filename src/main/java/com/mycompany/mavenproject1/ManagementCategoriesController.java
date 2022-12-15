@@ -22,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -33,13 +34,8 @@ import javafx.util.Duration;
  * @author PC
  */
 public class ManagementCategoriesController implements Initializable {
-
-    private Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
-
     @FXML
     private Label labelClock;
-    @FXML
-    private Circle avatar;
     @FXML
     private Label sessionUsername;
     @FXML
@@ -97,44 +93,54 @@ public class ManagementCategoriesController implements Initializable {
 
     int myIndex;
     int id;
+    @FXML
+    private AnchorPane page;
 
     @FXML
     private void switchToAdminDashboard() throws IOException {
+        page.setDisable(true);
         App.setRoot("AdminDashboard");
     }
 
     @FXML
     private void switchToManagementAuthors() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementAuthors");
     }
 
     @FXML
     private void switchToManagementBooks() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementBooks");
     }
 
     @FXML
     private void switchToManagementCategories() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementCategories");
     }
 
     @FXML
     private void switchToManagementPublishing() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementPublishing");
     }
 
     @FXML
     private void switchToManagementAccounts() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementAccounts");
     }
 
     @FXML
     private void switchToManagementBorrowing() throws IOException {
+        page.setDisable(true);
         App.setRoot("ManagementBorrow");
     }
 
     @FXML
     private void SignOut() throws Exception {
+        page.setDisable(true);
         App.setRoot("SignIn");
     }
 
@@ -174,6 +180,7 @@ public class ManagementCategoriesController implements Initializable {
         });
     }
 
+    @FXML
     public void BtnSearchClick() {
 //      get value at search text feild
         String search = txtSearch.getText();
@@ -205,6 +212,7 @@ public class ManagementCategoriesController implements Initializable {
         });
     }
 
+    @FXML
     public void BtnSaveClick() {
 
 //      Uppercase first char of each word
@@ -313,6 +321,7 @@ public class ManagementCategoriesController implements Initializable {
         RefeshData();
     }
 
+    @FXML
     public void BtnDeleteClick() {
 
         int id = Integer.parseInt(txtId.getText());
@@ -352,6 +361,7 @@ public class ManagementCategoriesController implements Initializable {
         RefeshData();
     }
 
+    @FXML
     public void CheckInputName() {
 //      if txtName empty show error else hide error and undisable button save
         if (txtName.getText().isEmpty()) {
@@ -373,6 +383,7 @@ public class ManagementCategoriesController implements Initializable {
         }
     }
 
+    @FXML
     public void FomartInputName() {
         String inpName = txtName.getText();
         String newInpName = "";
@@ -390,11 +401,13 @@ public class ManagementCategoriesController implements Initializable {
         txtName.setText(newInpName);
     }
 
+    @FXML
     public void RefeshData() {
         ResetFeild();
         table();
     }
 
+    @FXML
     public void ResetFeild() {
         txtId.setText("");
         txtName.setText("");

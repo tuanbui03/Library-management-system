@@ -35,6 +35,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 /**
@@ -89,6 +90,8 @@ public class CustomerEditInfomationController implements Initializable {
     private Button btnBack;
     @FXML
     private Button btnSave;
+    @FXML
+    private AnchorPane page;
 
     /**
      * Initializes the controller class.
@@ -116,21 +119,25 @@ public class CustomerEditInfomationController implements Initializable {
 
     @FXML
     private void switchToCustomerDashboard() throws Exception {
+        page.setDisable(true);
         App.setRoot("CustomerDashboard");
     }
 
     @FXML
     private void switchToCustomerInfomation() throws Exception {
+        page.setDisable(true);
         App.setRoot("CustomerInfomation");
     }
 
     @FXML
     private void switchToCustomerBorrowing() throws Exception {
+        page.setDisable(true);
         App.setRoot("CustomerBorrow");
     }
 
     @FXML
     private void switchToSignIn() throws Exception {
+        page.setDisable(true);
         App.setRoot("SignIn");
     }
 

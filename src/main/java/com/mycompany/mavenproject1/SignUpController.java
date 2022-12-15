@@ -31,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 /**
@@ -84,6 +85,8 @@ public class SignUpController implements Initializable {
     private TextField txtFullname;
     @FXML
     private Label errorFullname;
+    @FXML
+    private AnchorPane page;
 
     /**
      * Initializes the controller class.
@@ -328,6 +331,7 @@ public class SignUpController implements Initializable {
 
     @FXML
     private void switchToSignIn() throws IOException {
+        page.setDisable(true);
         App.setRoot("SignIn");
     }
 
