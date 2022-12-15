@@ -30,63 +30,21 @@ public class BorrowEntity {
     public static ObservableList<Borrow> GetAll() {
 //      Call array list with type is Borrow
         ObservableList<Borrow> list = FXCollections.observableArrayList();
-        String query = "Select bw.id,a.UID,bw.amount_of_pay, b.name as bookName,bw.borrowAt,bw.refundAt ,bw.time_out,sb.name as stautsName,a.username as accountName,bw.statusId,mb.accountId, mb.bookId,bw.manageId from borrow as bw\n"
-                + " join status_borrow as sb on bw.statusId = sb.id\n"
-                + " join manage_book as mb on bw.manageId = mb.id\n"
-                + " join accounts as a on mb.accountId = a.id\n"
-                + " join books as b on mb.bookId = b.id ";
-        try {
-//          Connect to database and execute query
-            connection = JDBCConnect.getJDBCConnection();
-            preparedStatement = connection.prepareStatement(query);
-            rs = preparedStatement.executeQuery();
-//          Call value in databse and set for list Borrow
-            int i = 1;
-            while (rs.next()) {
-                Borrow borrow = new Borrow();
-                borrow.setIndex(i);
-                borrow.setId(rs.getInt("id"));
-                borrow.setBorrowAt(rs.getString("borrowAt"));
-                borrow.setTime_out(rs.getInt("time_out"));
-                borrow.setRefundAt(rs.getString("refundAt"));
-                borrow.setAmount_of_pay(rs.getFloat("amount_of_pay"));
-                borrow.setManageId(rs.getInt("manageId"));
-                borrow.setStatusId(i);
-                borrow.setStatusName(rs.getString("stautsName"));
-                borrow.setBookName(rs.getString("bookName"));
-                borrow.setAccountName(rs.getString("accountName"));
-                list.add(borrow);
-                i++;
-            }
-            return list;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-//          Close databse at end
-            JDBCConnect.closeResultSet(rs);
-            JDBCConnect.closePreparedStatement(preparedStatement);
-            JDBCConnect.closeConnection(connection);
-        }
-        return null;
-    }
-
-    public ObservableList<Borrow> GetBorrowById(int id) {
-//      Call array list with type is Borrow
-        ObservableList<Borrow> list = FXCollections.observableArrayList();
 //      Query SELECT in SQL
-        String query = "SELECT * FROM borrow WHERE id = ?";
+        String query = "SELECT b.* "
+                + "FROM borrow AS b ";
 
         try {
 //          Connect to database and execute query
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, id);
             rs = preparedStatement.executeQuery();
 
 //          Call value in databse and set for list Borrow
-            while (rs.next()) {
+            for (int i = 1; rs.next(); i++) {
                 Borrow borrow = new Borrow();
 
+                borrow.setIndex(i);
                 borrow.setId(rs.getInt("id"));
                 borrow.setBorrowAt(rs.getString("borrowAt"));
                 borrow.setTime_out(rs.getInt("time_out"));
@@ -99,6 +57,50 @@ public class BorrowEntity {
             }
 
             return list;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+//          Close databse at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+
+        return null;
+    }
+
+    public static Borrow GetBorrowById(int id) {
+//      Call array list with type is Borrow
+        ObservableList<Borrow> list = FXCollections.observableArrayList();
+//      Query SELECT in SQL
+        String query = "SELECT b.* "
+                + "FROM borrow AS b "
+                + "WHERE id = ?";
+
+        try {
+//          Connect to database and execute query
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            rs = preparedStatement.executeQuery();
+
+//          Call value in databse and set for list Borrow
+            while (rs.next()) {
+                Borrow borrow = new Borrow();
+
+//                borrow.setIndex(i);
+                borrow.setId(rs.getInt("id"));
+                borrow.setBorrowAt(rs.getString("borrowAt"));
+                borrow.setTime_out(rs.getInt("time_out"));
+                borrow.setRefundAt(rs.getString("refundAt"));
+                borrow.setAmount_of_pay(rs.getFloat("amount_of_pay"));
+                borrow.setManageId(rs.getInt("manageId"));
+                borrow.setStatusId(rs.getInt("statusId"));
+
+                return borrow;
+            }
+
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -254,24 +256,27 @@ public class BorrowEntity {
         return null;
     }
 
-    public static ObservableList<Borrow> Search(String name) {
+    public static ObservableList<Borrow> Search(String search) {
 //      Call array list with type is Borrow
         ObservableList<Borrow> list = FXCollections.observableArrayList();
 //      Query SELECT in SQL
-        String query = "Select bw.id,a.UID,bw.amount_of_pay, b.name as bookName,bw.borrowAt,bw.refundAt ,bw.time_out,sb.name as stautsName,a.username as accountName,bw.statusId,mb.accountId, mb.bookId,bw.manageId from borrow as bw\n"
-                + " join status_borrow as sb on bw.statusId = sb.id\n"
-                + " join manage_book as mb on bw.manageId = mb.id\n"
-                + " join accounts as a on mb.accountId = a.id\n"
-                + " join books as b on mb.bookId = b.id  where b.name like '%" + name + "%'";
+        String query = "SELECT b.* "
+                + "FROM borrow AS b "
+                + "JOIN manage_book AS mb ON b.manageId = mb.id "
+                + "JOIN books ON mb.bookId = books.id "
+                + "WHERE books.name like ?";
+
         try {
 //          Connect to database and execute query
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "%" + search + "%");
             rs = preparedStatement.executeQuery();
+
 //          Call value in databse and set for list Borrow
-            int i = 1;
-            while (rs.next()) {
+            for (int i = 1; rs.next(); i++) {
                 Borrow borrow = new Borrow();
+
                 borrow.setIndex(i);
                 borrow.setId(rs.getInt("id"));
                 borrow.setBorrowAt(rs.getString("borrowAt"));
@@ -279,14 +284,13 @@ public class BorrowEntity {
                 borrow.setRefundAt(rs.getString("refundAt"));
                 borrow.setAmount_of_pay(rs.getFloat("amount_of_pay"));
                 borrow.setManageId(rs.getInt("manageId"));
-                borrow.setStatusId(i);
-                borrow.setStatusName(rs.getString("stautsName"));
-                borrow.setBookName(rs.getString("bookName"));
-                borrow.setAccountName(rs.getString("accountName"));
+                borrow.setStatusId(rs.getInt("statusId"));
+
                 list.add(borrow);
-                i++;
             }
+
             return list;
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -295,6 +299,7 @@ public class BorrowEntity {
             JDBCConnect.closePreparedStatement(preparedStatement);
             JDBCConnect.closeConnection(connection);
         }
+
         return null;
     }
 
@@ -407,47 +412,21 @@ public class BorrowEntity {
 
     public static boolean Update(Borrow obj) {
 //        Query Update in Database with hidden value "?"
-        String sql_borrow = "UPDATE `borrow` SET `borrowAt` = ?,refundAt = ?,statusId = ? WHERE (`id` = ?);";
-        String sql_manage_lib = "UPDATE `manage_book` SET  `accountId` = ?, bookId = ? WHERE (`id` = ?);";
+        String sql_borrow = "UPDATE borrow SET time_out = ?, refundAt = ?, statusId = ? WHERE id = ?";
 
         try {
-            System.out.println("Insert Manage_book");
             connection = JDBCConnect.getJDBCConnection();
-            preparedStatement = connection.prepareCall(sql_manage_lib);
-            preparedStatement.setInt(1, obj.getAccountid().intValue());
-            preparedStatement.setInt(2, obj.getBookid().intValue());
-            preparedStatement.setInt(3, obj.getManageId());
-            preparedStatement.executeUpdate();
-            if (preparedStatement.executeUpdate() > 0) {
-//                Alert alert = new Alert(Alert.AlertType.NONE);
-//                alert.setAlertType(Alert.AlertType.INFORMATION);
-//                alert.setTitle("Test Connection");
-//                alert.setHeaderText("Status Manager");
-//                alert.setContentText("Updated Successfully!");
-//                alert.showAndWait();
-            } else {
-                return false;
-            }
-        } catch (SQLException | NullPointerException e) {
-        }
-
-        try {
-//          Connect to database
-            connection = JDBCConnect.getJDBCConnection();
-//              Set hidden value
-            preparedStatement = connection.prepareStatement(sql_borrow);
-            preparedStatement.setString(1, obj.getBorrowAt());
+            preparedStatement = connection.prepareCall(sql_borrow);
+            preparedStatement.setInt(1, obj.getTime_out());
             preparedStatement.setString(2, obj.getRefundAt());
             preparedStatement.setInt(3, obj.getStatusId());
             preparedStatement.setInt(4, obj.getId());
-
-//          Execute Query, if update successfull set flag equal true
+            preparedStatement.executeUpdate();
             if (preparedStatement.executeUpdate() > 0) {
                 return true;
             } else {
                 return false;
             }
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -460,23 +439,24 @@ public class BorrowEntity {
         return false;
     }
 
+
     public static boolean Delete(int id) {
-//      Query Delete in database with hidden value
-        String query = "DELETE FROM borrows WHERE id = ?";
+        String sql = "Delete FROM borrow WHERE id = ?";
 
         try {
-//          Connect to Database, set value for hidden value
             connection = JDBCConnect.getJDBCConnection();
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = connection.prepareCall(sql);
             preparedStatement.setInt(1, id);
 
-//          Execute Query, if delete successfull set flag equal true
             if (preparedStatement.executeUpdate() > 0) {
+                System.out.println("Delete Successfully !");
+
                 return true;
             } else {
+                System.out.println("Delete Faild !");
+
                 return false;
             }
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -519,6 +499,11 @@ public class BorrowEntity {
                 list.add(rs.getInt("id"));
             }
         } catch (SQLException | NullPointerException ex) {
+        } finally {
+//          Close database at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
         }
         return list.get(accountID);
     }
@@ -540,6 +525,11 @@ public class BorrowEntity {
                 list.add(rs.getInt("id"));
             }
         } catch (SQLException | NullPointerException ex) {
+        } finally {
+//          Close database at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
         }
         return list.get(bookID);
     }
@@ -561,6 +551,11 @@ public class BorrowEntity {
                 list.add(rs.getInt("id"));
             }
         } catch (SQLException | NullPointerException ex) {
+        } finally {
+//          Close database at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
         }
 
         return list.get(StatusID);
@@ -580,6 +575,11 @@ public class BorrowEntity {
             }
             txtStatus.setItems(list);
         } catch (SQLException | NullPointerException ex) {
+        } finally {
+//          Close database at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
         }
     }
 
@@ -597,6 +597,11 @@ public class BorrowEntity {
             }
             txtBook.setItems(list);
         } catch (SQLException | NullPointerException ex) {
+        } finally {
+//          Close database at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
         }
     }
 
@@ -614,6 +619,11 @@ public class BorrowEntity {
             }
             txtAccount.setItems(list);
         } catch (SQLException | NullPointerException ex) {
+        } finally {
+//          Close database at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
         }
     }
 

@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.SignUpController">
+<AnchorPane prefHeight="800.0" prefWidth="1180.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.SignUpController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -71,12 +71,12 @@
                         <Label layoutX="164.0" layoutY="688.0" text="Already an account ?" />
                         <ComboBox fx:id="boxGender" layoutX="164.0" layoutY="546.0" onAction="#Validated" prefHeight="35.0" prefWidth="400.0" promptText="Select a Gender" />
                         <TextField fx:id="txtMobile" layoutX="164.0" layoutY="611.0" onKeyReleased="#Validated" prefHeight="40.0" prefWidth="400.0" promptText="Mobile" />
-                        <Label fx:id="errorUsername" layoutX="163.0" layoutY="303.0" styleClass="error" text="Cannot be null and less than 64 character!" visible="false" />
+                        <Label fx:id="errorUsername" layoutX="163.0" layoutY="303.0" styleClass="error" text="Cannot be null, don't have space and less than 64 character!" visible="false" />
                         <Label fx:id="errorPassword" layoutX="163.0" layoutY="373.0" styleClass="error" text="At least once(a digit, a lower case letter), at least 8 and at most 20 characters" visible="false" />
                         <Label fx:id="errorRePassword" layoutX="163.0" layoutY="444.0" styleClass="error" text="Wrong Password" visible="false" />
                         <Label fx:id="errorGender" layoutX="163.0" layoutY="581.0" styleClass="error" text="Select a Gender" visible="false" />
                         <Label fx:id="errorMobile" layoutX="163.0" layoutY="651.0" styleClass="error" text="Have 10 numbers" visible="false" />
-                        <TextField fx:id="txtFullname" layoutX="164.0" layoutY="475.0" onKeyReleased="#Validated" prefHeight="40.0" prefWidth="400.0" promptText="Fullname" />
+                        <TextField fx:id="txtFullname" layoutX="164.0" layoutY="475.0" onInputMethodTextChanged="#FormatFullName" onKeyReleased="#Validated" prefHeight="40.0" prefWidth="400.0" promptText="Fullname" />
                         <Label fx:id="errorFullname" layoutX="163.0" layoutY="515.0" styleClass="error" text="Cannot be null and less than 64 character!" visible="false" />
                      </children>
                   </Pane>

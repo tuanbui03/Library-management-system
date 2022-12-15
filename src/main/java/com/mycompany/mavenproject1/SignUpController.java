@@ -145,6 +145,7 @@ public class SignUpController implements Initializable {
         boolean flag = false;
         boolean validPass = false;
 
+        String USERNAME_PATTERN = "^(?=\\S+$).{1,64}$";
         String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{8,20}$";
         String MOBILE_PATTERN = "^\\d{10}$";
         String EMAIL_PATTERN = "^(?=.{1,64}@)[\\p{L}0-9_-]+(\\.[\\p{L}0-9_-]+)*@[^-][\\p{L}0-9-]+(\\.[\\p{L}0-9-]+)*(\\.[\\p{L}]{2,})$";
@@ -158,7 +159,7 @@ public class SignUpController implements Initializable {
         Gender gender = boxGender.getValue();
         String mobile = txtMobile.getText();
 
-        if (username.isEmpty() || username.equals(null)) {
+        if (!username.matches(USERNAME_PATTERN)) {
             errorUsername.setVisible(true);
 
             flag = true;
@@ -234,6 +235,8 @@ public class SignUpController implements Initializable {
         Role role = RoleEntity.GetOneByName("Reader");
         ObservableList<Account> accounts = AccountEntity.GetAccountByRole(role.getId());
 
+        FormatFullName();
+        
         String UID = role.getName() + accounts.size();
         String username = txtUsername.getText();
         String hidePass = passPassword.getText();
@@ -303,6 +306,24 @@ public class SignUpController implements Initializable {
             alert.showAndWait();
         }
 
+    }
+    
+    @FXML
+    private void FormatFullName() {
+        String inpFullname = txtFullname.getText();
+        String newFullname = "";
+        inpFullname = inpFullname.trim().replaceAll("//s//s+", " ");
+        String[] array = inpFullname.split(" ");
+
+        for (String name : array) {
+            newFullname += name.toUpperCase().charAt(0);
+            newFullname += name.substring(1);
+            newFullname += " ";
+        }
+
+        newFullname = newFullname.trim();
+
+        txtFullname.setText(newFullname);
     }
 
     @FXML

@@ -27,11 +27,13 @@ public class ManageBookEntity {
                 + "FROM manage_book "
                 + "JOIN accounts ON manage_book.accountId = accounts.id "
                 + "JOIN books ON manage_book.bookId = books.id "
-                + "JOIN status_manage ON manage_book.statusId = status_manage.id";
+                + "JOIN status_manage ON manage_book.statusId = status_manage.id "
+                + "WHERE NOT status_manage.name = ?";
 
         try {
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareCall(sql);
+            preparedStatement.setString(1, "Borrowed");
             rs = preparedStatement.executeQuery();
 
             for (int i = 1; rs.next(); i++) {
@@ -457,13 +459,14 @@ public class ManageBookEntity {
                 + "JOIN accounts ON manage_book.accountId = accounts.id "
                 + "JOIN books ON manage_book.bookId = books.id "
                 + "JOIN status_manage ON manage_book.statusId = status_manage.id "
-                + "WHERE books.name like ?";
+                + "WHERE books.name like ? AND NOT status_manage.name = ?";
         try {
 //          connect to database and execute query with hidden value
             connection = JDBCConnect.getJDBCConnection();
             preparedStatement = connection.prepareCall(sql);
 //          set hidden value in query
             preparedStatement.setString(1, "%" + search + "%");
+            preparedStatement.setString(2, "Borrowed");
             rs = preparedStatement.executeQuery();
 
 //          set a Category, add and return ObservableList with name is categories

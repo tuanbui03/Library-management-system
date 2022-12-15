@@ -582,6 +582,8 @@ public class ManagementAccountsController implements Initializable {
     @FXML
     private void Validated() {
         boolean flag = false;
+
+        String USERNAME_PATTERN = "^(?=\\S+$).{1,64}$";
         String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{8,20}$";
         String MOBILE_PATTERN = "^\\d{10}$";
         String EMAIL_PATTERN = "^(?=.{1,64}@)[\\p{L}0-9_-]+(\\.[\\p{L}0-9_-]+)*@[^-][\\p{L}0-9-]+(\\.[\\p{L}0-9-]+)*(\\.[\\p{L}]{2,})$";
@@ -593,66 +595,59 @@ public class ManagementAccountsController implements Initializable {
         String email = txtEmail.getText();
         LocalDate dob = txtDob.getValue();
         String mobile = txtMobile.getText();
-//        String avatar = txtAvatar.getText();
 //
-        if (username.isEmpty() || username.length() > 64) {
+        if (!username.matches(USERNAME_PATTERN)) {
             errorUsername.setVisible(true);
-            flag = true;
 
-//            return false;
+            flag = true;
         } else {
             errorUsername.setVisible(false);
         }
 
         if (password.isEmpty() || !password.matches(PASSWORD_PATTERN)) {
             errorPassword.setVisible(true);
+
             flag = true;
-//            return false;
         } else {
             errorPassword.setVisible(false);
         }
 
         if (fullname.isEmpty() || fullname.length() > 64) {
             errorFullname.setVisible(true);
-            flag = true;
 
-//            return false;
+            flag = true;
         } else {
             errorFullname.setVisible(false);
         }
 
         if (gender == null) {
             errorGender.setVisible(true);
-            flag = true;
 
-//            return false;
+            flag = true;
         } else {
             errorGender.setVisible(false);
         }
 
         if (role == null) {
             errorRole.setVisible(true);
-            flag = true;
 
-//            return false;
+            flag = true;
         } else {
             errorRole.setVisible(false);
         }
 
         if (email.isEmpty() || !email.matches(EMAIL_PATTERN)) {
             errorEmail.setVisible(true);
-            flag = true;
 
-//            return false;
+            flag = true;
         } else {
             errorEmail.setVisible(false);
         }
 
         if (dob == null) {
             errorDob.setVisible(true);
-            flag = true;
 
-//            return false;
+            flag = true;
         } else {
             errorDob.setVisible(false);
         }
@@ -661,19 +656,10 @@ public class ManagementAccountsController implements Initializable {
             errorMobile.setVisible(true);
 
             flag = true;
-//            return false;
         } else {
             errorMobile.setVisible(false);
         }
 
-//        if (avatar.isEmpty() || avatar == null) {
-//            errorAvatar.setVisible(true);
-//            flag = false;
-//
-////            return false;
-//        } else {
-//            errorAvatar.setVisible(false);
-//        }
         btnSave.setDisable(flag);
     }
 

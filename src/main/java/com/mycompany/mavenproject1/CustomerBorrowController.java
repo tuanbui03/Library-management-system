@@ -201,7 +201,7 @@ public class CustomerBorrowController implements Initializable {
             try {
                 alert.setDialogPane(loader.load());
                 MessageController mc = loader.getController();
-                mc.setMessage("Can't borrow more than 3 books!\nIf you want please refunded all borrowing book! Thanks");
+                mc.setMessage("Can't borrow more than 3 books!\nPlease refunded all borrowing book when borrowing more than book!");
             } catch (Exception e) {
             }
 

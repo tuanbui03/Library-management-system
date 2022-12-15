@@ -29,8 +29,6 @@ import javafx.collections.*;
  */
 public class ManagementAuthorsController implements Initializable {
 
-    private Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
-
     @FXML
     private TextField txtName;
     @FXML
@@ -434,8 +432,9 @@ public class ManagementAuthorsController implements Initializable {
                 errorDob.setVisible(true);
 
                 flag = true;
+            }else{
+                errorDob.setVisible(false);
             }
-            errorDob.setVisible(false);
         }
 
         btnSave.setDisable(flag);

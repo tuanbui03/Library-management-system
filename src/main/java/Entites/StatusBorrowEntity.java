@@ -51,6 +51,39 @@ public class StatusBorrowEntity {
         }
         return null;
     }
+    
+    public static StatusBorrow GetStatusBorrowWithId(int id) {
+
+        try {
+//          connect to database and execute query with hidden value
+            connection = JDBCConnect.getJDBCConnection();
+            preparedStatement = connection.prepareCall("Select * from status_borrow WHERE id = ?");
+//          set hidden value in query
+            preparedStatement.setInt(1, id);
+            rs = preparedStatement.executeQuery();
+
+//          set a StatusBorrow, add and return ObservableList with name is status_borrow
+            while (rs.next()) {
+                StatusBorrow statusBorrow = new StatusBorrow();
+
+                statusBorrow.setId(rs.getInt("id"));
+                statusBorrow.setName(rs.getString("name"));
+
+                return statusBorrow;
+            }
+
+        } catch (SQLException ex) {
+//          show message in console screen when wrong at query
+            System.out.println(ex.getMessage());
+        } finally {
+//          Close databse at end
+            JDBCConnect.closeResultSet(rs);
+            JDBCConnect.closePreparedStatement(preparedStatement);
+            JDBCConnect.closeConnection(connection);
+        }
+
+        return null;
+    }
 
     public static StatusBorrow GetStatusBorrowWithName(String name) {
 

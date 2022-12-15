@@ -4,8 +4,8 @@
  */
 package com.mycompany.mavenproject1;
 
-import Entites.BorrowEntity;
-import Models.Borrow;
+import Entites.*;
+import Models.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -17,6 +17,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -28,6 +29,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 /**
@@ -36,7 +39,6 @@ import javafx.util.Duration;
  */
 public class ManagementBorrowingController implements Initializable {
 
-    private Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
     @FXML
     private Label labelClock;
 
@@ -53,35 +55,72 @@ public class ManagementBorrowingController implements Initializable {
     private TextField txtID, txtTimeOut, txtSearch;
 
     @FXML
-    private ComboBox txtAccount, txtBook, txtStatus;
+    private ComboBox<Account> txtAccount;
+
+    @FXML
+    private ComboBox<Book> txtBook;
+
+    @FXML
+    private ComboBox<StatusBorrow> txtStatus;
 
     @FXML
     private DatePicker txtBorrowAt, txtRefundAt;
 
     @FXML
-    private Label errorAccount, errorBorrowAt, errorBook, errorRefundAt, errorStatus;
+    private Label errorTimeOut, errorStatus;
 
     @FXML
     private TableColumn<Borrow, String> colIndex, colUID, colBook, colBorrow, colRefund, colTime, colStatus;
+    @FXML
+    private AnchorPane ap;
+    @FXML
+    private Pane pnlOverview;
+    @FXML
+    private Button btnReset;
+    @FXML
+    private Button btnRefesh;
+    @FXML
+    private Button btnSearch;
+    @FXML
+    private Label sessionUsername;
+    @FXML
+    private Button btnDashboard;
+    @FXML
+    private Button btnManageBooks;
+    @FXML
+    private Button btnManageAuthors;
+    @FXML
+    private Button btnManageCategories;
+    @FXML
+    private Button btnManagePublishing;
+    @FXML
+    private Button btnManageAccounts;
+    @FXML
+    private Button btnManageBorrowing;
+    @FXML
+    private Button btnSignout;
 
     private void initClock() {
 
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss\ndd/MM/yyyy");
             labelClock.setText(LocalDateTime.now().format(formatter));
         }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
     }
 
-    @FXML
     public void CheckId() {
 //      get value of UID feild
         String id = txtID.getText();
+        txtTimeOut.setDisable(false);
+        txtStatus.setDisable(false);
 //      Set button delete disable when UID is empty else unset disable
         if (id.isEmpty()) {
+            btnSave.setDisable(true);
             btnDelete.setDisable(true);
         } else {
+            btnSave.setDisable(false);
             btnDelete.setDisable(false);
         }
     }
@@ -89,135 +128,18 @@ public class ManagementBorrowingController implements Initializable {
     @FXML
     private void Validated() {
         boolean flag = false;
+        String timeOut = txtTimeOut.getText();
+        String NUMBER_PATTERN = "^\\d+$";
 
-        LocalDate borrowAt = txtBorrowAt.getValue();
-        LocalDate refundAt = txtRefundAt.getValue();
-        
-        if (txtBook.getValue() == null) {
-            errorBook.setVisible(true);
-            flag = true;
-        } else {
-            errorBook.setVisible(false);
-        }
-
-        if (txtAccount.getValue() == null) {
-            errorAccount.setVisible(true);
+        if (!timeOut.matches(NUMBER_PATTERN)) {
+            errorTimeOut.setVisible(true);
 
             flag = true;
         } else {
-            errorAccount.setVisible(false);
-        }
-
-        if (txtStatus.getValue()== null) {
-            errorStatus.setVisible(true);
-
-            flag = true;
-        } else {
-            errorStatus.setVisible(false);
-        }
-
-        if (borrowAt == null) {
-            errorBorrowAt.setVisible(true);
-
-            flag = true;
-        } else {
-            errorBorrowAt.setVisible(false);
-        }
-
-        if (refundAt == null ) {
-            errorRefundAt.setVisible(true);
-
-            flag = true;
-        } else {
-            errorRefundAt.setVisible(false);
+            errorTimeOut.setVisible(false);
         }
 
         btnSave.setDisable(flag);
-    }
-
-    @FXML
-    private void BtnSaveClick() {
-        Validated();
-        try {
-//      Call Alert box
-            Alert alert = new Alert(Alert.AlertType.NONE);
-//      inpId is empty we create new categories else we update this
-            if (txtID.getText().isEmpty()) {
-
-                int accountId = BorrowEntity.selectAccountIndex(txtAccount);
-                int bookId = BorrowEntity.selectBookIndex(txtBook);
-                int statusId = BorrowEntity.selectStatusIndex(txtStatus);
-                
-                Borrow borrow = new Borrow();
-                borrow.setRefundAt(txtRefundAt.getValue().toString());
-                borrow.setBorrowAt(txtBorrowAt.getValue().toString());
-                borrow.setStatusId(statusId);
-//                borrow.setTime_out();
-                borrow.setAccountID(accountId);
-                borrow.setBookID(bookId);
-                System.out.println(borrow);
-                if (BorrowEntity.Add(borrow)) {
-//              set titile, header, content for alert box
-                    alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Test Connection");
-                    alert.setHeaderText("Borrows Manager");
-                    alert.setContentText("Added Successfully!");
-                    alert.showAndWait();
-                } else {
-//              set titile, header, content for alert box
-                    alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setTitle("Test Connection");
-                    alert.setHeaderText("Borrows Manager");
-                    alert.setContentText("Added Fail!");
-                    alert.showAndWait();
-//                }
-                }
-//            else {
-////              set titile, header, content for alert box
-//                alert.setAlertType(Alert.AlertType.ERROR);
-//                alert.setTitle("Test Connection");
-//                alert.setHeaderText("Borrows Manager");
-//                alert.setContentText("This Publishing exists!");
-//                alert.showAndWait();
-//            }
-            } else {
-                int accountId = BorrowEntity.selectAccountIndex(txtAccount);
-                int bookId = BorrowEntity.selectBookIndex(txtBook);
-                int statusId = BorrowEntity.selectStatusIndex(txtStatus);
-                manaId = Integer.parseInt(String.valueOf(table.getItems().get(myIndex).getManageId()));
-                myIndex = table.getSelectionModel().getSelectedIndex();
-                id = Integer.parseInt(String.valueOf(table.getItems().get(myIndex).getId()));
-                Borrow borrow = new Borrow();
-                borrow.setId(id);
-                borrow.setRefundAt(txtRefundAt.getValue().toString());
-                borrow.setBorrowAt(txtBorrowAt.getValue().toString());
-                borrow.setStatusId(statusId);
-                borrow.setManageId(manaId);
-                borrow.setAccountID(accountId);
-                borrow.setBookID(bookId);
-
-//          if Update success, show a box with message "Updated Successfully!" else show message "Updated Fail!"
-                if (BorrowEntity.Update(borrow)) {
-//              set titile, header, content for alert box
-                    alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Test Connection");
-                    alert.setHeaderText("Borrows Manager");
-                    alert.setContentText("Updated Successfully!");
-                    alert.showAndWait();
-                } else {
-//              set titile, header, content for alert box
-                    alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setTitle("Test Connection");
-                    alert.setHeaderText("Borrows Manager");
-                    alert.setContentText("Updated Fail!");
-                    alert.showAndWait();
-                }
-            }
-        } catch (NullPointerException e) {
-        } catch (RuntimeException r) {
-        }
-
-        RefeshData();
     }
 
     @FXML
@@ -225,6 +147,10 @@ public class ManagementBorrowingController implements Initializable {
         int id = Integer.parseInt(txtID.getText());
 //      Call Alert box
         Alert alert = new Alert(Alert.AlertType.NONE);
+
+        Book book = txtBook.getValue();
+        book.setQuantity(book.getQuantity() + 1);
+        BookEntity.Update(book);
 
 //      delete data for database, if success show message "Deleted successfully !" else show message "Delete Fail !"
         if (BorrowEntity.Delete(id)) {
@@ -256,25 +182,25 @@ public class ManagementBorrowingController implements Initializable {
         txtSearch.clear();
         txtRefundAt.setValue(null);
 
-        errorAccount.setVisible(false);
-        errorBorrowAt.setVisible(false);
-        errorBook.setVisible(false);
-        errorRefundAt.setVisible(false);
+        errorTimeOut.setVisible(false);
         errorStatus.setVisible(false);
 
         CheckId();
-        btnSave.setDisable(true);
+        txtTimeOut.setDisable(true);
+        txtStatus.setDisable(true);
     }
 
     @FXML
     private void RefeshData() {
         ResetFeild();
-        table();
+        InitData();
     }
 
     @FXML
     private void Search() {
-        this.table();
+        String search = txtSearch.getText();
+        ObservableList<Borrow> borrow = BorrowEntity.Search(search);
+        table(borrow);
     }
 
     public void data_Box() {
@@ -283,23 +209,43 @@ public class ManagementBorrowingController implements Initializable {
         BorrowEntity.data_Status(txtStatus);
     }
 
+    public void InitData() {
+        ObservableList<Borrow> borrow = BorrowEntity.GetAll();
+
+        table(borrow);
+    }
+
     @FXML
-    public void table() {
-        if (txtSearch.getText().equals("")) {
-            ObservableList<Borrow> borrow = BorrowEntity.GetAll();
-            table.setItems(borrow);
-        } else {
-            String search = txtSearch.getText();
-            ObservableList<Borrow> borrow = BorrowEntity.Search(search);
-            table.setItems(borrow);
-        }
+    public void table(ObservableList<Borrow> borrow) {
+        table.setItems(borrow);
+
         colIndex.setCellValueFactory(f -> f.getValue().indexProperty().asString());
-        colUID.setCellValueFactory(f -> f.getValue().idProperty().asString());
-        colBook.setCellValueFactory(f -> f.getValue().bookNameProperty());
+        colUID.setCellValueFactory(f -> {
+            int manageId = f.getValue().getManageId();
+
+            ManageBook mg = ManageBookEntity.GetAllBookInfoById(manageId);
+            Account acc = AccountEntity.GetAccountByID(mg.getAccount().getId());
+
+            return acc.UIDProperty();
+        });
+        colBook.setCellValueFactory(f -> {
+            int manageId = f.getValue().getManageId();
+
+            ManageBook mg = ManageBookEntity.GetAllBookInfoById(manageId);
+            Book book = BookEntity.GetBookWithBookId(mg.getBook().getId());
+
+            return book.nameProperty();
+        });
         colBorrow.setCellValueFactory(f -> f.getValue().borrowAtProperty());
         colRefund.setCellValueFactory(f -> f.getValue().refundAtProperty());
         colTime.setCellValueFactory(f -> f.getValue().time_outProperty().asString());
-        colStatus.setCellValueFactory(f -> f.getValue().statusNameProperty());
+        colStatus.setCellValueFactory(f -> {
+            int statusId = f.getValue().getStatusId();
+
+            StatusBorrow status = StatusBorrowEntity.GetStatusBorrowWithId(statusId);
+
+            return status.nameProperty();
+        });
 
         table.setRowFactory(tv -> {
             TableRow<Borrow> myRow = new TableRow<>();
@@ -316,11 +262,18 @@ public class ManagementBorrowingController implements Initializable {
                     txtBorrowAt.setValue(dobBorrow);
                     txtRefundAt.setValue(dobRefund);
 
+                    int manageId = table.getItems().get(myIndex).getManageId();
+
+                    ManageBook mg = ManageBookEntity.GetAllBookInfoById(manageId);
+                    Account acc = AccountEntity.GetAccountByID(mg.getAccount().getId());
+                    Book book = BookEntity.GetBookWithBookId(mg.getBook().getId());
+                    StatusBorrow sb = StatusBorrowEntity.GetStatusBorrowWithId(table.getItems().get(myIndex).getStatusId());
+
                     txtID.setText(String.valueOf(table.getItems().get(myIndex).getId()));
-                    txtAccount.setValue(table.getItems().get(myIndex).getAccountName());
+                    txtAccount.setValue(acc);
                     txtTimeOut.setText(String.valueOf(table.getItems().get(myIndex).getTime_out()));
-                    txtBook.setValue(table.getItems().get(myIndex).getBookName());
-                    txtStatus.setValue(table.getItems().get(myIndex).getStatusName());
+                    txtBook.setValue(book);
+                    txtStatus.setValue(sb);
 
                     CheckId();
                     Validated();
@@ -329,8 +282,6 @@ public class ManagementBorrowingController implements Initializable {
             return myRow;
         });
     }
-
-    
 
     @FXML
     private void switchToAdminDashboard() throws IOException {
@@ -369,17 +320,71 @@ public class ManagementBorrowingController implements Initializable {
 
     @FXML
     private void SignOut() throws Exception {
-        prefs.clear();
         App.setRoot("SignIn");
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        User user = User.getInstace();
+        String sessionUser = user.getUserName();
+        try {
+
+            if (sessionUser.equals("") || sessionUser.equals(null)) {
+                SignOut();
+            } else {
+                sessionUsername.setText(sessionUser);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         initClock();
-        this.table();
-        btnSave.setDisable(true);
-        CheckId();
+        RefeshData();
         this.data_Box();
+    }
+
+    @FXML
+    private void BtnSaveClick() {
+        int id = Integer.parseInt(txtID.getText());
+        Account account = txtAccount.getValue();
+        Book book = txtBook.getValue();
+        int timeOut = Integer.parseInt(txtTimeOut.getText());
+        String borrowAt = txtBorrowAt.getValue().toString();
+        String refundAt = txtRefundAt.getValue().toString();
+        StatusBorrow status = txtStatus.getValue();
+        StatusBorrow refundedStatus = StatusBorrowEntity.GetStatusBorrowWithName("Refunded");
+        Borrow preBorrow = BorrowEntity.GetBorrowById(id);
+        StatusBorrow preBorrowStatus = StatusBorrowEntity.GetStatusBorrowWithId(preBorrow.getStatusId());
+
+        if (!preBorrowStatus.equals(refundedStatus) && status.equals(refundedStatus)) {
+            book.setQuantity(book.getQuantity() + 1);
+            BookEntity.Update(book);
+        }
+
+        Borrow borrow = new Borrow();
+        borrow.setId(id);
+        borrow.setAccountID(account.getId());
+        borrow.setBookID(book.getId());
+        borrow.setTime_out(timeOut);
+        borrow.setBorrowAt(borrowAt);
+        borrow.setRefundAt(refundAt);
+        borrow.setStatusId(status.getId());
+        
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        if (BorrowEntity.Update(borrow)) {
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setTitle("Test Connection");
+            alert.setHeaderText("Borrows Manager");
+            alert.setContentText("Updated Successfully!");
+            alert.showAndWait();
+        } else {
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Test Connection");
+            alert.setHeaderText("Borrows Manager");
+            alert.setContentText("Updated Fail!");
+            alert.showAndWait();
+        }
+
+        RefeshData();
     }
 
 }

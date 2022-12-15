@@ -582,7 +582,7 @@ public class ManagementBooksController implements Initializable {
     private void Validated() {
         boolean flag = false;
 
-        String NUMBER_PATTERN = "^\\d+$";
+        String NUMBER_PATTERN = "^\\d\\d+$";
         String FLOAT_PATTERN = "\\d+\\.\\d+";
 
         String name = txtName.getText();

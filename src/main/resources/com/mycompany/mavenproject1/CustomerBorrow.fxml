@@ -106,7 +106,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnBorrowing" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#switchToCustomerBorrowing" prefHeight="50.0" prefWidth="300.0" styleClass="button_active" text="Borrowing">
+            <Button fx:id="btnBorrowing" alignment="BASELINE_LEFT" disable="true" graphicTextGap="22.0" mnemonicParsing="false" onAction="#switchToCustomerBorrowing" prefHeight="50.0" prefWidth="300.0" styleClass="button_active" text="Borrowing">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>

@@ -79,7 +79,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnProfile" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#switchToCustomerInfomation" prefHeight="50.0" prefWidth="300.0" styleClass="button_active" text="Profile">
+            <Button fx:id="btnProfile" alignment="BASELINE_LEFT" disable="true" graphicTextGap="22.0" mnemonicParsing="false" onAction="#switchToCustomerInfomation" prefHeight="50.0" prefWidth="300.0" styleClass="button_active" text="Profile">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -222,7 +222,7 @@
                               <PasswordField fx:id="txtPassword" onKeyReleased="#Validated" promptText="Password have at least once(a digit, a lower case letter), at least 8 and at most 20 places)" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <VBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <children>
-                                    <TextField fx:id="txtFullname" onKeyReleased="#Validated" promptText="Less than 64 characters">
+                                    <TextField fx:id="txtFullname" onInputMethodTextChanged="#FormatFullName" onKeyReleased="#Validated" promptText="Less than 64 characters">
                                        <VBox.margin>
                                           <Insets top="15.0" />
                                        </VBox.margin>
