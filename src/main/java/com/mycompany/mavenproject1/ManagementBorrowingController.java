@@ -359,11 +359,17 @@ public class ManagementBorrowingController implements Initializable {
         String refundAt = txtRefundAt.getValue().toString();
         StatusBorrow status = txtStatus.getValue();
         StatusBorrow refundedStatus = StatusBorrowEntity.GetStatusBorrowWithName("Refunded");
+        StatusBorrow borrowingStatus = StatusBorrowEntity.GetStatusBorrowWithName("Borrowing");
         Borrow preBorrow = BorrowEntity.GetBorrowById(id);
         StatusBorrow preBorrowStatus = StatusBorrowEntity.GetStatusBorrowWithId(preBorrow.getStatusId());
 
-        if (!preBorrowStatus.equals(refundedStatus) && status.equals(refundedStatus)) {
+        if (preBorrowStatus.equals(borrowingStatus) && status.equals(refundedStatus)) {
             book.setQuantity(book.getQuantity() + 1);
+            BookEntity.Update(book);
+        }
+        
+        if (preBorrowStatus.equals(refundedStatus) && status.equals(borrowingStatus)) {
+            book.setQuantity(book.getQuantity() - 1);
             BookEntity.Update(book);
         }
 

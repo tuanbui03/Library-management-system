@@ -200,7 +200,7 @@
                               <ComboBox fx:id="boxAuthor" layoutX="118.0" layoutY="68.0" onAction="#ValidatedFilter" prefWidth="300.0" promptText="Select a Author" />
                               <ComboBox fx:id="boxCategory" layoutX="528.0" layoutY="27.0" onAction="#ValidatedFilter" prefWidth="300.0" promptText="Select a Category" />
                               <ComboBox fx:id="boxBook" layoutX="528.0" layoutY="68.0" onAction="#ValidatedBook" prefWidth="300.0" promptText="Choose a Publishing, a Author and a Category!" />
-                              <Label fx:id="errorBook" layoutX="568.0" layoutY="93.0" styleClass="error" text="Choose Publishing, Author and Category!" visible="false" />
+                              <Label fx:id="errorBook" layoutX="528.0" layoutY="93.0" styleClass="error" text="Choose Publishing, Author and Category!" visible="false" />
                            </children>
                         </Pane>
                         <TableView fx:id="table" layoutX="20.0" layoutY="204.0" prefHeight="460.0" prefWidth="840.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="204.0">

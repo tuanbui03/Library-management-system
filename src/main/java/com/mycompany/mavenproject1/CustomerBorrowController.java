@@ -28,6 +28,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -201,82 +202,109 @@ public class CustomerBorrowController implements Initializable {
         mg.setPricePerBook(book.getPrice());
         mg.getBook().setId(book.getId());
         mg.getAccount().setId(acc.getId());
-        
-        if (BorrowEntity.GetBorrowingBookByAccountId(acc.getId()).size() > 2) {
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
-            try {
-                alert.setDialogPane(loader.load());
-                MessageController mc = loader.getController();
-                mc.setMessage("Can't borrow more than 3 books!\nPlease refunded all borrowing book when borrowing more than book!");
-            } catch (Exception e) {
-            }
-
-            alert.showAndWait();
-        } else {
-            if (book.getQuantity() == 0) {
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
-                try {
-                    alert.setDialogPane(loader.load());
-                    MessageController mc = loader.getController();
-                    mc.setMessage("The library is out of this books!");
-                } catch (Exception e) {
-                }
-
-                alert.showAndWait();
-                mg.getStatus().setId(outOfStockStatusManage.getId());
-
-                RefeshData();
-            } else {
-                int newQuantityBook = book.getQuantity() - 1;
-                book.setQuantity(newQuantityBook);
-
-                if (newQuantityBook == 0) {
-
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+        FXMLLoader confirmPasswordDLG = new FXMLLoader(getClass().getResource("ConfirmPassword.fxml"));
+        try {
+            alert.setDialogPane(confirmPasswordDLG.load());
+            alert.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+            alert.getDialogPane().lookupButton(ButtonType.OK).addEventFilter(ActionEvent.ANY, c -> {
+                ConfirmPasswordController confirmPage = confirmPasswordDLG.getController();
+                if (confirmPage.Confirm()) {
                     try {
-                        alert.setDialogPane(loader.load());
-                        MessageController mc = loader.getController();
-                        mc.setMessage("The library is out of this books! You were the last to choose it!");
-                    } catch (Exception e) {
+                        if (BorrowEntity.GetBorrowingBookByAccountId(acc.getId()).size() > 2) {
+
+                            FXMLLoader messageDLG = new FXMLLoader(getClass().getResource("Message.fxml"));
+                            try {
+                                alert.setDialogPane(messageDLG.load());
+                                MessageController mc = messageDLG.getController();
+                                mc.setMessage("Can't borrow more than 3 books!\nPlease refunded all borrowing book when borrowing more than book!");
+                            } catch (Exception e) {
+                            }
+
+                            alert.showAndWait();
+                        } else {
+                            if (book.getQuantity() == 0) {
+
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+                                try {
+                                    alert.setDialogPane(loader.load());
+                                    MessageController mc = loader.getController();
+                                    mc.setMessage("The library is out of this books!");
+                                } catch (Exception e) {
+                                }
+
+                                alert.showAndWait();
+                                mg.getStatus().setId(outOfStockStatusManage.getId());
+
+                                RefeshData();
+                            } else {
+                                int newQuantityBook = book.getQuantity() - 1;
+                                book.setQuantity(newQuantityBook);
+
+                                if (newQuantityBook == 0) {
+
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+                                    try {
+                                        alert.setDialogPane(loader.load());
+                                        MessageController mc = loader.getController();
+                                        mc.setMessage("The library is out of this books! You were the last to choose it!");
+                                    } catch (Exception e) {
+                                    }
+
+                                    alert.showAndWait();
+                                    mg.getStatus().setId(outOfStockStatusManage.getId());
+                                } else {
+                                    mg.getStatus().setId(borrowStatusManage.getId());
+                                }
+
+                                ManageBookEntity.Add(mg);
+                                BookEntity.Update(book);
+
+                                ObservableList<ManageBook> newMg = ManageBookEntity.GetAllBookBorrowByUID(acc.getUID());
+                                ManageBook newBook = newMg.get(newMg.size() - 1);
+                                Borrow br = new Borrow();
+                                br.setAmount_of_pay(book.getPrice());
+                                br.setManageId(newBook.getId());
+                                br.setTime_out(3);
+                                LocalDate preDate = LocalDate.now();
+                                LocalDate refundAt = preDate.withDayOfYear(preDate.getDayOfYear() + 3);
+                                br.setRefundAt(refundAt.toString());
+                                br.setStatusId(borrowStatusBorrow.getId());
+
+                                if (BorrowEntity.AddByReader(br)) {
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+                                    try {
+                                        alert.setDialogPane(loader.load());
+                                        MessageController mc = loader.getController();
+                                        mc.setMessage("Booking Successfully! You have read time this book: 3 days");
+                                        RefeshData();
+                                    } catch (Exception e) {
+                                    }
+
+                                    alert.showAndWait();
+                                }else{
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
+                                    try {
+                                        alert.setDialogPane(loader.load());
+                                        MessageController mc = loader.getController();
+                                        mc.setMessage("Booking Faild!");
+                                        RefeshData();
+                                    } catch (Exception e) {
+                                    }
+
+                                    alert.showAndWait();
+                                }
+                            }
+                        }
+                    } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
                     }
-
-                    alert.showAndWait();
-                    mg.getStatus().setId(outOfStockStatusManage.getId());
-                } else {
-                    mg.getStatus().setId(borrowStatusManage.getId());
                 }
-
-                ManageBookEntity.Add(mg);
-                BookEntity.Update(book);
-
-                ObservableList<ManageBook> newMg = ManageBookEntity.GetAllBookBorrowByUID(acc.getUID());
-                ManageBook newBook = newMg.get(newMg.size() - 1);
-                Borrow br = new Borrow();
-                br.setAmount_of_pay(book.getPrice());
-                br.setManageId(newBook.getId());
-                br.setTime_out(3);
-                LocalDate preDate = LocalDate.now();
-                LocalDate refundAt = preDate.withDayOfYear(preDate.getDayOfYear() + 3);
-                br.setRefundAt(refundAt.toString());
-                br.setStatusId(borrowStatusBorrow.getId());
-
-                if (BorrowEntity.AddByReader(br)) {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Message.fxml"));
-                    try {
-                        alert.setDialogPane(loader.load());
-                        MessageController mc = loader.getController();
-                        mc.setMessage("Booking Successfully! You have read time this book: 3 days");
-                    } catch (Exception e) {
-                    }
-
-                    alert.showAndWait();
-                }
-                RefeshData();
-            }
+            });
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-
+        alert.showAndWait();
     }
 
     private void ResetFeild() {
