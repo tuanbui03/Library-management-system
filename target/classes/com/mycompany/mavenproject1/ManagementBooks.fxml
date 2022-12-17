@@ -131,10 +131,10 @@
                               <TextField fx:id="txtName" layoutX="131.0" layoutY="64.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a name" styleClass="input" />
                               <Label fx:id="errorName" layoutX="131.0" layoutY="91.0" styleClass="error" text="Cannot be null and less than 64 characters" visible="false" />
                               <Label fx:id="errorCoyear" layoutX="131.0" layoutY="141.0" styleClass="error" text="Pick a date!" visible="false" />
-                              <TextField fx:id="txtPrice" layoutX="131.0" layoutY="164.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a price folllow valid(0.0 VND)" styleClass="input" />
-                              <Label fx:id="errorPrice" layoutX="131.0" layoutY="191.0" styleClass="error" text="Cannot be null and is number" visible="false" />
-                              <TextField fx:id="txtQuantity" layoutX="131.0" layoutY="216.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a price folllow valid(0)" styleClass="input" />
-                              <Label fx:id="errorQuantity" layoutX="131.0" layoutY="244.0" styleClass="error" text="Must be is number and greater than 10" visible="false" />
+                              <TextField fx:id="txtPrice" layoutX="131.0" layoutY="164.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a price folllow valid(1.0 VND)" styleClass="input" />
+                              <Label fx:id="errorPrice" layoutX="131.0" layoutY="191.0" styleClass="error" text="Must be is number and greater than 0.0" visible="false" />
+                              <TextField fx:id="txtQuantity" layoutX="131.0" layoutY="216.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a price folllow valid (0)" styleClass="input" />
+                              <Label fx:id="errorQuantity" layoutX="131.0" layoutY="244.0" styleClass="error" text="Must be is number and greater than 09" visible="false" />
                               <TextField fx:id="txtDescription" layoutX="131.0" layoutY="264.0" onInputMethodTextChanged="#Validated" onKeyReleased="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Enter a text" styleClass="input" />
                               <Label fx:id="errorDescription" layoutX="131.0" layoutY="292.0" styleClass="error" text="Enter a description" visible="false" />
                               <ComboBox fx:id="boxCategories" layoutX="563.0" layoutY="14.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Please choose a Category !" />

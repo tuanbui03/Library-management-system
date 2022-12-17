@@ -22,6 +22,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-border-color: #000000;
     -fx-border-width: 0px 0px 1px 0px;
     -fx-border-style: segments(2, 1, 2, 1);
-    -fx-opacity: 0.2;
+    -fx-opacity: 0.5;
     color: black;
 }

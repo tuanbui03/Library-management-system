@@ -129,7 +129,7 @@ public class ManagementBorrowingController implements Initializable {
     private void Validated() {
         boolean flag = false;
         String timeOut = txtTimeOut.getText();
-        String NUMBER_PATTERN = "^\\d+$";
+        String NUMBER_PATTERN = "^[1-9]{1,}$";
 
         if (!timeOut.matches(NUMBER_PATTERN)) {
             errorTimeOut.setVisible(true);

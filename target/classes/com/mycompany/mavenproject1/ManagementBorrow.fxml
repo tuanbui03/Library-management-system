@@ -83,7 +83,7 @@
                                     <Font name="System Bold Italic" size="14.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="txtStatus" layoutX="570.0" layoutY="181.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Pick a date!" styleClass="combo-box" />
+                              <ComboBox fx:id="txtStatus" disable="true" layoutX="570.0" layoutY="181.0" onAction="#Validated" prefHeight="26.0" prefWidth="300.0" promptText="Pick a date!" styleClass="combo-box" />
                               <Label fx:id="errorStatus" layoutX="570.0" layoutY="207.0" prefHeight="17.0" prefWidth="288.0" styleClass="error" text="Status cannot be empty !" visible="false" />
                               <Label fx:id="errorTimeOut" layoutX="131.0" layoutY="207.0" styleClass="error" text="Must be a number" visible="false" />
                            </children>

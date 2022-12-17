@@ -585,8 +585,8 @@ public class ManagementBooksController implements Initializable {
     private void Validated() {
         boolean flag = false;
 
-        String NUMBER_PATTERN = "^\\d\\d+$";
-        String FLOAT_PATTERN = "\\d+\\.\\d+";
+        String NUMBER_PATTERN = "^[1-9]\\d+$";
+        String FLOAT_PATTERN = "^[1-9]\\d+\\.\\d+$";
 
         String name = txtName.getText();
         LocalDate coYear = txtCoyear.getValue();

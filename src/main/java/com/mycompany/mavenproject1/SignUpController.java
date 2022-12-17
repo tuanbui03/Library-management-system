@@ -150,7 +150,7 @@ public class SignUpController implements Initializable {
 
         String USERNAME_PATTERN = "^(?=\\S+$).{1,64}$";
         String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{8,20}$";
-        String MOBILE_PATTERN = "^\\d{10}$";
+        String MOBILE_PATTERN = "^[0]\\d{9}$";
         String EMAIL_PATTERN = "^(?=.{1,64}@)[\\p{L}0-9_-]+(\\.[\\p{L}0-9_-]+)*@[^-][\\p{L}0-9-]+(\\.[\\p{L}0-9-]+)*(\\.[\\p{L}]{2,})$";
 
         String username = txtUsername.getText();

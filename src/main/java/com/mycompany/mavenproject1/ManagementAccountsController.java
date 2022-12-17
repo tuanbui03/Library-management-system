@@ -380,7 +380,7 @@ public class ManagementAccountsController implements Initializable {
             a.setDob(date);
             a.setMobile(mobile);
             a.setRoleId(role.getId());
-            if (AccountEntity.GetAccountByUID(UID).getUsername().equals(a.getUsername())) {
+            if (!AccountEntity.GetAccountByUID(UID).getUsername().equals(a.getUsername())) {
 //              if update success, show a box with message "Updated Successfully!" else show message "Updated Fail!"
                 if (AccountEntity.GetAccountByUsername(a.getUsername()) == null) {
                     if (AccountEntity.Update(a)) {
@@ -593,7 +593,7 @@ public class ManagementAccountsController implements Initializable {
 
         String USERNAME_PATTERN = "^(?=\\S+$).{1,64}$";
         String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{8,20}$";
-        String MOBILE_PATTERN = "^\\d{10}$";
+        String MOBILE_PATTERN = "^[0]\\d{9}$";
         String EMAIL_PATTERN = "^(?=.{1,64}@)[\\p{L}0-9_-]+(\\.[\\p{L}0-9_-]+)*@[^-][\\p{L}0-9-]+(\\.[\\p{L}0-9-]+)*(\\.[\\p{L}]{2,})$";
         String username = txtUsername.getText();
         String password = txtPassword.getText();
